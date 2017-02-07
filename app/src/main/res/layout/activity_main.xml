@@ -8,14 +8,50 @@
     tools:context="maks.dev.diplom.MainActivity">
 
     <LinearLayout
-        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorAccent"
+            android:minHeight="?attr/actionBarSize" />
+
+        <LinearLayout
+            android:id="@+id/contentFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvMainScreen"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:paddingTop="30dp"
+                android:text="EUR 10"
+                android:textAlignment="center"
+                android:textSize="30dp" />
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nvView"
@@ -25,5 +61,5 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/drawer_view" />
 
-
 </android.support.v4.widget.DrawerLayout>
+

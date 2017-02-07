@@ -17,7 +17,7 @@ public class MainFragment extends android.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, null);
+        return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
 }

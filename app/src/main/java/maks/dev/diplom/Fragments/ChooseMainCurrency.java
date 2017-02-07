@@ -18,6 +18,6 @@ public class ChooseMainCurrency extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_currency_fragment, null);
+        return inflater.inflate(R.layout.main_currency_fragment, container, false);
     }
 }

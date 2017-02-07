@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/border_for_list_item"
+    android:orientation="horizontal">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvCurrencyName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="30sp"
+                android:text="asdasd"
+                android:paddingTop="5dp"
+                android:paddingStart="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCurrencyValue"
+                android:textSize="24sp"
+                android:textStyle="normal|bold"
+                android:text="ASDASD"
+                android:textAlignment="viewEnd"
+                android:paddingEnd="2dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCurrencyFullName"
+                android:textSize="14sp"
+                android:text="asdsad"
+                android:textAlignment="viewEnd"
+                android:paddingTop="0dp"
+                android:paddingEnd="2dp" />
+        </LinearLayout>
+
+</LinearLayout>
