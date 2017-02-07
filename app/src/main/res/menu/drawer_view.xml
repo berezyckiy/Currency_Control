@@ -4,6 +4,7 @@
         <item
             android:id="@+id/nav_currency_exchange"
             android:icon="@drawable/menu_pic_main"
+            android:checked="true"
             android:title="Currency exchange" />
         <item
             android:id="@+id/nav_choose_main_currency"
