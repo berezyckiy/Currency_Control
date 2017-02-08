@@ -5,47 +5,47 @@
     android:background="@drawable/border_for_list_item"
     android:orientation="horizontal">
 
-        <LinearLayout
-            android:orientation="vertical"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCurrencyName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:paddingStart="2dp"
+            android:paddingTop="5dp"
+            android:text="asdasd"
+            android:textSize="30sp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvCurrencyName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="30sp"
-                android:text="asdasd"
-                android:paddingTop="5dp"
-                android:paddingStart="2dp" />
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/tvCurrencyValue"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:paddingEnd="2dp"
+            android:text="ASDASD"
+            android:textAlignment="viewEnd"
+            android:textSize="24sp"
+            android:textStyle="normal|bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCurrencyValue"
-                android:textSize="24sp"
-                android:textStyle="normal|bold"
-                android:text="ASDASD"
-                android:textAlignment="viewEnd"
-                android:paddingEnd="2dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCurrencyFullName"
-                android:textSize="14sp"
-                android:text="asdsad"
-                android:textAlignment="viewEnd"
-                android:paddingTop="0dp"
-                android:paddingEnd="2dp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvCurrencyFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="2dp"
+            android:paddingTop="0dp"
+            android:text="asdsad"
+            android:textAlignment="viewEnd"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 </LinearLayout>

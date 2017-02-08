@@ -14,12 +14,11 @@ import android.view.View;
 
 import maks.dev.diplom.Fragments.ChooseMainCurrency;
 import maks.dev.diplom.Fragments.ChooseYourCurrency;
-import maks.dev.diplom.Fragments.GrafficsFragment;
+import maks.dev.diplom.Fragments.GraphicsFragment;
 import maks.dev.diplom.Fragments.MainFragment;
 import maks.dev.diplom.Fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
     }
 
-    private void startMainFragment(){
+    private void startMainFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         toolbar.setTitle("Currency exchange");
         ft.replace(R.id.contentFrame, new MainFragment()).commit();
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_graphics:
                 toolbar.setTitle("Graphics");
-                ft.replace(R.id.contentFrame, new GrafficsFragment()).commit();
+                ft.replace(R.id.contentFrame, new GraphicsFragment()).commit();
                 break;
             case R.id.nav_settings:
                 toolbar.setTitle("Settings");

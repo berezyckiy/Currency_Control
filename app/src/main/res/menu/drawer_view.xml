@@ -3,24 +3,24 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_currency_exchange"
-            android:icon="@drawable/menu_pic_main"
+            android:icon="@drawable/ic_menu_main"
             android:checked="true"
             android:title="Currency exchange" />
         <item
             android:id="@+id/nav_choose_main_currency"
-            android:icon="@drawable/menu_pic_choose_main_currency"
+            android:icon="@drawable/ic_menu_choose_main_currency"
             android:title="Choose main currency" />
         <item
             android:id="@+id/nav_choose_your_currency"
-            android:icon="@drawable/menu_pic_choose_your_currency"
+            android:icon="@drawable/ic_menu_choose_your_currency"
             android:title="Choose your currencies" />
         <item
             android:id="@+id/nav_graphics"
-            android:icon="@drawable/menu_pic_graphics"
+            android:icon="@drawable/ic_menu_graphics"
             android:title="Graphics" />
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/menu_pic_settings"
+            android:icon="@drawable/ic_menu_settings"
             android:title="Settings" />
         </group>
 </menu>

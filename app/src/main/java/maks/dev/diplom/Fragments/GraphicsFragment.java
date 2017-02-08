@@ -12,11 +12,11 @@ import maks.dev.diplom.R;
 /**
  * Created by berezyckiy on 2/6/17.
  */
-public class GrafficsFragment extends Fragment {
+public class GraphicsFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.graffic_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_graphics, container, false);
     }
 }
