@@ -7,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,7 +15,6 @@ import java.util.List;
 
 import maks.dev.diplom.Currency;
 import maks.dev.diplom.CurrencyAdapter;
-import maks.dev.diplom.CurrencyNameAdapter;
 import maks.dev.diplom.R;
 
 /**
@@ -26,10 +24,11 @@ import maks.dev.diplom.R;
 public class ChooseMainCurrency extends Fragment {
 
     private RecyclerView recyclerViewChooseMainCurrency;
-    private CurrencyNameAdapter mAdapter;
+    private CurrencyAdapter mAdapter;
     private List<Currency> currencyNamesList;
 
     private View view;
+    private final static int viewTypeOnlyName = 0;
 
 
     @Nullable
@@ -48,7 +47,7 @@ public class ChooseMainCurrency extends Fragment {
     }
 
     private void buildRecyclerView() {
-        mAdapter = new CurrencyNameAdapter(currencyNamesList);
+        mAdapter = new CurrencyAdapter(currencyNamesList, viewTypeOnlyName);
         recyclerViewChooseMainCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewChooseMainCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseMainCurrency.setAdapter(mAdapter);

@@ -34,6 +34,8 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private List<Currency> currencyList;
     private CurrencyAdapter mAdapter;
 
+    private final static int viewTypeFull = 1;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void buildRecyclerView() {
-        mAdapter = new CurrencyAdapter(currencyList);
+        mAdapter = new CurrencyAdapter(currencyList, viewTypeFull);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
