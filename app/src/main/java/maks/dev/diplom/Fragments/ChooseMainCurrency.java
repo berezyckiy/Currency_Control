@@ -10,11 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import maks.dev.diplom.Currency;
-import maks.dev.diplom.CurrencyAdapter;
+import maks.dev.diplom.Adapters.CurrencyNameInfo.AdapterCurrencyNameInfo;
 import maks.dev.diplom.R;
 
 /**
@@ -24,12 +23,9 @@ import maks.dev.diplom.R;
 public class ChooseMainCurrency extends Fragment {
 
     private RecyclerView recyclerViewChooseMainCurrency;
-    private CurrencyAdapter mAdapter;
-    private List<Currency> currencyNamesList;
-
+    private AdapterCurrencyNameInfo mAdapter;
+    private List<Map<String, Object>> currencyList;
     private View view;
-    private final static int viewTypeOnlyName = 0;
-
 
     @Nullable
     @Override
@@ -37,44 +33,18 @@ public class ChooseMainCurrency extends Fragment {
         view = inflater.inflate(R.layout.fragment_main_currency, container, false);
         initItems();
         buildRecyclerView();
-        prepareCurrencyData();
         return view;
     }
 
     private void initItems() {
         recyclerViewChooseMainCurrency = (RecyclerView) view.findViewById(R.id.recyclerViewChooseMainCurrency);
-        currencyNamesList = new ArrayList<>();
+        currencyList = MainFragment.currencyList;
     }
 
     private void buildRecyclerView() {
-        mAdapter = new CurrencyAdapter(currencyNamesList, viewTypeOnlyName);
+        mAdapter = new AdapterCurrencyNameInfo(currencyList);
         recyclerViewChooseMainCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewChooseMainCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseMainCurrency.setAdapter(mAdapter);
-    }
-
-    private void prepareCurrencyData() {
-        Currency currency = new Currency("USD");
-        currencyNamesList.add(currency);
-
-        currency = new Currency("EUR");
-        currencyNamesList.add(currency);
-
-        currency = new Currency("RUR");
-        currencyNamesList.add(currency);
-
-        currency = new Currency("BYN");
-        currencyNamesList.add(currency);
-
-        currency = new Currency("PLN");
-        currencyNamesList.add(currency);
-
-        currency = new Currency("TG");
-        currencyNamesList.add(currency);
-
-        currency = new Currency("GBP");
-        currencyNamesList.add(currency);
-
-        mAdapter.notifyDataSetChanged();
     }
 }

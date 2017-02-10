@@ -5,14 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import maks.dev.diplom.Fragments.MainFragment;
 
 /**
  * Created by berezyckiy on 2/8/17.
@@ -42,7 +39,7 @@ public class ActivityChooseValue extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.choose_main_currency, menu);
+        getMenuInflater().inflate(R.menu.menu_btnsubmit, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -57,6 +54,7 @@ public class ActivityChooseValue extends AppCompatActivity {
                 intent.putExtra("value", tvTempValue.getText().toString());
                 intent.putExtra("name", getSupportActionBar().getTitle());
                 startActivity(intent);
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

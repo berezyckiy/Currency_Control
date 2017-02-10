@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
-    private NavigationView nvView;
+    public static NavigationView nvView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void startMainFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         toolbar.setTitle("Currency exchange");
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         ft.replace(R.id.contentFrame, new MainFragment()).commit();
     }
 
@@ -76,22 +77,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.nav_currency_exchange:
                 toolbar.setTitle("Currency exchange");
+                toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
                 ft.replace(R.id.contentFrame, new MainFragment()).commit();
                 break;
             case R.id.nav_choose_main_currency:
                 toolbar.setTitle("Choose main currency");
+                toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
                 ft.replace(R.id.contentFrame, new ChooseMainCurrency()).commit();
                 break;
             case R.id.nav_choose_your_currency:
                 toolbar.setTitle("Choose your currencies");
+                toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
                 ft.replace(R.id.contentFrame, new ChooseYourCurrency()).commit();
                 break;
             case R.id.nav_graphics:
                 toolbar.setTitle("Graphics");
+                toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
                 ft.replace(R.id.contentFrame, new GraphicsFragment()).commit();
                 break;
             case R.id.nav_settings:
                 toolbar.setTitle("Settings");
+                toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
                 ft.replace(R.id.contentFrame, new SettingsFragment()).commit();
                 break;
         }
