@@ -1,4 +1,4 @@
-package maks.dev.diplom.Fragments;
+package maks.dev.diplom.Fragments.ActivityGraphics;
 
 import android.graphics.Color;
 import android.graphics.Typeface;

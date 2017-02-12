@@ -9,14 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.ActivityGraphics.ViewPagerAdapter;
-import maks.dev.diplom.Fragments.GraphicDiagram;
-import maks.dev.diplom.Fragments.GraphicLinear;
+import maks.dev.diplom.Fragments.ActivityGraphics.GraphicDiagram;
+import maks.dev.diplom.Fragments.ActivityGraphics.GraphicLinear;
 import maks.dev.diplom.R;
 
 /**

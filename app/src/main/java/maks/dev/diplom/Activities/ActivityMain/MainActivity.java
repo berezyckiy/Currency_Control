@@ -12,11 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import maks.dev.diplom.Fragments.ChooseMainCurrency;
-import maks.dev.diplom.Fragments.ChooseYourCurrency;
-import maks.dev.diplom.Fragments.GraphicsFragment;
-import maks.dev.diplom.Fragments.MainFragment;
-import maks.dev.diplom.Fragments.SettingsFragment;
+import maks.dev.diplom.Fragments.ActivityMain.ChooseMainCurrency;
+import maks.dev.diplom.Fragments.ActivityMain.ChooseYourCurrency;
+import maks.dev.diplom.Fragments.ActivityMain.GraphicsFragment;
+import maks.dev.diplom.Fragments.ActivityMain.MainFragment;
+import maks.dev.diplom.Fragments.ActivityMain.SettingsFragment;
 import maks.dev.diplom.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

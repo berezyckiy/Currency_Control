@@ -1,4 +1,4 @@
-package maks.dev.diplom.Fragments;
+package maks.dev.diplom.Fragments.ActivityMain;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -101,7 +101,6 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
                     break;
                 }
                 Intent intent = new Intent(getActivity(), ActivityGraphics.class);
-                HashMap tmpMap = (HashMap) currencyList.get(mapPosFirstTextView);
                 intent.putExtra("firstCurrency", (HashMap) currencyList.get(mapPosFirstTextView));
                 intent.putExtra("secondCurrency", (HashMap) currencyList.get(mapPosSecondTextView));
                 startActivity(intent);
@@ -115,7 +114,7 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int maxPos = currencyList.size() - 1;
-        String tmp = "";
+        String tmp;
         switch (v.getId()) {
             case R.id.btnArrowLeftFirst:
                 if (currentPos == 0) {
@@ -182,6 +181,5 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
                 mapPosSecondTextView = currentPos;
                 break;
         }
-
     }
 }

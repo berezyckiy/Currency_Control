@@ -1,4 +1,4 @@
-package maks.dev.diplom.Fragments;
+package maks.dev.diplom.Fragments.ActivityMain;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
