@@ -1,4 +1,4 @@
-package maks.dev.diplom;
+package maks.dev.diplom.Activities.ActivityChooseValue;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import maks.dev.diplom.Activities.ActivityMain.MainActivity;
+import maks.dev.diplom.R;
 
 /**
  * Created by berezyckiy on 2/8/17.

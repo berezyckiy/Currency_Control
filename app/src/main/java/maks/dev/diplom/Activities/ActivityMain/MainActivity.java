@@ -1,4 +1,4 @@
-package maks.dev.diplom;
+package maks.dev.diplom.Activities.ActivityMain;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +17,7 @@ import maks.dev.diplom.Fragments.ChooseYourCurrency;
 import maks.dev.diplom.Fragments.GraphicsFragment;
 import maks.dev.diplom.Fragments.MainFragment;
 import maks.dev.diplom.Fragments.SettingsFragment;
+import maks.dev.diplom.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

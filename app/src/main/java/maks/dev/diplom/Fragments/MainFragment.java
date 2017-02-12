@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import java.util.Map;
 
 import maks.dev.diplom.Adapters.CurrencyFullInfo.AdapterCurrencyFullInfo;
 import maks.dev.diplom.Data.DB;
-import maks.dev.diplom.MainActivity;
+import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.R;
 
 /**

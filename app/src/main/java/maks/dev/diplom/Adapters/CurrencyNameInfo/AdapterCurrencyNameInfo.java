@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.List;
 import java.util.Map;
 
-import maks.dev.diplom.ActivityChooseValue;
+import maks.dev.diplom.Activities.ActivityChooseValue.ActivityChooseValue;
 import maks.dev.diplom.R;
 
 /**
