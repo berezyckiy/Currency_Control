@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import maks.dev.diplom.Activities.ActivityGraphics.ActivityGraphics;
+import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.R;
 
 /**
@@ -61,7 +62,7 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
         btnArrowLeftSecond.setOnClickListener(this);
         btnArrowRightSecond.setOnClickListener(this);
         currencyList = MainFragment.currencyList;
-
+        MainActivity.nvView.setCheckedItem(R.id.nav_graphics);
     }
 
     private void setDataTextView() {
@@ -95,7 +96,7 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.btnSubmit:
+            case R.id.btnDone:
                 if (!isDataInTextViewCorrect) {
                     Toast.makeText(getActivity(), "Add currency, please!", Toast.LENGTH_SHORT).show();
                     break;

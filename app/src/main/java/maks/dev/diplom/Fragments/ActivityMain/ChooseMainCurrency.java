@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.List;
 import java.util.Map;
 
+import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.CurrencyNameInfo.AdapterCurrencyNameInfo;
 import maks.dev.diplom.R;
 
@@ -39,6 +40,7 @@ public class ChooseMainCurrency extends Fragment {
     private void initItems() {
         recyclerViewChooseMainCurrency = (RecyclerView) view.findViewById(R.id.recyclerViewChooseMainCurrency);
         currencyList = MainFragment.currencyList;
+        MainActivity.nvView.setCheckedItem(R.id.nav_choose_main_currency);
     }
 
     private void buildRecyclerView() {

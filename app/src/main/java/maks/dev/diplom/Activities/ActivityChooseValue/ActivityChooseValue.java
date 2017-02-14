@@ -52,7 +52,7 @@ public class ActivityChooseValue extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.btnSubmit:
+            case R.id.btnDone:
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("value", tvTempValue.getText().toString());
                 intent.putExtra("name", getSupportActionBar().getTitle());

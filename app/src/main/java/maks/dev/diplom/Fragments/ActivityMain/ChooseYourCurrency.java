@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.CurrencySelected.AdapterCurrencySelected;
 import maks.dev.diplom.Data.DB;
 import maks.dev.diplom.R;
@@ -50,6 +51,7 @@ public class ChooseYourCurrency extends Fragment {
         db = new DB(getActivity());
         recyclerViewChooseYourCurrency = (RecyclerView) view.findViewById(R.id.recyclerViewChooseYourCurrency);
         currencyList = getAllCurrencyFromDB();
+        MainActivity.nvView.setCheckedItem(R.id.nav_choose_your_currency);
     }
 
     private void buildRecyclerView() {
@@ -87,7 +89,7 @@ public class ChooseYourCurrency extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.btnSubmit:
+            case R.id.btnDone:
                 db.open();
                 db.delAllData();
                 for (int i = 0; i < currencyList.size(); i++) {

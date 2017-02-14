@@ -62,7 +62,7 @@ public class ActivityGraphics extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.btnSubmit:
+            case R.id.btnDone:
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
                 break;

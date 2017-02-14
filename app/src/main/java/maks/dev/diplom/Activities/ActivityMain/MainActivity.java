@@ -1,6 +1,10 @@
 package maks.dev.diplom.Activities.ActivityMain;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -12,22 +16,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.Locale;
+
+import maks.dev.diplom.Dialogs.DialogLanguage;
+import maks.dev.diplom.Dialogs.DialogTheme;
 import maks.dev.diplom.Fragments.ActivityMain.ChooseMainCurrency;
 import maks.dev.diplom.Fragments.ActivityMain.ChooseYourCurrency;
 import maks.dev.diplom.Fragments.ActivityMain.GraphicsFragment;
 import maks.dev.diplom.Fragments.ActivityMain.MainFragment;
 import maks.dev.diplom.Fragments.ActivityMain.SettingsFragment;
+import maks.dev.diplom.Interface.ChangeThemeDialogListener;
 import maks.dev.diplom.R;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+        , ChangeThemeDialogListener {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     public static NavigationView nvView;
+    private DialogTheme dialogTheme;
+    private SharedPreferences sPref;
+    private DialogLanguage dialogLanguage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setApplicationTheme();
         setContentView(R.layout.activity_main);
         initItems();
         setSupportActionBar(toolbar);
@@ -40,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvView = (NavigationView) findViewById(R.id.nvView);
+        dialogTheme = new DialogTheme();
+        dialogLanguage = new DialogLanguage();
     }
 
     private void addDrawerToggle() {
@@ -70,6 +87,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar.setTitle("Currency exchange");
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         ft.replace(R.id.contentFrame, new MainFragment()).commit();
+    }
+
+    private void setApplicationTheme() {
+        sPref = getPreferences(MODE_PRIVATE);
+        Integer theme = R.style.AppTheme;
+        if (!sPref.contains("appTheme")) {
+            SharedPreferences.Editor editor = sPref.edit();
+            editor.putInt("appTheme", R.style.AppTheme);
+            editor.apply();
+        } else {
+            theme = sPref.getInt("appTheme", R.style.AppTheme);
+        }
+        setTheme(theme);
+    }
+
+    private void changeTheme(Integer themeId) {
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sPref.edit();
+        editor.putInt("appTheme", themeId);
+        editor.apply();
+        finish();
+        startActivity(new Intent(this, this.getClass()));
+    }
+
+    public void showDialogTheme(View v) {
+        dialogTheme.show(getSupportFragmentManager(), "ThemeDialog");
+    }
+
+    public void showDialogLanguage(View v) {
+//        startActivityForResult(new Intent(Settings.ACTION_LOCALE_SETTINGS), 0);
+
+    }
+
+    @Override
+    public void onFinishThemeDialog(Integer chosenThemeId) {
+        if (chosenThemeId != sPref.getInt("appTheme", 0)) {
+            switch (chosenThemeId) {
+                case R.style.AppTheme:
+                    changeTheme(chosenThemeId);
+                    break;
+                case R.style.AppThemeWhite:
+                    changeTheme(chosenThemeId);
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onFinishLanguageDialog(String language) {
+
     }
 
     @Override
