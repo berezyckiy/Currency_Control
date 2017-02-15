@@ -29,10 +29,10 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/6/17.
  */
 
-public class ChooseYourCurrency extends Fragment {
+public class ChooseYourCurrency
+        extends Fragment {
 
     private RecyclerView recyclerViewChooseYourCurrency;
-    private AdapterCurrencySelected mAdapter;
     private List<Map<String, Object>> currencyList;
     private View view;
     private DB db;
@@ -55,7 +55,7 @@ public class ChooseYourCurrency extends Fragment {
     }
 
     private void buildRecyclerView() {
-        mAdapter = new AdapterCurrencySelected(currencyList);
+        AdapterCurrencySelected mAdapter = new AdapterCurrencySelected(currencyList);
         recyclerViewChooseYourCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewChooseYourCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseYourCurrency.setAdapter(mAdapter);

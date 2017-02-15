@@ -6,9 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.Map;
@@ -21,12 +24,13 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/6/17.
  */
 
-public class ChooseMainCurrency extends Fragment {
+public class ChooseMainCurrency
+        extends Fragment {
 
     private RecyclerView recyclerViewChooseMainCurrency;
-    private AdapterCurrencyNameInfo mAdapter;
     private List<Map<String, Object>> currencyList;
     private View view;
+    private LinearLayout linLayoutMainCurrency;
 
     @Nullable
     @Override
@@ -34,6 +38,7 @@ public class ChooseMainCurrency extends Fragment {
         view = inflater.inflate(R.layout.fragment_main_currency, container, false);
         initItems();
         buildRecyclerView();
+        isCurrencyDataNull();
         return view;
     }
 
@@ -41,12 +46,24 @@ public class ChooseMainCurrency extends Fragment {
         recyclerViewChooseMainCurrency = (RecyclerView) view.findViewById(R.id.recyclerViewChooseMainCurrency);
         currencyList = MainFragment.currencyList;
         MainActivity.nvView.setCheckedItem(R.id.nav_choose_main_currency);
+        linLayoutMainCurrency = (LinearLayout) view.findViewById(R.id.linLayoutMainCurrency);
     }
 
     private void buildRecyclerView() {
-        mAdapter = new AdapterCurrencyNameInfo(currencyList);
+        AdapterCurrencyNameInfo mAdapter = new AdapterCurrencyNameInfo(currencyList);
         recyclerViewChooseMainCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewChooseMainCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseMainCurrency.setAdapter(mAdapter);
+    }
+
+    private void isCurrencyDataNull() {
+        if (currencyList.size() == 0) {
+            TextView textView = new TextView(getActivity());
+            LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextSize(20);
+            textView.setText(getString(R.string.no_currency_is_selected));
+            linLayoutMainCurrency.addView(textView, lParams);
+        }
     }
 }

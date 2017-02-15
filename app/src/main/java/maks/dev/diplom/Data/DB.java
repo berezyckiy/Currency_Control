@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
  */
 
 public class DB {
+
     private final Context mContext;
     private DBHelper mDBHelper;
     private SQLiteDatabase mSQLiteDatabase;

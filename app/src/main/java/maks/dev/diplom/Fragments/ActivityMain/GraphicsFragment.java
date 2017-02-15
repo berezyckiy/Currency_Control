@@ -25,7 +25,9 @@ import maks.dev.diplom.R;
 /**
  * Created by berezyckiy on 2/6/17.
  */
-public class GraphicsFragment extends Fragment implements View.OnClickListener {
+public class GraphicsFragment
+        extends Fragment
+        implements View.OnClickListener {
 
     private TextView tvGraphicCurrencyFirst;
     private TextView tvGraphicCurrencySecond;
@@ -71,15 +73,15 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
             btnArrowRightFirst.setVisibility(View.INVISIBLE);
             btnArrowLeftSecond.setVisibility(View.INVISIBLE);
             btnArrowRightSecond.setVisibility(View.INVISIBLE);
-            tvGraphicCurrencyFirst.setText("Choose more currencies");
-            tvGraphicCurrencySecond.setText("Choose more currencies");
+            tvGraphicCurrencyFirst.setText(getString(R.string.add_currency_please));
+            tvGraphicCurrencySecond.setText(getString(R.string.add_currency_please));
             return;
         }
         if (currencyList.size() == 1) {
             tvGraphicCurrencyFirst.setText(currencyList.get(0).get("name").toString());
             btnArrowLeftSecond.setVisibility(View.INVISIBLE);
             btnArrowRightSecond.setVisibility(View.INVISIBLE);
-            tvGraphicCurrencySecond.setText("Choose more currencies");
+            tvGraphicCurrencySecond.setText(getString(R.string.add_currency_please));
             return;
         }
         tvGraphicCurrencyFirst.setText(currencyList.get(0).get("name").toString());
@@ -98,7 +100,7 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
         switch (item.getItemId()) {
             case R.id.btnDone:
                 if (!isDataInTextViewCorrect) {
-                    Toast.makeText(getActivity(), "Add currency, please!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.add_currency_please), Toast.LENGTH_SHORT).show();
                     break;
                 }
                 Intent intent = new Intent(getActivity(), ActivityGraphics.class);
@@ -111,13 +113,30 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
 
 
 
-    private int currentPos = 0;
     @Override
     public void onClick(View v) {
-        int maxPos = currencyList.size() - 1;
-        String tmp;
         switch (v.getId()) {
             case R.id.btnArrowLeftFirst:
+                onClickSetData("left_first");
+                break;
+            case R.id.btnArrowLeftSecond:
+                onClickSetData("left_second");
+                break;
+            case R.id.btnArrowRightFirst:
+                onClickSetData("right_first");
+                break;
+            case R.id.btnArrowRightSecond:
+                onClickSetData("right_second");
+                break;
+        }
+    }
+
+    private int currentPos = 0;
+    private void onClickSetData(String button) {
+        int maxPos = currencyList.size() - 1;
+        String tmp;
+        switch (button) {
+            case "left_first":
                 if (currentPos == 0) {
                     currentPos = maxPos + 1;
                 }
@@ -132,7 +151,7 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
                 }
                 mapPosFirstTextView = currentPos;
                 break;
-            case R.id.btnArrowLeftSecond:
+            case "left_second":
                 if (currentPos == 0) {
                     currentPos = maxPos + 1;
                 }
@@ -147,7 +166,8 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
                 }
                 mapPosSecondTextView = currentPos;
                 break;
-            case R.id.btnArrowRightFirst:
+
+            case "right_first":
                 if (currentPos == maxPos) {
                     currentPos = -1;
                 }
@@ -164,9 +184,13 @@ public class GraphicsFragment extends Fragment implements View.OnClickListener {
                 }
                 mapPosFirstTextView = currentPos;
                 break;
-            case R.id.btnArrowRightSecond:
+
+            case "right_second":
                 if (currentPos == maxPos) {
                     currentPos = -1;
+                }
+                if (currentPos == 0) {
+                    currentPos = 1;
                 }
                 if (currentPos < maxPos) {
                     tmp = currencyList.get(++currentPos).get("name").toString();

@@ -11,7 +11,8 @@ import java.util.List;
  * Created by berezyckiy on 2/11/17.
  */
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerAdapter
+        extends FragmentStatePagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -24,7 +25,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
     }
-
 
     @Override
     public int getCount() {

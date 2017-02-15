@@ -21,33 +21,39 @@ import maks.dev.diplom.R;
 /**
  * Created by berezyckiy on 2/11/17.
  */
-public class ActivityGraphics extends AppCompatActivity {
+public class ActivityGraphics
+        extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private HashMap currencyOne;
+    private HashMap currencyTwo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graphis);
-        HashMap currencyOne = (HashMap) getIntent().getSerializableExtra("firstCurrency");
-        HashMap currencyTwo = (HashMap) getIntent().getSerializableExtra("secondCurrency");
-
         initItems();
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(currencyOne.get("name") + " -> " + currencyTwo.get("name"));
+        buildToolbar();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
     }
 
     private void initItems() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        currencyOne = (HashMap) getIntent().getSerializableExtra("firstCurrency");
+        currencyTwo = (HashMap) getIntent().getSerializableExtra("secondCurrency");
+    }
 
+    private void buildToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(currencyOne.get("name") + " -> " + currencyTwo.get("name"));
+        }
     }
 
     @Override
@@ -72,8 +78,8 @@ public class ActivityGraphics extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new GraphicLinear(), "Linear");
-        adapter.addFragment(new GraphicDiagram(), "Diagram");
+        adapter.addFragment(new GraphicLinear(), getString(R.string.linear));
+        adapter.addFragment(new GraphicDiagram(), getString(R.string.diagram));
         viewPager.setAdapter(adapter);
     }
 }

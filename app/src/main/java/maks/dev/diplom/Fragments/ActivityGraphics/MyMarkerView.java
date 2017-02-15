@@ -16,7 +16,8 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/12/17.
  */
 
-public class MyMarkerView extends MarkerView {
+public class MyMarkerView
+        extends MarkerView {
 
     private TextView tvContent;
 

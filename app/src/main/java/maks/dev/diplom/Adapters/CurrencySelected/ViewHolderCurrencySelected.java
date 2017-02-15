@@ -11,7 +11,9 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/10/17.
  */
 
-public class ViewHolderCurrencySelected extends RecyclerView.ViewHolder {
+public class ViewHolderCurrencySelected
+        extends RecyclerView.ViewHolder {
+
     TextView tvCurrencySelectedName;
     CheckBox cbCurrencySelected;
 

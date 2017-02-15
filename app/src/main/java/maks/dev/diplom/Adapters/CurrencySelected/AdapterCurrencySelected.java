@@ -16,7 +16,9 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/10/17.
  */
 
-public class AdapterCurrencySelected extends RecyclerView.Adapter<ViewHolderCurrencySelected> {
+public class AdapterCurrencySelected
+        extends RecyclerView.Adapter<ViewHolderCurrencySelected> {
+
     private List<Map<String, Object>> currencyList;
 
     public AdapterCurrencySelected(List<Map<String, Object>> currencyList) {

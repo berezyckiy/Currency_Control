@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
@@ -12,40 +13,82 @@
         android:id="@+id/dialogTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/hatching"
         android:clickable="true"
-        android:onClick="showDialogTheme"
-        android:background="@drawable/hatching">
+        android:onClick="showDialogTheme">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Theme"
+            android:gravity="center"
+            android:text="@string/theme"
             android:textColor="@android:color/black"
-            android:textSize="40sp"
-            android:gravity="center" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black"/>
-
-    <LinearLayout
-        android:id="@+id/dialogLanguage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:onClick="showDialogLanguage"
-        android:background="@drawable/language">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="40sp"
-            android:textColor="@android:color/black"
-            android:gravity="center"/>
+            android:textSize="40sp" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/black" />
+
+    <LinearLayout
+        android:id="@+id/dialogLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/language"
+        android:clickable="true"
+        android:onClick="showDialogLanguage">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/language"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:id="@+id/dialogDefault"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/default_ic"
+        android:clickable="true"
+        android:onClick="showDialogSetDefaultSettings">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/set_default"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/about"
+        android:clickable="true"
+        android:onClick="showDialogAbout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/about"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="40sp" />
+    </LinearLayout>
+
 </LinearLayout>

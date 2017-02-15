@@ -3,4 +3,26 @@
 
     <string name="home_navigation_drawer_open">Open navigation drawer</string>
     <string name="home_navigation_drawer_close">Close navigation drawer</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="theme">Theme</string>
+    <string name="language">Language</string>
+    <string name="currency_exchange">Currency exchange</string>
+    <string name="choose_main_currency">Choose main currency</string>
+    <string name="choose_your_currencies">Choose your currencies</string>
+    <string name="graphics">Graphics</string>
+    <string name="settings">Settings</string>
+    <string name="linear">Linear</string>
+    <string name="diagram">Diagram</string>
+    <string name="choose_your_language">Choose your language</string>
+    <string name="choose_your_theme">Choose your theme</string>
+    <string name="add_currency_please">Add currency, please!</string>
+    <string name="no_currency_is_selected">No currency is selected</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Russian</string>
+    <string name="theme_default">Default</string>
+    <string name="theme_light">Light</string>
+    <string name="set_default">Default</string>
+    <string name="question_set_default">Are your sure set default settings</string>
+    <string name="about">About</string>
 </resources>

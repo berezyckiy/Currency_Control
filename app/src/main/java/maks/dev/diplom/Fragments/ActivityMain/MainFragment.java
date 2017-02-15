@@ -19,16 +19,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.CurrencyFullInfo.AdapterCurrencyFullInfo;
 import maks.dev.diplom.Data.DB;
-import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.R;
 
 /**
  * Created by berezyckiy on 2/6/17.
  */
 
-public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MainFragment
+        extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener {
 
     private TextView tvMainScreen;
     private View view;
@@ -47,7 +49,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         prepareData();
         addCurrencyList();
         buildRecyclerView();
-        swipeRefresh.setOnRefreshListener(this);
         setDataOnTextView();
         return view;
     }
@@ -65,6 +66,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         tvMainScreen = (TextView) view.findViewById(R.id.tvMainScreen);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(this);
         swipeRefresh.setColorSchemeResources(
                 android.R.color.holo_purple,
                 android.R.color.holo_blue_dark,

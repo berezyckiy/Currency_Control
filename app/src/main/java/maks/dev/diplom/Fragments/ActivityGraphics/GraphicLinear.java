@@ -38,7 +38,9 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/11/17.
  */
 
-public class GraphicLinear extends Fragment implements SeekBar.OnSeekBarChangeListener {
+public class GraphicLinear
+        extends Fragment
+        implements SeekBar.OnSeekBarChangeListener {
 
     private LineChart mChart;
     private SeekBar mSeekBarX, mSeekBarY;

@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Курсы валют Exchange</string>
+
+    <string name="home_navigation_drawer_open">Open navigation drawer</string>
+    <string name="home_navigation_drawer_close">Close navigation drawer</string>
+    <string name="submit">Принять</string>
+    <string name="cancel">Отмена</string>
+    <string name="theme">Тема</string>
+    <string name="language">Язык</string>
+    <string name="currency_exchange">Курсы валют</string>
+    <string name="choose_main_currency">Главная валюта</string>
+    <string name="choose_your_currencies">Доступные валюты</string>
+    <string name="graphics">Графики</string>
+    <string name="settings">Настройки</string>
+    <string name="linear">Линейный</string>
+    <string name="diagram">Диаграмма</string>
+    <string name="choose_your_language">Выберите ваш язык</string>
+    <string name="choose_your_theme">Выберите тему</string>
+    <string name="add_currency_please">Добавьте валюту!</string>
+    <string name="no_currency_is_selected">Ничего не выбрано</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="theme_default">Стандартная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="set_default">Сбросить настройки</string>
+    <string name="question_set_default">Вы уверены, что хотите сбросить все настройки</string>
+    <string name="about">О программе</string>
+</resources>

@@ -10,7 +10,9 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/10/17.
  */
 
-public class ViewHolderCurrencyName extends RecyclerView.ViewHolder {
+public class ViewHolderCurrencyName
+        extends RecyclerView.ViewHolder {
+
     TextView tvSoloCurrencyName;
 
     public ViewHolderCurrencyName(View itemView) {
