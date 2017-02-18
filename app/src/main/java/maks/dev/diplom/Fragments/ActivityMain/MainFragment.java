@@ -2,13 +2,14 @@ package maks.dev.diplom.Fragments.ActivityMain;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,10 @@ import java.util.Map;
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.CurrencyFullInfo.AdapterCurrencyFullInfo;
 import maks.dev.diplom.Data.DB;
+import maks.dev.diplom.Dialogs.DialogLoading;
+import maks.dev.diplom.Interface.CurrencyDataListener;
 import maks.dev.diplom.R;
+import maks.dev.diplom.network.CurrencyData;
 
 /**
  * Created by berezyckiy on 2/6/17.
@@ -30,7 +34,7 @@ import maks.dev.diplom.R;
 
 public class MainFragment
         extends Fragment
-        implements SwipeRefreshLayout.OnRefreshListener {
+        implements SwipeRefreshLayout.OnRefreshListener, CurrencyDataListener {
 
     private TextView tvMainScreen;
     private View view;
@@ -40,25 +44,33 @@ public class MainFragment
     static List<Map<String, Object>> currencyList;
     private AdapterCurrencyFullInfo mAdapter;
     private DB db;
+    private DialogLoading dialogLoading;
+
+    private String chosenCurrency;
+    private String chosenSum;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main, container, false);
         initItems();
-        prepareData();
-        addCurrencyList();
+        setChosenNameAndSum();
+        loadData();
         buildRecyclerView();
-        setDataOnTextView();
         return view;
     }
 
-    private void setDataOnTextView() {
-        if (getActivity().getIntent().getStringExtra("name") == null) {
+    private void loadData() {
+        new CurrencyData(getActivity(), this).execute();
+    }
+
+    private void setChosenNameAndSum() {
+        if (chosenCurrency == null) {
             tvMainScreen.setText("USD 1");
+            chosenCurrency = "USD";
+            chosenSum = "1";
         } else {
-            String tmp = getActivity().getIntent().getStringExtra("name") + " " + getActivity().getIntent().getStringExtra("value");
-            tvMainScreen.setText(tmp);
+            tvMainScreen.setText(chosenCurrency + " " + chosenSum);
         }
     }
 
@@ -72,11 +84,16 @@ public class MainFragment
                 android.R.color.holo_blue_dark,
                 android.R.color.holo_green_dark);
         db = new DB(getContext());
-        db.open();
         currencyList = new ArrayList<>();
         mAdapter = new AdapterCurrencyFullInfo(currencyList);
         MainActivity.nvView.setCheckedItem(R.id.nav_currency_exchange);
+        chosenCurrency = getActivity().getIntent().getStringExtra("name");
+        Log.d("myLogs", "chosenCurrency = " + chosenCurrency);
+        chosenSum = getActivity().getIntent().getStringExtra("sum");
+        Log.d("myLogs", "chosenSum = " + chosenSum);
+        dialogLoading = new DialogLoading();
     }
+
 
     private void buildRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -84,19 +101,18 @@ public class MainFragment
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void prepareData() {
-        if (!db.isData()) {
-            db.addRec("USD", 50, "United States", "true");
-            db.addRec("EUR", 75, "England", "true");
-            db.addRec("BYN", 25, "Belarussian Ruble", "true");
-            db.addRec("GBP", 100, "Fund Sterlingov", "true");
-            db.addRec("PLN", 70, "Polski Zlote", "true");
-            db.addRec("RUR", 150, "Russian Ruble", "true");
+    private double calculateCoefficient() {
+        String value = getActivity().getIntent().getStringExtra("value");
+        Log.d("myLogs", "value = " + value);
+        if (value == null) {
+            value = "1";
         }
-        mAdapter.notifyDataSetChanged();
+        return Double.parseDouble(chosenSum) / Double.parseDouble(value);
     }
 
-    private List<Map<String, Object>> addCurrencyList() {
+    private void updateList() {
+        db.open();
+        currencyList.clear();
         Cursor tmpCursor = db.getAllData();
         Map<String, Object> tmpMap;
         if (tmpCursor.moveToFirst()) {
@@ -107,21 +123,39 @@ public class MainFragment
                     tmpMap.put("value", tmpCursor.getString(tmpCursor.getColumnIndex("value")));
                     tmpMap.put("fullName", tmpCursor.getString(tmpCursor.getColumnIndex("fullName")));
                     tmpMap.put("isChecked", tmpCursor.getString(tmpCursor.getColumnIndex("isChecked")));
+                    tmpMap.put("coefficient", calculateCoefficient());
                     currencyList.add(tmpMap);
                 }
             } while (tmpCursor.moveToNext());
         }
         db.close();
-        return currencyList;
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefresh.setRefreshing(false);
-            }
-        }, 3000);
+        loadData();
+        swipeRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void onSuccessLoadingData() {
+        updateList();
+    }
+
+    @Override
+    public void onErrorLoadingData() {
+        updateList();
+        Snackbar.make(view, "Error loading data", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressBar() {
+        dialogLoading.show(getActivity().getSupportFragmentManager(), "DialogLoading");
+    }
+
+    @Override
+    public void hideProgressBar() {
+        dialogLoading.dismissAllowingStateLoss();
     }
 }

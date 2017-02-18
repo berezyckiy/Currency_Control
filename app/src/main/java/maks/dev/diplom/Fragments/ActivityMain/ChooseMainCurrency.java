@@ -1,5 +1,6 @@
 package maks.dev.diplom.Fragments.ActivityMain;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,8 +17,10 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Map;
 
+import maks.dev.diplom.Activities.ActivityChooseValue.ActivityChooseValue;
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.CurrencyNameInfo.AdapterCurrencyNameInfo;
+import maks.dev.diplom.Adapters.CurrencyNameInfo.NameCurrencyListener;
 import maks.dev.diplom.R;
 
 /**
@@ -25,7 +28,8 @@ import maks.dev.diplom.R;
  */
 
 public class ChooseMainCurrency
-        extends Fragment {
+        extends Fragment
+        implements NameCurrencyListener {
 
     private RecyclerView recyclerViewChooseMainCurrency;
     private List<Map<String, Object>> currencyList;
@@ -50,7 +54,7 @@ public class ChooseMainCurrency
     }
 
     private void buildRecyclerView() {
-        AdapterCurrencyNameInfo mAdapter = new AdapterCurrencyNameInfo(currencyList);
+        AdapterCurrencyNameInfo mAdapter = new AdapterCurrencyNameInfo(this, currencyList);
         recyclerViewChooseMainCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewChooseMainCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseMainCurrency.setAdapter(mAdapter);
@@ -65,5 +69,13 @@ public class ChooseMainCurrency
             textView.setText(getString(R.string.no_currency_is_selected));
             linLayoutMainCurrency.addView(textView, lParams);
         }
+    }
+
+    @Override
+    public void startChooseValueActivity(String name, String value) {
+        Intent intent = new Intent(getActivity(), ActivityChooseValue.class);
+        intent.putExtra("name", name);
+        intent.putExtra("value", value);
+        getActivity().startActivity(intent);
     }
 }

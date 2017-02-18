@@ -22,7 +22,7 @@ public class ActivityChooseValue
         extends AppCompatActivity
         implements View.OnClickListener, View.OnLongClickListener {
 
-    private TextView tvTempValue;
+    private TextView tvTempSum;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,10 +56,11 @@ public class ActivityChooseValue
                 break;
             case R.id.btnDone:
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("value", tvTempValue.getText().toString());
-                intent.putExtra("name",  getSupportActionBar() != null ? getSupportActionBar().getTitle() : "");
+                intent.putExtra("sum", tvTempSum.getText().toString());
+                intent.putExtra("name", getSupportActionBar() != null ? getSupportActionBar().getTitle() : "");
+                intent.putExtra("value", getIntent().getStringExtra("value"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -70,7 +71,7 @@ public class ActivityChooseValue
         Button btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnClickListener(this);
         btnClear.setOnLongClickListener(this);
-        tvTempValue = (TextView) findViewById(R.id.tvTempValue);
+        tvTempSum = (TextView) findViewById(R.id.tvTempSum);
     }
 
     public void onClickButton1(View view) {
@@ -121,12 +122,12 @@ public class ActivityChooseValue
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnClear:
-                if (!tvTempValue.getText().equals("0")) {
-                    String tmp = tvTempValue.getText().toString();
+                if (!tvTempSum.getText().equals("0")) {
+                    String tmp = tvTempSum.getText().toString();
                     if (tmp.length() == 1) {
-                        tvTempValue.setText("0");
+                        tvTempSum.setText("0");
                     } else {
-                        tvTempValue.setText(tmp.substring(0, tmp.length() - 1));
+                        tvTempSum.setText(tmp.substring(0, tmp.length() - 1));
                     }
                 }
                 break;
@@ -135,17 +136,17 @@ public class ActivityChooseValue
 
     @Override
     public boolean onLongClick(View v) {
-        if (!tvTempValue.getText().equals("0")) {
-            tvTempValue.setText("0");
+        if (!tvTempSum.getText().equals("0")) {
+            tvTempSum.setText("0");
         }
         return true;
     }
 
     private void printData(String btnNumber) {
-        if (tvTempValue.getText().equals("0")) {
-            tvTempValue.setText(btnNumber);
+        if (tvTempSum.getText().equals("0")) {
+            tvTempSum.setText(btnNumber);
         } else {
-            tvTempValue.setText(tvTempValue.getText().toString().concat(btnNumber));
+            tvTempSum.setText(tvTempSum.getText().toString().concat(btnNumber));
         }
     }
 

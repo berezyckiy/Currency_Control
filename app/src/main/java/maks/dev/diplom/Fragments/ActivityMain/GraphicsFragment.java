@@ -112,93 +112,78 @@ public class GraphicsFragment
     }
 
 
-
+    private int currentPos = 0;
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnArrowLeftFirst:
-                onClickSetData("left_first");
-                break;
-            case R.id.btnArrowLeftSecond:
-                onClickSetData("left_second");
-                break;
-            case R.id.btnArrowRightFirst:
-                onClickSetData("right_first");
-                break;
-            case R.id.btnArrowRightSecond:
-                onClickSetData("right_second");
-                break;
-        }
-    }
-
-    private int currentPos = 0;
-    private void onClickSetData(String button) {
         int maxPos = currencyList.size() - 1;
         String tmp;
-        switch (button) {
-            case "left_first":
+        switch (v.getId()) {
+            case R.id.btnArrowLeftFirst:
                 if (currentPos == 0) {
                     currentPos = maxPos + 1;
                 }
-                tmp = currencyList.get(--currentPos).get("name").toString();
+                currentPos--;
+                tmp = currencyList.get(currentPos).get("name").toString();
                 if (tvGraphicCurrencySecond.getText().equals(tmp)) {
                     if (currentPos == 0) {
                         currentPos = maxPos + 1;
                     }
-                    tvGraphicCurrencyFirst.setText(currencyList.get(--currentPos).get("name").toString());
+                    currentPos--;
+                    tvGraphicCurrencyFirst.setText(currencyList.get(currentPos).get("name").toString());
                 } else {
                     tvGraphicCurrencyFirst.setText(tmp);
                 }
                 mapPosFirstTextView = currentPos;
                 break;
-            case "left_second":
+            case R.id.btnArrowLeftSecond:
                 if (currentPos == 0) {
                     currentPos = maxPos + 1;
                 }
-                tmp = currencyList.get(--currentPos).get("name").toString();
+                currentPos--;
+                tmp = currencyList.get(currentPos).get("name").toString();
                 if (tvGraphicCurrencyFirst.getText().equals(tmp)) {
                     if (currentPos == 0) {
                         currentPos = maxPos + 1;
                     }
-                    tvGraphicCurrencySecond.setText(currencyList.get(--currentPos).get("name").toString());
+                    currentPos--;
+                    tvGraphicCurrencySecond.setText(currencyList.get(currentPos).get("name").toString());
                 } else {
                     tvGraphicCurrencySecond.setText(tmp);
                 }
                 mapPosSecondTextView = currentPos;
                 break;
-
-            case "right_first":
+            case R.id.btnArrowRightFirst:
                 if (currentPos == maxPos) {
                     currentPos = -1;
                 }
                 if (currentPos < maxPos) {
-                    tmp = currencyList.get(++currentPos).get("name").toString();
+                    currentPos++;
+                    tmp = currencyList.get(currentPos).get("name").toString();
                     if (tvGraphicCurrencySecond.getText().equals(tmp)) {
                         if (currentPos == maxPos) {
                             currentPos = -1;
                         }
-                        tvGraphicCurrencyFirst.setText(currencyList.get(++currentPos).get("name").toString());
+                        currentPos++;
+                        tvGraphicCurrencyFirst.setText(currencyList.get(currentPos).get("name").toString());
                     } else {
                         tvGraphicCurrencyFirst.setText(tmp);
                     }
                 }
                 mapPosFirstTextView = currentPos;
                 break;
-
-            case "right_second":
+            case R.id.btnArrowRightSecond:
                 if (currentPos == maxPos) {
                     currentPos = -1;
                 }
-                if (currentPos == 0) {
-                    currentPos = 1;
-                }
                 if (currentPos < maxPos) {
-                    tmp = currencyList.get(++currentPos).get("name").toString();
+                    currentPos++;
+                    tmp = currencyList.get(currentPos).get("name").toString();
                     if (tvGraphicCurrencyFirst.getText().equals(tmp)) {
                         if (currentPos == maxPos) {
                             currentPos = -1;
                         }
-                        tvGraphicCurrencySecond.setText(currencyList.get(++currentPos).get("name").toString());
+                        currentPos++;
+                        tvGraphicCurrencySecond.setText(currencyList.get(currentPos).get("name").toString());
                     } else {
                         tvGraphicCurrencySecond.setText(tmp);
                     }

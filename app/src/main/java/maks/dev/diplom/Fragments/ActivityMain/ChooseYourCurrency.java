@@ -94,7 +94,7 @@ public class ChooseYourCurrency
                 db.delAllData();
                 for (int i = 0; i < currencyList.size(); i++) {
                     String name = currencyList.get(i).get("name").toString();
-                    double value = Double.parseDouble(currencyList.get(i).get("value").toString());
+                    String value = currencyList.get(i).get("value").toString();
                     String fullName = currencyList.get(i).get("fullName").toString();
                     String isChecked = currencyList.get(i).get("isChecked").toString();
                     db.addRec(name, value, fullName, isChecked);

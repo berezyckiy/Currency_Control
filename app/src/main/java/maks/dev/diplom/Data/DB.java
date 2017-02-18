@@ -30,7 +30,7 @@ public class DB {
         }
     }
 
-    public void addRec(String name, double value, String fullName, String isChecked) {
+    public void addRec(String name, String value, String fullName, String isChecked) {
         ContentValues cv = new ContentValues();
         cv.put("name", name);
         cv.put("value", value);

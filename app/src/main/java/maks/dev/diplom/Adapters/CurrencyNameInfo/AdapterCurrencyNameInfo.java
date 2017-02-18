@@ -1,6 +1,8 @@
 package maks.dev.diplom.Adapters.CurrencyNameInfo;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import maks.dev.diplom.Activities.ActivityChooseValue.ActivityChooseValue;
+import maks.dev.diplom.Interface.CurrencyDataListener;
 import maks.dev.diplom.R;
 
 /**
@@ -19,10 +22,12 @@ import maks.dev.diplom.R;
 public class AdapterCurrencyNameInfo
         extends RecyclerView.Adapter<ViewHolderCurrencyName> {
 
-    private List<Map<String, Object>> currencyNamesList;
+    private List<Map<String, Object>> currencyList;
+    private NameCurrencyListener mListener;
 
-    public AdapterCurrencyNameInfo(List<Map<String, Object>> currencyNamesList) {
-        this.currencyNamesList = currencyNamesList;
+    public AdapterCurrencyNameInfo(@NonNull NameCurrencyListener listener, List<Map<String, Object>> currencyList) {
+        this.currencyList = currencyList;
+        mListener = listener;
     }
 
     @Override
@@ -33,20 +38,21 @@ public class AdapterCurrencyNameInfo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolderCurrencyName holder, int position) {
-        holder.tvSoloCurrencyName.setText(currencyNamesList.get(position).get("name").toString());
+    public void onBindViewHolder(final ViewHolderCurrencyName holder, final int position) {
+        holder.tvSoloCurrencyName.setText(currencyList.get(position).get("name").toString());
         holder.tvSoloCurrencyName.setOnClickListener(new RecyclerView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ActivityChooseValue.class);
-                intent.putExtra("name", holder.tvSoloCurrencyName.getText());
-                v.getContext().startActivity(intent);
+                String name = holder.tvSoloCurrencyName.getText().toString();
+                String value = currencyList.get(position).get("value").toString();
+                mListener.startChooseValueActivity(name, value);
+
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return currencyNamesList.size();
+        return currencyList.size();
     }
 }

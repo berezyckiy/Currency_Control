@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.DeflaterOutputStream;
 
 import maks.dev.diplom.R;
 
@@ -33,7 +36,11 @@ public class AdapterCurrencyFullInfo
     @Override
     public void onBindViewHolder(ViewHolderCurrencyFull holder, int position) {
         holder.currencyName.setText(currencyList.get(position).get("name").toString());
-        holder.currencyValue.setText(String.valueOf(currencyList.get(position).get("value")));
+        String tmpValue = currencyList.get(position).get("value").toString();
+        String coefficient = currencyList.get(position).get("coefficient").toString();
+        Double result = Double.parseDouble(tmpValue) * Double.parseDouble(coefficient);
+        double roundedResult = new BigDecimal(result).setScale(2, RoundingMode.UP).doubleValue();
+        holder.currencyValue.setText(String.valueOf(roundedResult));
         holder.currencyFullName.setText(currencyList.get(position).get("fullName").toString());
     }
 

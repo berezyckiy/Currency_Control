@@ -171,12 +171,12 @@ public class MainActivity
             DB db = new DB(this);
             db.open();
             db.delAllData();
-            db.addRec("USD", 50, "United States", "true");
-            db.addRec("EUR", 75, "England", "true");
-            db.addRec("BYN", 25, "Belarussian Ruble", "true");
-            db.addRec("GBP", 100, "Fund Sterlingov", "true");
-            db.addRec("PLN", 70, "Polski Zlote", "true");
-            db.addRec("RUR", 150, "Russian Ruble", "true");
+            db.addRec("USD", "50", "United States", "true");
+            db.addRec("EUR", "50", "England", "true");
+            db.addRec("BYN", "50", "Belarussian Ruble", "true");
+            db.addRec("GBP", "100", "Fund Sterlingov", "true");
+            db.addRec("PLN", "70", "Polski Zlote", "true");
+            db.addRec("RUR", "100", "Russian Ruble", "true");
             db.close();
             if (PreferenceUtils.isContainsKey(this, "appTheme") || PreferenceUtils.isContainsKey(this, "appLanguage")) {
                 PreferenceUtils.saveInteger(this, "appTheme", R.style.AppTheme);

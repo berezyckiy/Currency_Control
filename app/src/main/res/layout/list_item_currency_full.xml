@@ -33,7 +33,9 @@
             android:paddingEnd="2dp"
             android:textAlignment="viewEnd"
             android:textSize="24sp"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/tvCurrencyFullName"
