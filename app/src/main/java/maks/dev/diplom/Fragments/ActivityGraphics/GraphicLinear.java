@@ -5,6 +5,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -13,12 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -26,13 +25,17 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import maks.dev.diplom.Interface.GraphicResponseListener;
 import maks.dev.diplom.R;
+import maks.dev.diplom.network.GraphicResponce;
 
 /**
  * Created by berezyckiy on 2/11/17.
@@ -40,12 +43,14 @@ import maks.dev.diplom.R;
 
 public class GraphicLinear
         extends Fragment
-        implements SeekBar.OnSeekBarChangeListener {
+        implements GraphicResponseListener {
 
     private LineChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
     private View view;
+    private String symbol;
+
+    private ArrayList<Entry> values = new ArrayList<>();
+    private ArrayList<Map<String, String>> symbolRates;
 
     @Nullable
     @Override
@@ -53,18 +58,13 @@ public class GraphicLinear
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.tab_graphic_linear, container, false);
 
-        tvX = (TextView) view.findViewById(R.id.tvXMax);
-        tvY = (TextView) view.findViewById(R.id.tvYMax);
+        HashMap currencyOne = (HashMap) getActivity().getIntent().getSerializableExtra("firstCurrency");
+        HashMap currencyTwo = (HashMap) getActivity().getIntent().getSerializableExtra("secondCurrency");
+        String base = currencyOne.get("name").toString();
+        symbol = currencyTwo.get("name").toString();
 
-        mSeekBarX = (SeekBar) view.findViewById(R.id.seekBar1);
-        mSeekBarY = (SeekBar) view.findViewById(R.id.seekBar2);
-
-        mSeekBarX.setProgress(10);
-        mSeekBarY.setProgress(50);
-
-        mSeekBarY.setOnSeekBarChangeListener(this);
-        mSeekBarX.setOnSeekBarChangeListener(this);
-
+        symbolRates = new ArrayList<>();
+        new GraphicResponce(this, base, symbol).execute();
         mChart = (LineChart) view.findViewById(R.id.chart1);
         mChart.setDrawGridBackground(false);
 
@@ -88,9 +88,6 @@ public class GraphicLinear
 
         // create a custom MarkerView (extend MarkerView) and specify the layout
         // to use for it
-        MyMarkerView mv = new MyMarkerView(getActivity(), R.layout.tab_graphic_linear_maker_view);
-        mv.setChartView(mChart); // For bounds control
-        mChart.setMarker(mv); // Set the marker to the chart
 
         LimitLine llXAxis = new LimitLine(10f, "Index 10");
         llXAxis.setLineWidth(4f);
@@ -99,26 +96,14 @@ public class GraphicLinear
         llXAxis.setTextSize(10f);
 
         XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setAxisMinimum(0f);
+//        xAxis.setAxisMaximum(17f);
         xAxis.enableGridDashedLine(10f, 10f, 0f);
-
-
-        LimitLine ll1 = new LimitLine(100f, "Upper Limit");
-        ll1.setLineWidth(4f);
-        ll1.enableDashedLine(10f, 10f, 0f);
-        ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-        ll1.setTextSize(10f);
-
-        LimitLine ll2 = new LimitLine(0f, "Lower Limit");
-        ll2.setLineWidth(4f);
-        ll2.enableDashedLine(10f, 10f, 0f);
-        ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-        ll2.setTextSize(10f);
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-        leftAxis.addLimitLine(ll1);
-        leftAxis.addLimitLine(ll2);
-        leftAxis.setAxisMaximum(100f);
+//        leftAxis.addLimitLine(ll2);
         leftAxis.setAxisMinimum(0f);
         //leftAxis.setYOffset(20f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
@@ -128,12 +113,11 @@ public class GraphicLinear
         leftAxis.setDrawLimitLinesBehindData(true);
 
         mChart.getAxisRight().setEnabled(false);
-
         //mChart.getViewPortHandler().setMaximumScaleY(2f);
         //mChart.getViewPortHandler().setMaximumScaleX(2f);
 
         // add data
-        setData(10, 50);
+//        setData(10);
 
         mChart.animateX(2500);
         //mChart.invalidate();
@@ -148,6 +132,16 @@ public class GraphicLinear
         return view;
     }
 
+    private Float calculateMaxRate(ArrayList<Map<String, String>> data) {
+        Float maximum = 0f;
+        for (int i = 0; i < data.size(); i++) {
+            if (Float.parseFloat(data.get(i).get(symbol)) > maximum) {
+                maximum = Float.parseFloat(data.get(i).get(symbol));
+            }
+        }
+        return maximum;
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         getActivity().getMenuInflater().inflate(R.menu.menu_line_chart, menu);
@@ -158,108 +152,6 @@ public class GraphicLinear
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.actionToggleValues: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setDrawValues(!set.isDrawValuesEnabled());
-                }
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleHighlight: {
-                if (mChart.getData() != null) {
-                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-                    mChart.invalidate();
-                }
-                break;
-            }
-            case R.id.actionToggleFilled: {
-
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    if (set.isDrawFilledEnabled())
-                        set.setDrawFilled(false);
-                    else
-                        set.setDrawFilled(true);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleCircles: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    if (set.isDrawCirclesEnabled())
-                        set.setDrawCircles(false);
-                    else
-                        set.setDrawCircles(true);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleCubic: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.CUBIC_BEZIER
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.CUBIC_BEZIER);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleStepped: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.STEPPED
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.STEPPED);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleHorizontalCubic: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.HORIZONTAL_BEZIER
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.HORIZONTAL_BEZIER);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionTogglePinch: {
-                if (mChart.isPinchZoomEnabled())
-                    mChart.setPinchZoom(false);
-                else
-                    mChart.setPinchZoom(true);
-
-                mChart.invalidate();
-                break;
-            }
             case R.id.animateX: {
                 mChart.animateX(3000);
                 break;
@@ -272,51 +164,19 @@ public class GraphicLinear
                 mChart.animateXY(3000, 3000);
                 break;
             }
-            case R.id.actionSave: {
-                if (mChart.saveToPath("title" + System.currentTimeMillis(), "")) {
-                    Toast.makeText(getActivity(), "Saving SUCCESSFUL!",
-                            Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(getActivity(), "Saving FAILED!", Toast.LENGTH_SHORT)
-                            .show();
-
-                break;
-            }
         }
         return true;
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-        tvX.setText("" + (mSeekBarX.getProgress() + 1));
-        tvY.setText("" + (mSeekBarY.getProgress()));
-
-        setData(mSeekBarX.getProgress() + 1, mSeekBarY.getProgress());
-
-        // redraw
-        mChart.invalidate();
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        // TODO Auto-generated method stub
-
-    }
-
-    private void setData(int count, float range) {
-
-        ArrayList<Entry> values = new ArrayList<Entry>();
-
-        for (int i = 0; i < count; i++) {
-
-            float val = (float) (Math.random() * range) + 3;
+    private void setData(ArrayList<Map<String, String>> myData) {
+        final HashMap<Integer, String> numMap = new HashMap<>();
+        for (int i = 0; i < myData.size(); i++) {
+            float val = Float.parseFloat(myData.get(i).get(symbol));
+            if (i < 10) {
+                numMap.put(i, "200" + i);
+            } else {
+                numMap.put(i, "20" + i);
+            }
             values.add(new Entry(i, val));
         }
 
@@ -353,14 +213,38 @@ public class GraphicLinear
                 set1.setFillColor(Color.BLACK);
             }
 
-            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1); // add the datasets
-
-            // create a data object with the datasets
             LineData data = new LineData(dataSets);
+            XAxis xAxis = mChart.getXAxis();
+            YAxis yAxis = mChart.getAxisLeft();
+            Float maxRate = calculateMaxRate(symbolRates);
+            if (maxRate <= 1) {
+                yAxis.setAxisMaximum(maxRate + 0.2f);
+            } else {
+                yAxis.setAxisMaximum(maxRate + 1);
+            }
+            xAxis.setValueFormatter(new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    return numMap.get((int) value);
+                }
+            });
 
             // set data
             mChart.setData(data);
+            mChart.invalidate();
         }
+    }
+
+    @Override
+    public void onSuccessLoading(ArrayList<Map<String, String>> data) {
+        symbolRates = data;
+        setData(data);
+    }
+
+    @Override
+    public void onErrorLoading() {
+        Snackbar.make(view, "Error loading", Snackbar.LENGTH_SHORT).show();
     }
 }

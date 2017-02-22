@@ -33,6 +33,7 @@ public class ChooseYourCurrency
         extends Fragment {
 
     private RecyclerView recyclerViewChooseYourCurrency;
+    private AdapterCurrencySelected mAdapter;
     private List<Map<String, Object>> currencyList;
     private View view;
     private DB db;
@@ -55,7 +56,7 @@ public class ChooseYourCurrency
     }
 
     private void buildRecyclerView() {
-        AdapterCurrencySelected mAdapter = new AdapterCurrencySelected(currencyList);
+        mAdapter = new AdapterCurrencySelected(currencyList);
         recyclerViewChooseYourCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewChooseYourCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseYourCurrency.setAdapter(mAdapter);
@@ -82,13 +83,25 @@ public class ChooseYourCurrency
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.menu_btnsubmit, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_choose_your_currency, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.btnCheckAll:
+                for (int i = 0; i < currencyList.size(); i++) {
+                    currencyList.get(i).put("isChecked", "true");
+                }
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.btnUnCheckAll:
+                for (int i = 0; i < currencyList.size(); i++) {
+                    currencyList.get(i).put("isChecked", "false");
+                }
+                mAdapter.notifyDataSetChanged();
+                break;
             case R.id.btnDone:
                 db.open();
                 db.delAllData();

@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +53,8 @@ public class MainFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main, container, false);
         initItems();
-        setChosenNameAndSum();
         loadData();
+        setChosenNameAndSum();
         buildRecyclerView();
         return view;
     }
@@ -88,9 +87,7 @@ public class MainFragment
         mAdapter = new AdapterCurrencyFullInfo(currencyList);
         MainActivity.nvView.setCheckedItem(R.id.nav_currency_exchange);
         chosenCurrency = getActivity().getIntent().getStringExtra("name");
-        Log.d("myLogs", "chosenCurrency = " + chosenCurrency);
         chosenSum = getActivity().getIntent().getStringExtra("sum");
-        Log.d("myLogs", "chosenSum = " + chosenSum);
         dialogLoading = new DialogLoading();
     }
 
@@ -103,7 +100,6 @@ public class MainFragment
 
     private double calculateCoefficient() {
         String value = getActivity().getIntent().getStringExtra("value");
-        Log.d("myLogs", "value = " + value);
         if (value == null) {
             value = "1";
         }
@@ -129,7 +125,16 @@ public class MainFragment
             } while (tmpCursor.moveToNext());
         }
         db.close();
+        isNothingToShow(currencyList.size() == 0);
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void isNothingToShow(boolean result) {
+        if (result) {
+            tvMainScreen.setText(R.string.add_currency_please);
+        } else {
+            tvMainScreen.setText(tvMainScreen.getText().toString());
+        }
     }
 
     @Override

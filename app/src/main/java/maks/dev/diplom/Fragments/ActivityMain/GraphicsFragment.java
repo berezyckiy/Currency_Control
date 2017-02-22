@@ -112,83 +112,87 @@ public class GraphicsFragment
     }
 
 
-    private int currentPos = 0;
+    private int currentPosTop = 0;
+    private int currentPosBottom = 1;
     @Override
     public void onClick(View v) {
         int maxPos = currencyList.size() - 1;
         String tmp;
         switch (v.getId()) {
             case R.id.btnArrowLeftFirst:
-                if (currentPos == 0) {
-                    currentPos = maxPos + 1;
+                if (currentPosTop == 0) {
+                    currentPosTop = maxPos + 1;
                 }
-                currentPos--;
-                tmp = currencyList.get(currentPos).get("name").toString();
+                currentPosTop--;
+                tmp = currencyList.get(currentPosTop).get("name").toString();
                 if (tvGraphicCurrencySecond.getText().equals(tmp)) {
-                    if (currentPos == 0) {
-                        currentPos = maxPos + 1;
+                    if (currentPosTop == 0) {
+                        currentPosTop = maxPos + 1;
                     }
-                    currentPos--;
-                    tvGraphicCurrencyFirst.setText(currencyList.get(currentPos).get("name").toString());
+                    currentPosTop--;
+                    tvGraphicCurrencyFirst.setText(currencyList.get(currentPosTop).get("name").toString());
                 } else {
                     tvGraphicCurrencyFirst.setText(tmp);
                 }
-                mapPosFirstTextView = currentPos;
+                mapPosFirstTextView = currentPosTop;
                 break;
-            case R.id.btnArrowLeftSecond:
-                if (currentPos == 0) {
-                    currentPos = maxPos + 1;
-                }
-                currentPos--;
-                tmp = currencyList.get(currentPos).get("name").toString();
-                if (tvGraphicCurrencyFirst.getText().equals(tmp)) {
-                    if (currentPos == 0) {
-                        currentPos = maxPos + 1;
+
+            case R.id.btnArrowRightFirst:
+            if (currentPosTop == maxPos) {
+                currentPosTop = -1;
+            }
+            if (currentPosTop < maxPos) {
+                currentPosTop++;
+                tmp = currencyList.get(currentPosTop).get("name").toString();
+                if (tvGraphicCurrencySecond.getText().equals(tmp)) {
+                    if (currentPosTop == maxPos) {
+                        currentPosTop = -1;
                     }
-                    currentPos--;
-                    tvGraphicCurrencySecond.setText(currencyList.get(currentPos).get("name").toString());
+                    currentPosTop++;
+                    tvGraphicCurrencyFirst.setText(currencyList.get(currentPosTop).get("name").toString());
+                } else {
+                    tvGraphicCurrencyFirst.setText(tmp);
+                }
+            }
+            mapPosFirstTextView = currentPosTop;
+            break;
+
+            case R.id.btnArrowLeftSecond:
+                if (currentPosBottom == 0) {
+                    currentPosBottom = maxPos + 1;
+                }
+                currentPosBottom--;
+                tmp = currencyList.get(currentPosBottom).get("name").toString();
+                if (tvGraphicCurrencyFirst.getText().equals(tmp)) {
+                    if (currentPosBottom == 0) {
+                        currentPosBottom = maxPos + 1;
+                    }
+                    currentPosBottom--;
+                    tvGraphicCurrencySecond.setText(currencyList.get(currentPosBottom).get("name").toString());
                 } else {
                     tvGraphicCurrencySecond.setText(tmp);
                 }
-                mapPosSecondTextView = currentPos;
+                mapPosSecondTextView = currentPosBottom;
                 break;
-            case R.id.btnArrowRightFirst:
-                if (currentPos == maxPos) {
-                    currentPos = -1;
-                }
-                if (currentPos < maxPos) {
-                    currentPos++;
-                    tmp = currencyList.get(currentPos).get("name").toString();
-                    if (tvGraphicCurrencySecond.getText().equals(tmp)) {
-                        if (currentPos == maxPos) {
-                            currentPos = -1;
-                        }
-                        currentPos++;
-                        tvGraphicCurrencyFirst.setText(currencyList.get(currentPos).get("name").toString());
-                    } else {
-                        tvGraphicCurrencyFirst.setText(tmp);
-                    }
-                }
-                mapPosFirstTextView = currentPos;
-                break;
+
             case R.id.btnArrowRightSecond:
-                if (currentPos == maxPos) {
-                    currentPos = -1;
+            if (currentPosBottom == maxPos) {
+                    currentPosBottom = -1;
                 }
-                if (currentPos < maxPos) {
-                    currentPos++;
-                    tmp = currencyList.get(currentPos).get("name").toString();
+                if (currentPosBottom < maxPos) {
+                    currentPosBottom++;
+                    tmp = currencyList.get(currentPosBottom).get("name").toString();
                     if (tvGraphicCurrencyFirst.getText().equals(tmp)) {
-                        if (currentPos == maxPos) {
-                            currentPos = -1;
+                        if (currentPosBottom == maxPos) {
+                            currentPosBottom = -1;
                         }
-                        currentPos++;
-                        tvGraphicCurrencySecond.setText(currencyList.get(currentPos).get("name").toString());
+                        currentPosBottom++;
+                        tvGraphicCurrencySecond.setText(currencyList.get(currentPosBottom).get("name").toString());
                     } else {
                         tvGraphicCurrencySecond.setText(tmp);
                     }
                 }
-                mapPosSecondTextView = currentPos;
+                mapPosSecondTextView = currentPosBottom;
                 break;
         }
     }

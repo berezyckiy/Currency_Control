@@ -31,7 +31,7 @@ import maks.dev.diplom.utils.PreferenceUtils;
 
 public class MainActivity
         extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DialogListener{
+        implements NavigationView.OnNavigationItemSelectedListener, DialogListener {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -98,8 +98,7 @@ public class MainActivity
     private void setApplicationLocale() {
         if (!PreferenceUtils.isContainsKey(this, "appLanguage")) {
             PreferenceUtils.saveString(this, "appLanguage", "en");
-        }
-        else  {
+        } else {
             String mLang = PreferenceUtils.getString(this, "appLanguage", "");
             Locale mNewLocale = new Locale(mLang);
             Locale.setDefault(mNewLocale);
@@ -140,28 +139,14 @@ public class MainActivity
     @Override
     public void onFinishThemeDialog(Integer chosenThemeId) {
         if (chosenThemeId != PreferenceUtils.getInteger(this, "appTheme", 0)) {
-            switch (chosenThemeId) {
-                case R.style.AppTheme:
-                    changeTheme(chosenThemeId);
-                    break;
-                case R.style.AppThemeWhite:
-                    changeTheme(chosenThemeId);
-                    break;
-            }
+            changeTheme(chosenThemeId);
         }
     }
 
     @Override
     public void onFinishLanguageDialog(String language) {
         if (!language.equals(PreferenceUtils.getString(this, "appLanguage", ""))) {
-            switch (language) {
-                case "ru":
-                    changeLocale("ru");
-                    break;
-                case "en":
-                    changeLocale("en");
-                    break;
-            }
+            changeLocale(language);
         }
     }
 
@@ -171,12 +156,6 @@ public class MainActivity
             DB db = new DB(this);
             db.open();
             db.delAllData();
-            db.addRec("USD", "50", "United States", "true");
-            db.addRec("EUR", "50", "England", "true");
-            db.addRec("BYN", "50", "Belarussian Ruble", "true");
-            db.addRec("GBP", "100", "Fund Sterlingov", "true");
-            db.addRec("PLN", "70", "Polski Zlote", "true");
-            db.addRec("RUR", "100", "Russian Ruble", "true");
             db.close();
             if (PreferenceUtils.isContainsKey(this, "appTheme") || PreferenceUtils.isContainsKey(this, "appLanguage")) {
                 PreferenceUtils.saveInteger(this, "appTheme", R.style.AppTheme);

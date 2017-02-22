@@ -35,13 +35,13 @@ public class AdapterCurrencySelected
     @Override
     public void onBindViewHolder(ViewHolderCurrencySelected holder, final int position) {
         holder.tvCurrencySelectedName.setText(currencyList.get(position).get("name").toString());
-        holder.cbCurrencySelected.setChecked(Boolean.parseBoolean(currencyList.get(position).get("isChecked").toString()));
         holder.cbCurrencySelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 currencyList.get(position).put("isChecked", String.valueOf(isChecked));
             }
         });
+        holder.cbCurrencySelected.setChecked(Boolean.parseBoolean(currencyList.get(position).get("isChecked").toString()));
     }
 
     @Override

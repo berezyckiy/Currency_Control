@@ -25,4 +25,6 @@
     <string name="set_default">Сбросить настройки</string>
     <string name="question_set_default">Вы уверены, что хотите сбросить все настройки</string>
     <string name="about">О программе</string>
+    <string name="check_all">Выделить все</string>
+    <string name="uncheck_all">Снять все выделения</string>
 </resources>

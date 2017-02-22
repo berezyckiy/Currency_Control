@@ -25,4 +25,6 @@
     <string name="set_default">Default</string>
     <string name="question_set_default">Are your sure set default settings</string>
     <string name="about">About</string>
+    <string name="check_all">Check all</string>
+    <string name="uncheck_all">Uncheck all</string>
 </resources>
