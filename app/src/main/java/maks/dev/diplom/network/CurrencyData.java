@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import maks.dev.diplom.Data.DB;
 import maks.dev.diplom.Interface.CurrencyDataListener;
+import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
  * Created by berezyckiy on 2/16/17.
@@ -71,16 +73,20 @@ public class CurrencyData
             String jsonStr = sh.makeServiceCall("http://api.fixer.io/latest?base=USD");
             JSONObject jsonObj = new JSONObject(jsonStr);
             JSONObject objRates = jsonObj.getJSONObject("rates");
+            String date = jsonObj.getString("date");
+            PreferenceUtils.saveString(mActivity, "date", date);
             db.delAllData();
             int i = 0;
-            db.addRec(jsonObj.getString("base"), "1", jsonObj.getString("base"), getSavedChecked(i));
+            db.addRec(jsonObj.getString("base"), "1", PreferenceUtils.getFullNameOfCurrency(jsonObj.getString("base")), getSavedChecked(i));
             i++;
-            db.addRec("BYN", "1.8751", "BYN", getSavedChecked(i));
+            db.addRec("BYN", "1.8751", PreferenceUtils.getFullNameOfCurrency("BYN"), getSavedChecked(i));
             Iterator<String> iterator = objRates.keys();
             while (iterator.hasNext()) {
                 String nameCurrency = iterator.next();
+                Log.d("myLogs", "nameCurrency = " + nameCurrency);
                 String currencyRate = objRates.getString(nameCurrency);
-                db.addRec(nameCurrency, currencyRate, nameCurrency, getSavedChecked(++i));
+                Log.d("myLogs", "currencyRate = " + currencyRate);
+                db.addRec(nameCurrency, currencyRate, PreferenceUtils.getFullNameOfCurrency(nameCurrency), getSavedChecked(++i));
             }
             db.close();
         } catch (Exception e) {

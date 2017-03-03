@@ -1,24 +1,18 @@
 package maks.dev.diplom.Fragments.ActivityMain;
 
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,12 +35,12 @@ public class MainFragment
         extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener, CurrencyDataListener {
 
-    private TextView tvMainScreen;
     private View view;
 
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefresh;
     static List<Map<String, Object>> currencyList;
+    private List<Map<String, Object>> listWithoutMainCurrency;
     private AdapterCurrencyFullInfo mAdapter;
     private DB db;
     private DialogLoading dialogLoading;
@@ -54,8 +48,14 @@ public class MainFragment
     private String chosenCurrency;
     private String chosenSum;
 
-    private Toolbar mainFragmentToolbar;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    public interface CollapseListener {
+
+        void enableCollapse(String base, String rate, String baseFullName);
+
+        void disableCollapse();
+
+        void disableTitle();
+    }
 
     @Nullable
     @Override
@@ -63,7 +63,6 @@ public class MainFragment
         view = inflater.inflate(R.layout.fragment_main, container, false);
         initItems();
         loadData();
-        setChosenNameAndSum();
         buildRecyclerView();
         return view;
     }
@@ -72,24 +71,16 @@ public class MainFragment
         new CurrencyData(getActivity(), this).execute();
     }
 
-    private void setChosenNameAndSum() {
-        if (chosenCurrency == null) {
-//            tvMainScreen.setText("USD 1");
-            collapsingToolbarLayout.setExpandedTitleTextColor(ColorStateList.valueOf(getResources().getColor(android.R.color.black)));
-            collapsingToolbarLayout.setTitle("USD 1");
-            chosenCurrency = "USD";
-            chosenSum = "1";
-        } else {
-            collapsingToolbarLayout.setTitle(String.valueOf(chosenCurrency + " " + chosenSum));
-//            tvMainScreen.setText(chosenCurrency + " " + chosenSum);
+    private String getFullNameChosenCurrency(String currencyName) {
+        for (int i = 0; i < currencyList.size(); i++) {
+            if (currencyList.get(i).get("name").equals(currencyName)) {
+                return currencyList.get(i).get("fullName").toString();
+            }
         }
+        return "";
     }
 
     private void initItems() {
-//        tvMainScreen = (TextView) view.findViewById(R.id.tvMainScreen);
-        mainFragmentToolbar = (Toolbar) view.findViewById(R.id.mainFragmentToolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mainFragmentToolbar);
-        collapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.main_collapsing);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(this);
@@ -99,11 +90,20 @@ public class MainFragment
                 android.R.color.holo_green_dark);
         db = new DB(getContext());
         currencyList = new ArrayList<>();
-        mAdapter = new AdapterCurrencyFullInfo(currencyList);
+        listWithoutMainCurrency = new ArrayList<>();
+        mAdapter = new AdapterCurrencyFullInfo(listWithoutMainCurrency);
         MainActivity.nvView.setCheckedItem(R.id.nav_currency_exchange);
         chosenCurrency = getActivity().getIntent().getStringExtra("name");
         chosenSum = getActivity().getIntent().getStringExtra("sum");
         dialogLoading = new DialogLoading();
+        if (chosenCurrency == null) {
+            chosenCurrency = "USD";
+            chosenSum = "1";
+        }
+        if (getActivity().getActionBar() != null) {
+            getActivity().getActionBar().setTitle("");
+        }
+        ((CollapseListener) getActivity()).disableTitle();
     }
 
 
@@ -128,31 +128,22 @@ public class MainFragment
         Map<String, Object> tmpMap;
         if (tmpCursor.moveToFirst()) {
             do {
-                    if (Boolean.parseBoolean(tmpCursor.getString(tmpCursor.getColumnIndex("isChecked")))
-                            && !tmpCursor.getString(tmpCursor.getColumnIndex("name")).equals(chosenCurrency)) {
-                        tmpMap = new HashMap<>();
-                        tmpMap.put("name", tmpCursor.getString(tmpCursor.getColumnIndex("name")));
-                        tmpMap.put("value", tmpCursor.getString(tmpCursor.getColumnIndex("value")));
-                        tmpMap.put("fullName", tmpCursor.getString(tmpCursor.getColumnIndex("fullName")));
-                        tmpMap.put("isChecked", tmpCursor.getString(tmpCursor.getColumnIndex("isChecked")));
-                        tmpMap.put("coefficient", calculateCoefficient());
-                        currencyList.add(tmpMap);
+                if (Boolean.parseBoolean(tmpCursor.getString(tmpCursor.getColumnIndex("isChecked")))) {
+                    tmpMap = new HashMap<>();
+                    tmpMap.put("name", tmpCursor.getString(tmpCursor.getColumnIndex("name")));
+                    tmpMap.put("value", tmpCursor.getString(tmpCursor.getColumnIndex("value")));
+                    tmpMap.put("fullName", tmpCursor.getString(tmpCursor.getColumnIndex("fullName")));
+                    tmpMap.put("isChecked", tmpCursor.getString(tmpCursor.getColumnIndex("isChecked")));
+                    tmpMap.put("coefficient", calculateCoefficient());
+                    currencyList.add(tmpMap);
+                    if (!tmpCursor.getString(tmpCursor.getColumnIndex("name")).equals(chosenCurrency)) {
+                        listWithoutMainCurrency.add(tmpMap);
                     }
+                }
             } while (tmpCursor.moveToNext());
         }
         db.close();
-        isNothingToShow(currencyList.size() == 0);
         mAdapter.notifyDataSetChanged();
-    }
-
-    private void isNothingToShow(boolean result) {
-        if (result) {
-//            tvMainScreen.setText(R.string.add_currency_please);
-            collapsingToolbarLayout.setTitle(getString(R.string.add_currency_please));
-        } else {
-//            tvMainScreen.setText(tvMainScreen.getText().toString());
-            collapsingToolbarLayout.setTitle(collapsingToolbarLayout.getTitle());
-        }
     }
 
     @Override
@@ -164,12 +155,20 @@ public class MainFragment
     @Override
     public void onSuccessLoadingData() {
         updateList();
+        ((CollapseListener) getActivity()).enableCollapse(chosenCurrency, chosenSum,
+                getFullNameChosenCurrency(chosenCurrency));
+        //TODO sdelat` proverky kogda nechego pokazivat`
+
     }
 
     @Override
     public void onErrorLoadingData() {
         updateList();
+        ((CollapseListener) getActivity()).enableCollapse(chosenCurrency, chosenSum,
+                getFullNameChosenCurrency(chosenCurrency));
         Snackbar.make(view, "Error loading data", Snackbar.LENGTH_SHORT).show();
+        //TODO sdelat` proverky kogda nechego pokazivat`
+
     }
 
     @Override
@@ -180,5 +179,11 @@ public class MainFragment
     @Override
     public void hideProgressBar() {
         dialogLoading.dismissAllowingStateLoss();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ((CollapseListener) getActivity()).disableCollapse();
     }
 }

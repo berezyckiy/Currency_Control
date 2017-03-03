@@ -27,4 +27,5 @@
     <string name="about">About</string>
     <string name="check_all">Check all</string>
     <string name="uncheck_all">Uncheck all</string>
+    <string name="last_updated">"Last updated: "</string>
 </resources>

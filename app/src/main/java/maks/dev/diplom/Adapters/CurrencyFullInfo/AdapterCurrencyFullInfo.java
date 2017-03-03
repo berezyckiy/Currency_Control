@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
 
 import maks.dev.diplom.R;
+import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
  * Created by berezyckiy on 2/8/17.
@@ -35,7 +36,9 @@ public class AdapterCurrencyFullInfo
 
     @Override
     public void onBindViewHolder(ViewHolderCurrencyFull holder, int position) {
-        holder.currencyName.setText(currencyList.get(position).get("name").toString());
+        String name = currencyList.get(position).get("name").toString();
+        holder.imgViewRecyclerView.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(name));
+        holder.currencyName.setText(name);
         String tmpValue = currencyList.get(position).get("value").toString();
         String coefficient = currencyList.get(position).get("coefficient").toString();
         Double result = Double.parseDouble(tmpValue) * Double.parseDouble(coefficient);

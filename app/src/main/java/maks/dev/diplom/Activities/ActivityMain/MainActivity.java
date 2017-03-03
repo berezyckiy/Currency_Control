@@ -3,6 +3,9 @@ package maks.dev.diplom.Activities.ActivityMain;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -31,11 +38,16 @@ import maks.dev.diplom.utils.PreferenceUtils;
 
 public class MainActivity
         extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DialogListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DialogListener, MainFragment.CollapseListener {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     public static NavigationView nvView;
+    private AppBarLayout appBarLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private FrameLayout collapsingFrameLayout;
+    private AppBarLayout.OnOffsetChangedListener mListener;
+    private TextView tvToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +59,15 @@ public class MainActivity
         setSupportActionBar(toolbar);
         addDrawerToggle();
         startMainFragment();
+        initAppBarOnOffsetChangedListener();
     }
 
     private void initItems() {
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        collapsingFrameLayout = (FrameLayout) findViewById(R.id.collapsingFrameLayout);
+        tvToolbar = (TextView) findViewById(R.id.tvToolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.currency_exchange));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvView = (NavigationView) findViewById(R.id.nvView);
         nvView.setNavigationItemSelectedListener(this);
@@ -78,10 +94,32 @@ public class MainActivity
         toggle.syncState();
     }
 
+
+    private void initAppBarOnOffsetChangedListener() {
+        mListener = new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (collapsingToolbarLayout.getHeight() + verticalOffset < collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
+//                    tvToolbar.animate().alpha(1).setDuration(600);
+                    tvToolbar.setAlpha(1);
+                } else {
+//                    tvToolbar.animate().alpha(0).setDuration(600);
+                    tvToolbar.setAlpha(0);
+                }
+            }
+        };
+    }
+
+    private void enableToolbarTitle(boolean showTitle) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
+        }
+    }
+
     private void startMainFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        setToolbarTitle(R.string.currency_exchange);
-        setToolbarTitleTextColor(android.R.color.white);
+        enableToolbarTitle(false);
+        collapsingToolbarLayout.setTitleEnabled(false);
         ft.replace(R.id.contentFrame, new MainFragment()).commit();
     }
 
@@ -166,12 +204,10 @@ public class MainActivity
         }
     }
 
-    private void setToolbarTitle(@NonNull Integer stringId) {
-        toolbar.setTitle(getString(stringId));
-    }
-
-    private void setToolbarTitleTextColor(@NonNull Integer colorId) {
-        toolbar.setTitleTextColor(getResources().getColor(colorId));
+    private void setToolbarTitle(@NonNull String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 
     @Override
@@ -179,28 +215,26 @@ public class MainActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()) {
             case R.id.nav_currency_exchange:
-                setToolbarTitle(R.string.currency_exchange);
-                setToolbarTitleTextColor(android.R.color.white);
-                ft.replace(R.id.contentFrame, new MainFragment()).commit();
+                startMainFragment();
                 break;
             case R.id.nav_choose_main_currency:
-                setToolbarTitle(R.string.choose_main_currency);
-                setToolbarTitleTextColor(android.R.color.white);
+                enableToolbarTitle(true);
+                setToolbarTitle(getString(R.string.choose_main_currency));
                 ft.replace(R.id.contentFrame, new ChooseMainCurrency()).commit();
                 break;
             case R.id.nav_choose_your_currency:
-                setToolbarTitle(R.string.choose_your_currencies);
-                setToolbarTitleTextColor(android.R.color.white);
+                enableToolbarTitle(true);
+                setToolbarTitle(getString(R.string.choose_your_currencies));
                 ft.replace(R.id.contentFrame, new ChooseYourCurrency()).commit();
                 break;
             case R.id.nav_graphics:
-                setToolbarTitle(R.string.graphics);
-                setToolbarTitleTextColor(android.R.color.white);
+                enableToolbarTitle(true);
+                setToolbarTitle(getString(R.string.graphics));
                 ft.replace(R.id.contentFrame, new GraphicsFragment()).commit();
                 break;
             case R.id.nav_settings:
-                setToolbarTitle(R.string.settings);
-                setToolbarTitleTextColor(android.R.color.white);
+                enableToolbarTitle(true);
+                setToolbarTitle(getString(R.string.settings));
                 ft.replace(R.id.contentFrame, new SettingsFragment()).commit();
                 break;
         }
@@ -215,5 +249,43 @@ public class MainActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    @Override
+    public void enableCollapse(String base, String rate, String baseFullName) {
+        ImageView imgViewMain = (ImageView) findViewById(R.id.imgViewMain);
+        TextView tvMainScreenBase = (TextView) findViewById(R.id.tvMainScreenBase);
+        TextView tvMainScreenDate = (TextView) findViewById(R.id.tvMainScreenDate);
+        TextView tvMainScreenRate = (TextView) findViewById(R.id.tvMainScreenRate);
+        TextView tvMainScreenBaseFullName = (TextView) findViewById(R.id.tvMainScreenBaseFullName);
+        CoordinatorLayout.LayoutParams defaultParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        defaultParams.height = 386;
+        appBarLayout.setLayoutParams(defaultParams);
+        collapsingFrameLayout.setVisibility(View.VISIBLE);
+        imgViewMain.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(base));
+        tvMainScreenBase.setText(base);
+        tvMainScreenRate.setText(rate);
+        tvMainScreenDate.setText(getString(R.string.last_updated).concat(PreferenceUtils.getString(this, "date", "0")));
+        tvMainScreenBaseFullName.setText(baseFullName);
+        tvToolbar.setAlpha(0);
+        tvToolbar.setText(base + " " + rate);
+        tvToolbar.setVisibility(View.VISIBLE);
+        appBarLayout.addOnOffsetChangedListener(mListener);
+    }
+
+    @Override
+    public void disableCollapse() {
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        CoordinatorLayout.LayoutParams customParams = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        appBarLayout.setLayoutParams(customParams);
+        collapsingFrameLayout.setVisibility(View.GONE);
+        tvToolbar.setVisibility(View.GONE);
+        appBarLayout.removeOnOffsetChangedListener(mListener);
+    }
+
+    @Override
+    public void disableTitle() {
+        enableToolbarTitle(false);
     }
 }
