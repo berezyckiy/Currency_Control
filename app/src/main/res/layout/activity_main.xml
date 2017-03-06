@@ -45,8 +45,8 @@
 
                         <ImageView
                             android:id="@+id/imgViewMain"
-                            android:layout_width="35dp"
-                            android:layout_height="22dp"
+                            android:layout_width="36dp"
+                            android:layout_height="24dp"
                             android:layout_gravity="left"
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="88dp" />
@@ -65,7 +65,6 @@
 
                         <TextView
                             android:id="@+id/tvMainScreenRate"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:layout_marginRight="16dp"
@@ -74,7 +73,9 @@
                             android:maxLines="1"
                             android:textColor="#BDBDBD"
                             android:textSize="28sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            android:layout_width="200dp"
+                            android:textAlignment="textEnd" />
 
                         <TextView
                             android:id="@+id/tvMainScreenDate"

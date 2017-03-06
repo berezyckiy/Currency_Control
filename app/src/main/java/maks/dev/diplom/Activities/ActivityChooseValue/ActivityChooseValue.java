@@ -68,7 +68,7 @@ public class ActivityChooseValue
 
 
     private void initItems() {
-        Button btnClear = (Button) findViewById(R.id.btnClear);
+        TextView btnClear = (TextView) findViewById(R.id.btnClear);
         btnClear.setOnClickListener(this);
         btnClear.setOnLongClickListener(this);
         tvTempSum = (TextView) findViewById(R.id.tvTempSum);

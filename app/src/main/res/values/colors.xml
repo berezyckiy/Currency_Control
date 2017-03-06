@@ -7,4 +7,8 @@
     <color name="colorPrimaryDarkCustom">#65f1ec</color>
     <color name="colorAccentCustom">#d3e609</color>
 
+    <color name="light_font">#FBFBFB</color>
+    <color name="text_shadow">#7F000000</color>
+    <color name="text_shadow_white">#FFFFFF</color>
+
 </resources>

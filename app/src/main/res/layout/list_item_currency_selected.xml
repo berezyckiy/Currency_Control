@@ -10,7 +10,7 @@
         android:id="@+id/act_main_btn_telephony"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/button_background"
+        android:background="@drawable/button_currency_selected_background"
         android:gravity="center"
         android:textSize="24sp"
         android:textStyle="bold"
