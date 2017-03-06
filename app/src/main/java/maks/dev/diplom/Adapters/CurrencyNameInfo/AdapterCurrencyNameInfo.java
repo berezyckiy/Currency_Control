@@ -1,7 +1,5 @@
 package maks.dev.diplom.Adapters.CurrencyNameInfo;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +9,8 @@ import android.view.ViewGroup;
 import java.util.List;
 import java.util.Map;
 
-import maks.dev.diplom.Activities.ActivityChooseValue.ActivityChooseValue;
-import maks.dev.diplom.Interface.CurrencyDataListener;
 import maks.dev.diplom.R;
+import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
  * Created by berezyckiy on 2/10/17.
@@ -39,14 +36,22 @@ public class AdapterCurrencyNameInfo
 
     @Override
     public void onBindViewHolder(final ViewHolderCurrencyName holder, final int position) {
-        holder.tvSoloCurrencyName.setText(currencyList.get(position).get("name").toString());
+        final String name = currencyList.get(position).get("name").toString();
+        final String value = currencyList.get(position).get("value").toString();
+        holder.tvSoloCurrencyName.setText(name);
+        holder.imgViewRecyclerView.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(name));
+
         holder.tvSoloCurrencyName.setOnClickListener(new RecyclerView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = holder.tvSoloCurrencyName.getText().toString();
-                String value = currencyList.get(position).get("value").toString();
                 mListener.startChooseValueActivity(name, value);
 
+            }
+        });
+        holder.imgViewRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.startChooseValueActivity(name, value);
             }
         });
     }

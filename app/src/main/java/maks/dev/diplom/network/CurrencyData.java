@@ -83,9 +83,7 @@ public class CurrencyData
             Iterator<String> iterator = objRates.keys();
             while (iterator.hasNext()) {
                 String nameCurrency = iterator.next();
-                Log.d("myLogs", "nameCurrency = " + nameCurrency);
                 String currencyRate = objRates.getString(nameCurrency);
-                Log.d("myLogs", "currencyRate = " + currencyRate);
                 db.addRec(nameCurrency, currencyRate, PreferenceUtils.getFullNameOfCurrency(nameCurrency), getSavedChecked(++i));
             }
             db.close();

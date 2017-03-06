@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -55,7 +56,10 @@ public class ChooseMainCurrency
 
     private void buildRecyclerView() {
         AdapterCurrencyNameInfo mAdapter = new AdapterCurrencyNameInfo(this, currencyList);
-        recyclerViewChooseMainCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerViewChooseMainCurrency.setLayoutManager(layoutManager);
+//        recyclerViewChooseMainCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         recyclerViewChooseMainCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseMainCurrency.setAdapter(mAdapter);
     }

@@ -11,7 +11,7 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/10/17.
  */
 
-public class ViewHolderCurrencyFull
+class ViewHolderCurrencyFull
         extends RecyclerView.ViewHolder {
 
     ImageView imgViewRecyclerView;
@@ -19,7 +19,7 @@ public class ViewHolderCurrencyFull
     TextView currencyValue;
     TextView currencyFullName;
 
-    public ViewHolderCurrencyFull(View itemView) {
+    ViewHolderCurrencyFull(View itemView) {
         super(itemView);
         imgViewRecyclerView = (ImageView) itemView.findViewById(R.id.imgViewRecyclerView);
         currencyName = (TextView) itemView.findViewById(R.id.tvCurrencyName);

@@ -2,8 +2,7 @@ package maks.dev.diplom.Adapters.CurrencySelected;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import maks.dev.diplom.R;
 
@@ -11,15 +10,13 @@ import maks.dev.diplom.R;
  * Created by berezyckiy on 2/10/17.
  */
 
-public class ViewHolderCurrencySelected
+class ViewHolderCurrencySelected
         extends RecyclerView.ViewHolder {
 
-    TextView tvCurrencySelectedName;
-    CheckBox cbCurrencySelected;
+    ToggleButton button;
 
-    public ViewHolderCurrencySelected(View itemView) {
+    ViewHolderCurrencySelected(View itemView) {
         super(itemView);
-        tvCurrencySelectedName = (TextView) itemView.findViewById(R.id.tvCurrencySelectedName);
-        cbCurrencySelected = (CheckBox) itemView.findViewById(R.id.cbCurrencySelected);
+        button = (ToggleButton) itemView.findViewById(R.id.act_main_btn_telephony);
     }
 }

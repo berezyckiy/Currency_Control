@@ -56,7 +56,7 @@ public class ChooseYourCurrency
     }
 
     private void buildRecyclerView() {
-        mAdapter = new AdapterCurrencySelected(currencyList);
+        mAdapter = new AdapterCurrencySelected(getActivity() ,currencyList);
         recyclerViewChooseYourCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewChooseYourCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseYourCurrency.setAdapter(mAdapter);

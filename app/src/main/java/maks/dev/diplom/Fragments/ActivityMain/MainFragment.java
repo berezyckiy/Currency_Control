@@ -124,6 +124,7 @@ public class MainFragment
     private void updateList() {
         db.open();
         currencyList.clear();
+        listWithoutMainCurrency.clear();
         Cursor tmpCursor = db.getAllData();
         Map<String, Object> tmpMap;
         if (tmpCursor.moveToFirst()) {
