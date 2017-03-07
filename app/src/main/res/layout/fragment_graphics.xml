@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,29 +14,34 @@
 
         <ImageView
             android:id="@+id/btnArrowLeftFirst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="10dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_keyboard_arrow_left"
             android:layout_weight="1"
-            android:src="@mipmap/ic_keyboard_arrow_left" />
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="5dp" />
 
-        <TextView
+        <maks.dev.diplom.mytextview.MyTextView
             android:id="@+id/tvGraphicCurrencyFirst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical|center_horizontal"
+            android:shadowDx="7"
+            android:shadowDy="7"
+            android:shadowRadius="5"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_height="50dp"
+            android:layout_width="120dp" />
 
         <ImageView
             android:id="@+id/btnArrowRightFirst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="10dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:src="@mipmap/ic_keyboard_arrow_right" />
+            android:src="@mipmap/ic_keyboard_arrow_right"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="5dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,29 +52,37 @@
 
         <ImageView
             android:id="@+id/btnArrowLeftSecond"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@mipmap/ic_keyboard_arrow_left" />
+            android:src="@mipmap/ic_keyboard_arrow_left"
+            android:layout_marginTop="5dp" />
 
-        <TextView
-            android:id="@+id/tvGraphicCurrencySecond"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/imageViewGraphic"
+            android:layout_weight="1" />
+
+        <maks.dev.diplom.mytextview.MyTextView
+            android:id="@+id/tvGraphicCurrencySecond"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:textSize="30sp"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/btnArrowRightSecond"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@mipmap/ic_keyboard_arrow_right" />
+            android:src="@mipmap/ic_keyboard_arrow_right"
+            android:layout_marginTop="5dp" />
 
     </LinearLayout>
 </LinearLayout>

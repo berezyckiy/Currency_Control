@@ -1,8 +1,12 @@
 package maks.dev.diplom.Fragments.ActivityMain;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,16 +15,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import maks.dev.diplom.Activities.ActivityGraphics.ActivityGraphics;
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.R;
+import maks.dev.diplom.mytextview.MyTextView;
+import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
  * Created by berezyckiy on 2/6/17.
@@ -29,13 +35,15 @@ public class GraphicsFragment
         extends Fragment
         implements View.OnClickListener {
 
-    private TextView tvGraphicCurrencyFirst;
-    private TextView tvGraphicCurrencySecond;
+    private MyTextView tvGraphicCurrencyFirst;
+    private MyTextView tvGraphicCurrencySecond;
     private ImageView btnArrowLeftFirst;
     private ImageView btnArrowRightFirst;
     private ImageView btnArrowLeftSecond;
     private ImageView btnArrowRightSecond;
     private List<Map<String, Object>> currencyList;
+
+    ImageView imageViewGraphic;
 
     private View view;
     private int mapPosFirstTextView = 0;
@@ -53,8 +61,13 @@ public class GraphicsFragment
     }
 
     private void initItems() {
-        tvGraphicCurrencyFirst = (TextView) view.findViewById(R.id.tvGraphicCurrencyFirst);
-        tvGraphicCurrencySecond = (TextView) view.findViewById(R.id.tvGraphicCurrencySecond);
+        imageViewGraphic = (ImageView) view.findViewById(R.id.imageViewGraphic);
+        tvGraphicCurrencyFirst = (MyTextView) view.findViewById(R.id.tvGraphicCurrencyFirst);
+        tvGraphicCurrencyFirst.setDuration(1000);
+        tvGraphicCurrencyFirst.setIsVisible(true);
+        tvGraphicCurrencySecond = (MyTextView) view.findViewById(R.id.tvGraphicCurrencySecond);
+        tvGraphicCurrencySecond.setDuration(1000);
+        tvGraphicCurrencySecond.setIsVisible(true);
         btnArrowLeftFirst = (ImageView) view.findViewById(R.id.btnArrowLeftFirst);
         btnArrowRightFirst = (ImageView) view.findViewById(R.id.btnArrowRightFirst);
         btnArrowLeftSecond = (ImageView) view.findViewById(R.id.btnArrowLeftSecond);
@@ -79,13 +92,16 @@ public class GraphicsFragment
         }
         if (currencyList.size() == 1) {
             tvGraphicCurrencyFirst.setText(currencyList.get(0).get("name").toString());
+//            imageViewGraphic.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(0).get("name").toString()));
             btnArrowLeftSecond.setVisibility(View.INVISIBLE);
             btnArrowRightSecond.setVisibility(View.INVISIBLE);
             tvGraphicCurrencySecond.setText(getString(R.string.add_currency_please));
             return;
         }
         tvGraphicCurrencyFirst.setText(currencyList.get(0).get("name").toString());
+//        imageViewGraphic.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(0).get("name").toString()));
         tvGraphicCurrencySecond.setText(currencyList.get(1).get("name").toString());
+        imageViewGraphic.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(1).get("name").toString()));
         isDataInTextViewCorrect = true;
     }
 
@@ -100,7 +116,7 @@ public class GraphicsFragment
         switch (item.getItemId()) {
             case R.id.btnDone:
                 if (!isDataInTextViewCorrect) {
-                    Toast.makeText(getActivity(), getString(R.string.add_currency_please), Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, getString(R.string.add_currency_please), Snackbar.LENGTH_SHORT).show();
                     break;
                 }
                 Intent intent = new Intent(getActivity(), ActivityGraphics.class);
@@ -120,6 +136,7 @@ public class GraphicsFragment
         String tmp;
         switch (v.getId()) {
             case R.id.btnArrowLeftFirst:
+                tvGraphicCurrencyFirst.toggle();
                 if (currentPosTop == 0) {
                     currentPosTop = maxPos + 1;
                 }
@@ -135,29 +152,34 @@ public class GraphicsFragment
                     tvGraphicCurrencyFirst.setText(tmp);
                 }
                 mapPosFirstTextView = currentPosTop;
+                tvGraphicCurrencyFirst.toggle();
                 break;
 
             case R.id.btnArrowRightFirst:
-            if (currentPosTop == maxPos) {
-                currentPosTop = -1;
-            }
-            if (currentPosTop < maxPos) {
-                currentPosTop++;
-                tmp = currencyList.get(currentPosTop).get("name").toString();
-                if (tvGraphicCurrencySecond.getText().equals(tmp)) {
-                    if (currentPosTop == maxPos) {
-                        currentPosTop = -1;
-                    }
-                    currentPosTop++;
-                    tvGraphicCurrencyFirst.setText(currencyList.get(currentPosTop).get("name").toString());
-                } else {
-                    tvGraphicCurrencyFirst.setText(tmp);
+                tvGraphicCurrencyFirst.toggle();
+                if (currentPosTop == maxPos) {
+                    currentPosTop = -1;
                 }
-            }
-            mapPosFirstTextView = currentPosTop;
-            break;
+                if (currentPosTop < maxPos) {
+                    currentPosTop++;
+                    tmp = currencyList.get(currentPosTop).get("name").toString();
+                    if (tvGraphicCurrencySecond.getText().equals(tmp)) {
+                        if (currentPosTop == maxPos) {
+                            currentPosTop = -1;
+                        }
+                        currentPosTop++;
+                        tvGraphicCurrencyFirst.setText(currencyList.get(currentPosTop).get("name").toString());
+                    } else {
+                        tvGraphicCurrencyFirst.setText(tmp);
+                    }
+                }
+                mapPosFirstTextView = currentPosTop;
+                tvGraphicCurrencyFirst.toggle();
+                break;
 
             case R.id.btnArrowLeftSecond:
+                imageViewGraphic.setAlpha(0f);
+                tvGraphicCurrencySecond.toggle();
                 if (currentPosBottom == 0) {
                     currentPosBottom = maxPos + 1;
                 }
@@ -173,10 +195,15 @@ public class GraphicsFragment
                     tvGraphicCurrencySecond.setText(tmp);
                 }
                 mapPosSecondTextView = currentPosBottom;
+                String name = tvGraphicCurrencySecond.getText().toString();
+                imageViewGraphic.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(name));
+                imageViewGraphic.animate().alpha(1f).setDuration(1000);
+                tvGraphicCurrencySecond.toggle();
                 break;
 
             case R.id.btnArrowRightSecond:
-            if (currentPosBottom == maxPos) {
+                tvGraphicCurrencySecond.toggle();
+                if (currentPosBottom == maxPos) {
                     currentPosBottom = -1;
                 }
                 if (currentPosBottom < maxPos) {
@@ -193,6 +220,7 @@ public class GraphicsFragment
                     }
                 }
                 mapPosSecondTextView = currentPosBottom;
+                tvGraphicCurrencySecond.toggle();
                 break;
         }
     }
