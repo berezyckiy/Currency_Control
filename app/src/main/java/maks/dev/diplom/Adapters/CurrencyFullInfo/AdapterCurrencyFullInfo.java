@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
@@ -43,12 +44,16 @@ public class AdapterCurrencyFullInfo
         String coefficient = currencyList.get(position).get("coefficient").toString();
         Double result = Double.parseDouble(tmpValue) * Double.parseDouble(coefficient);
         double roundedResult = new BigDecimal(result).setScale(2, RoundingMode.UP).doubleValue();
-        holder.currencyValue.setText(String.valueOf(roundedResult));
+        holder.currencyValue.setText(getFilteredResult(roundedResult));
         holder.currencyFullName.setText(currencyList.get(position).get("fullName").toString());
     }
 
     @Override
     public int getItemCount() {
         return currencyList.size();
+    }
+
+    private String getFilteredResult(Double result) {
+        return new DecimalFormat("#######.############").format(result);
     }
 }

@@ -8,8 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.R;
@@ -42,37 +43,13 @@ public class ActivityChooseValue
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_btnsubmit, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            case R.id.btnDone:
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("sum", tvTempSum.getText().toString());
-                intent.putExtra("name", getSupportActionBar() != null ? getSupportActionBar().getTitle() : "");
-                intent.putExtra("value", getIntent().getStringExtra("value"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
     private void initItems() {
         TextView btnClear = (TextView) findViewById(R.id.btnClear);
         btnClear.setOnClickListener(this);
         btnClear.setOnLongClickListener(this);
         tvTempSum = (TextView) findViewById(R.id.tvTempSum);
     }
+
 
     public void onClickButton1(View view) {
         printData("1");
@@ -111,7 +88,10 @@ public class ActivityChooseValue
     }
 
     public void onClickButtonPoint(View view) {
-        printData(".");
+        String tmpText = tvTempSum.getText().toString();
+        if (!tmpText.contains(".")) {
+            tvTempSum.setText(tmpText.concat("."));
+        }
     }
 
     public void onClickButtonZero(View view) {
@@ -148,6 +128,38 @@ public class ActivityChooseValue
         } else {
             tvTempSum.setText(tvTempSum.getText().toString().concat(btnNumber));
         }
+    }
+
+    private String getFilteredResult(String result) {
+        if (Double.parseDouble(result) != 0) {
+            return new DecimalFormat("#######.############").format(Double.parseDouble(result));
+        } else {
+            return "1";
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_btnsubmit, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.btnDone:
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("sum", getFilteredResult(tvTempSum.getText().toString()));
+                intent.putExtra("name", getSupportActionBar() != null ? getSupportActionBar().getTitle() : "");
+                intent.putExtra("value", getIntent().getStringExtra("value"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
