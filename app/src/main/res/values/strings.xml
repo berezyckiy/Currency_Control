@@ -16,7 +16,7 @@
     <string name="diagram">Diagram</string>
     <string name="choose_your_language">Choose your language</string>
     <string name="choose_your_theme">Choose your theme</string>
-    <string name="add_currency_please">Add currency, please!</string>
+    <string name="add_currency_please">Add currency!</string>
     <string name="no_currency_is_selected">No currency is selected</string>
     <string name="language_english">English</string>
     <string name="language_russian">Russian</string>

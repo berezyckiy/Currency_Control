@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.ActivityGraphics.ViewPagerAdapter;
+import maks.dev.diplom.Fragments.ActivityGraphics.GraphicDiagram;
 import maks.dev.diplom.Fragments.ActivityGraphics.GraphicLinear;
 import maks.dev.diplom.R;
 
@@ -41,6 +42,7 @@ public class ActivityGraphics
     private void initItems() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setTabTextColors(R.color.text_black, R.color.text_black);
         currencyOne = (HashMap) getIntent().getSerializableExtra("firstCurrency");
         currencyTwo = (HashMap) getIntent().getSerializableExtra("secondCurrency");
     }
@@ -78,7 +80,7 @@ public class ActivityGraphics
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new GraphicLinear(), getString(R.string.linear));
-//        adapter.addFragment(new GraphicDiagram(), getString(R.string.diagram));
+        adapter.addFragment(new GraphicDiagram(), getString(R.string.diagram));
         viewPager.setAdapter(adapter);
     }
 }

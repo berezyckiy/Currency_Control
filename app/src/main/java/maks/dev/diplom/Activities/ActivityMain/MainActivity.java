@@ -263,6 +263,9 @@ public class MainActivity
         defaultParams.height = 386;
         appBarLayout.setLayoutParams(defaultParams);
         collapsingFrameLayout.setVisibility(View.VISIBLE);
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+        | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
         imgViewMain.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(base));
         tvMainScreenBase.setText(base);
         tvMainScreenRate.setText(rate);
@@ -287,5 +290,11 @@ public class MainActivity
     @Override
     public void disableTitle() {
         enableToolbarTitle(false);
+    }
+
+    @Override
+    public void disableScrolling() {
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+        params.setScrollFlags(0);
     }
 }

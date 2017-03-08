@@ -17,14 +17,14 @@ import maks.dev.diplom.Interface.GraphicResponseListener;
  * Created by berezyckiy on 2/20/17.
  */
 
-public class GraphicResponce extends AsyncTask<Void, Void, Boolean> {
+public class GraphicResponse extends AsyncTask<Void, Void, Boolean> {
 
     private GraphicResponseListener mListener;
     private String base;
     private String symbol;
     private ArrayList<Map<String, String>> data;
 
-    public GraphicResponce(@NonNull GraphicResponseListener listener, String base, String symbol) {
+    public GraphicResponse(@NonNull GraphicResponseListener listener, String base, String symbol) {
         mListener = listener;
         this.base = base;
         this.symbol = symbol;
@@ -52,12 +52,16 @@ public class GraphicResponce extends AsyncTask<Void, Void, Boolean> {
                 }
                 jsonStr = hh.makeServiceCall(url + "20" + year + "-01-01" + "?base=" + base + "&symbols=" + symbol);
                 tmpMap = new HashMap<>();
-                JSONObject jsonObj = new JSONObject(jsonStr);
-                JSONObject objRates = jsonObj.getJSONObject("rates");
-                Log.d("myLogs", "year = " + year);
-                Log.d("myLogs", "rate = " + objRates);
-                tmpMap.put(symbol, objRates.isNull(symbol) ? "0" : objRates.getString(symbol));
-                data.add(tmpMap);
+                if (jsonStr != null) {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    JSONObject objRates = jsonObj.getJSONObject("rates");
+                    tmpMap.put(symbol, objRates.isNull(symbol) ? "0" : objRates.getString(symbol));
+                    data.add(tmpMap);
+                } else {
+                    tmpMap.put(symbol, "0");
+                    data.add(tmpMap);
+                }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

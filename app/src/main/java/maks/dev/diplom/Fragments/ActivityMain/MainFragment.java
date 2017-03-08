@@ -55,6 +55,8 @@ public class MainFragment
         void disableCollapse();
 
         void disableTitle();
+
+        void disableScrolling();
     }
 
     @Nullable
@@ -144,6 +146,7 @@ public class MainFragment
             } while (tmpCursor.moveToNext());
         }
         db.close();
+
         mAdapter.notifyDataSetChanged();
     }
 
@@ -160,6 +163,9 @@ public class MainFragment
                 getFullNameChosenCurrency(chosenCurrency));
         //TODO sdelat` proverky kogda nechego pokazivat`
 
+        if (listWithoutMainCurrency != null && listWithoutMainCurrency.size() <= 5) {
+            ((CollapseListener) getActivity()).disableScrolling();
+        }
     }
 
     @Override
@@ -170,6 +176,9 @@ public class MainFragment
         Snackbar.make(view, "Error loading data", Snackbar.LENGTH_SHORT).show();
         //TODO sdelat` proverky kogda nechego pokazivat`
 
+        if (listWithoutMainCurrency != null && listWithoutMainCurrency.size() <= 5) {
+            ((CollapseListener) getActivity()).disableScrolling();
+        }
     }
 
     @Override

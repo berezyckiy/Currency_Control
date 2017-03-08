@@ -1,13 +1,12 @@
 package maks.dev.diplom.Fragments.ActivityMain;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.LayerDrawable;
+import android.media.Image;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,12 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import maks.dev.diplom.Activities.ActivityGraphics.ActivityGraphics;
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
@@ -43,7 +40,8 @@ public class GraphicsFragment
     private ImageView btnArrowRightSecond;
     private List<Map<String, Object>> currencyList;
 
-    ImageView imageViewGraphic;
+    private ImageView imgViewCurrencyFirst;
+    private ImageView imgViewCurrencySecond;
 
     private View view;
     private int mapPosFirstTextView = 0;
@@ -61,7 +59,6 @@ public class GraphicsFragment
     }
 
     private void initItems() {
-        imageViewGraphic = (ImageView) view.findViewById(R.id.imageViewGraphic);
         tvGraphicCurrencyFirst = (MyTextView) view.findViewById(R.id.tvGraphicCurrencyFirst);
         tvGraphicCurrencyFirst.setDuration(1000);
         tvGraphicCurrencyFirst.setIsVisible(true);
@@ -72,6 +69,8 @@ public class GraphicsFragment
         btnArrowRightFirst = (ImageView) view.findViewById(R.id.btnArrowRightFirst);
         btnArrowLeftSecond = (ImageView) view.findViewById(R.id.btnArrowLeftSecond);
         btnArrowRightSecond = (ImageView) view.findViewById(R.id.btnArrowRightSecond);
+        imgViewCurrencyFirst = (ImageView) view.findViewById(R.id.imgViewGraphicCurrencyFirst);
+        imgViewCurrencySecond = (ImageView) view.findViewById(R.id.imgViewGraphicCurrencySecond);
         btnArrowLeftFirst.setOnClickListener(this);
         btnArrowRightFirst.setOnClickListener(this);
         btnArrowLeftSecond.setOnClickListener(this);
@@ -86,22 +85,28 @@ public class GraphicsFragment
             btnArrowRightFirst.setVisibility(View.INVISIBLE);
             btnArrowLeftSecond.setVisibility(View.INVISIBLE);
             btnArrowRightSecond.setVisibility(View.INVISIBLE);
+            imgViewCurrencyFirst.setVisibility(View.GONE);
+            imgViewCurrencySecond.setVisibility(View.GONE);
+            tvGraphicCurrencyFirst.setTextSize(20);
+            tvGraphicCurrencySecond.setTextSize(20);
             tvGraphicCurrencyFirst.setText(getString(R.string.add_currency_please));
             tvGraphicCurrencySecond.setText(getString(R.string.add_currency_please));
             return;
         }
         if (currencyList.size() == 1) {
             tvGraphicCurrencyFirst.setText(currencyList.get(0).get("name").toString());
-//            imageViewGraphic.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(0).get("name").toString()));
+            imgViewCurrencyFirst.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(0).get("name").toString()));
             btnArrowLeftSecond.setVisibility(View.INVISIBLE);
             btnArrowRightSecond.setVisibility(View.INVISIBLE);
+            imgViewCurrencySecond.setVisibility(View.GONE);
+            tvGraphicCurrencySecond.setTextSize(20);
             tvGraphicCurrencySecond.setText(getString(R.string.add_currency_please));
             return;
         }
         tvGraphicCurrencyFirst.setText(currencyList.get(0).get("name").toString());
-//        imageViewGraphic.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(0).get("name").toString()));
+        imgViewCurrencyFirst.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(0).get("name").toString()));
         tvGraphicCurrencySecond.setText(currencyList.get(1).get("name").toString());
-        imageViewGraphic.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(1).get("name").toString()));
+        imgViewCurrencySecond.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(1).get("name").toString()));
         isDataInTextViewCorrect = true;
     }
 
@@ -136,13 +141,14 @@ public class GraphicsFragment
         String tmp;
         switch (v.getId()) {
             case R.id.btnArrowLeftFirst:
+                imgViewCurrencyFirst.setAlpha(0f);
                 tvGraphicCurrencyFirst.toggle();
                 if (currentPosTop == 0) {
                     currentPosTop = maxPos + 1;
                 }
                 currentPosTop--;
                 tmp = currencyList.get(currentPosTop).get("name").toString();
-                if (tvGraphicCurrencySecond.getText().equals(tmp)) {
+                if (tvGraphicCurrencySecond.getText().toString().equals(tmp)) {
                     if (currentPosTop == 0) {
                         currentPosTop = maxPos + 1;
                     }
@@ -152,10 +158,13 @@ public class GraphicsFragment
                     tvGraphicCurrencyFirst.setText(tmp);
                 }
                 mapPosFirstTextView = currentPosTop;
+                imgViewCurrencyFirst.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(tvGraphicCurrencyFirst.getText().toString()));
+                imgViewCurrencyFirst.animate().alpha(1).setDuration(1000);
                 tvGraphicCurrencyFirst.toggle();
                 break;
 
             case R.id.btnArrowRightFirst:
+                imgViewCurrencyFirst.setAlpha(0f);
                 tvGraphicCurrencyFirst.toggle();
                 if (currentPosTop == maxPos) {
                     currentPosTop = -1;
@@ -163,7 +172,7 @@ public class GraphicsFragment
                 if (currentPosTop < maxPos) {
                     currentPosTop++;
                     tmp = currencyList.get(currentPosTop).get("name").toString();
-                    if (tvGraphicCurrencySecond.getText().equals(tmp)) {
+                    if (tvGraphicCurrencySecond.getText().toString().equals(tmp)) {
                         if (currentPosTop == maxPos) {
                             currentPosTop = -1;
                         }
@@ -174,18 +183,20 @@ public class GraphicsFragment
                     }
                 }
                 mapPosFirstTextView = currentPosTop;
+                imgViewCurrencyFirst.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(tvGraphicCurrencyFirst.getText().toString()));
+                imgViewCurrencyFirst.animate().alpha(1).setDuration(1000);
                 tvGraphicCurrencyFirst.toggle();
                 break;
 
             case R.id.btnArrowLeftSecond:
-                imageViewGraphic.setAlpha(0f);
+                imgViewCurrencySecond.setAlpha(0f);
                 tvGraphicCurrencySecond.toggle();
                 if (currentPosBottom == 0) {
                     currentPosBottom = maxPos + 1;
                 }
                 currentPosBottom--;
                 tmp = currencyList.get(currentPosBottom).get("name").toString();
-                if (tvGraphicCurrencyFirst.getText().equals(tmp)) {
+                if (tvGraphicCurrencyFirst.getText().toString().equals(tmp)) {
                     if (currentPosBottom == 0) {
                         currentPosBottom = maxPos + 1;
                     }
@@ -195,13 +206,13 @@ public class GraphicsFragment
                     tvGraphicCurrencySecond.setText(tmp);
                 }
                 mapPosSecondTextView = currentPosBottom;
-                String name = tvGraphicCurrencySecond.getText().toString();
-                imageViewGraphic.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(name));
-                imageViewGraphic.animate().alpha(1f).setDuration(1000);
+                imgViewCurrencySecond.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(tvGraphicCurrencySecond.getText().toString()));
+                imgViewCurrencySecond.animate().alpha(1f).setDuration(1000);
                 tvGraphicCurrencySecond.toggle();
                 break;
 
             case R.id.btnArrowRightSecond:
+                imgViewCurrencySecond.setAlpha(0f);
                 tvGraphicCurrencySecond.toggle();
                 if (currentPosBottom == maxPos) {
                     currentPosBottom = -1;
@@ -209,7 +220,7 @@ public class GraphicsFragment
                 if (currentPosBottom < maxPos) {
                     currentPosBottom++;
                     tmp = currencyList.get(currentPosBottom).get("name").toString();
-                    if (tvGraphicCurrencyFirst.getText().equals(tmp)) {
+                    if (tvGraphicCurrencyFirst.getText().toString().equals(tmp)) {
                         if (currentPosBottom == maxPos) {
                             currentPosBottom = -1;
                         }
@@ -220,6 +231,8 @@ public class GraphicsFragment
                     }
                 }
                 mapPosSecondTextView = currentPosBottom;
+                imgViewCurrencySecond.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(tvGraphicCurrencySecond.getText().toString()));
+                imgViewCurrencySecond.animate().alpha(1f).setDuration(1000);
                 tvGraphicCurrencySecond.toggle();
                 break;
         }

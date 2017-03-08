@@ -35,7 +35,7 @@ import java.util.Map;
 
 import maks.dev.diplom.Interface.GraphicResponseListener;
 import maks.dev.diplom.R;
-import maks.dev.diplom.network.GraphicResponce;
+import maks.dev.diplom.network.GraphicResponse;
 
 /**
  * Created by berezyckiy on 2/11/17.
@@ -64,30 +64,18 @@ public class GraphicLinear
         symbol = currencyTwo.get("name").toString();
 
         symbolRates = new ArrayList<>();
-        new GraphicResponce(this, base, symbol).execute();
+        new GraphicResponse(this, base, symbol).execute();
         mChart = (LineChart) view.findViewById(R.id.chart1);
         mChart.setDrawGridBackground(false);
 
-        // no description text
         mChart.getDescription().setEnabled(false);
 
-        // enable touch gestures
         mChart.setTouchEnabled(true);
 
-        // enable scaling and dragging
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
-        // mChart.setScaleXEnabled(true);
-        // mChart.setScaleYEnabled(true);
 
-        // if disabled, scaling can be done on x- and y-axis separately
         mChart.setPinchZoom(true);
-
-        // set an alternative background color
-        // mChart.setBackgroundColor(Color.GRAY);
-
-        // create a custom MarkerView (extend MarkerView) and specify the layout
-        // to use for it
 
         LimitLine llXAxis = new LimitLine(10f, "Index 10");
         llXAxis.setLineWidth(4f);
@@ -98,37 +86,24 @@ public class GraphicLinear
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAxisMinimum(0f);
-//        xAxis.setAxisMaximum(17f);
         xAxis.enableGridDashedLine(10f, 10f, 0f);
 
         YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-//        leftAxis.addLimitLine(ll2);
+        leftAxis.removeAllLimitLines();
         leftAxis.setAxisMinimum(0f);
-        //leftAxis.setYOffset(20f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(false);
 
-        // limit lines are drawn behind data (and not on top)
         leftAxis.setDrawLimitLinesBehindData(true);
 
         mChart.getAxisRight().setEnabled(false);
-        //mChart.getViewPortHandler().setMaximumScaleY(2f);
-        //mChart.getViewPortHandler().setMaximumScaleX(2f);
-
-        // add data
-//        setData(10);
 
         mChart.animateX(2500);
-        //mChart.invalidate();
 
-        // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
 
-        // modify the legend ...
         l.setForm(Legend.LegendForm.LINE);
 
-        // mChart.invalidate();
         return view;
     }
 
@@ -189,7 +164,6 @@ public class GraphicLinear
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
         } else {
-            // create a dataset and give it a type
             set1 = new LineDataSet(values, "Dependency");
 
             set1.enableDashedLine(10f, 5f, 0f);
@@ -206,7 +180,6 @@ public class GraphicLinear
             set1.setFormSize(15.f);
 
             if (Utils.getSDKInt() >= 18) {
-                // fill drawable only supported on api level 18 and above
                 Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.graphic_linear_fade_red);
                 set1.setFillDrawable(drawable);
             } else {
@@ -214,7 +187,7 @@ public class GraphicLinear
             }
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1); // add the datasets
+            dataSets.add(set1);
             LineData data = new LineData(dataSets);
             XAxis xAxis = mChart.getXAxis();
             YAxis yAxis = mChart.getAxisLeft();
@@ -231,7 +204,6 @@ public class GraphicLinear
                 }
             });
 
-            // set data
             mChart.setData(data);
             mChart.invalidate();
         }
