@@ -4,91 +4,95 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black" />
-
     <LinearLayout
         android:id="@+id/dialogTheme"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/hatching"
+        android:layout_height="60dp"
         android:clickable="true"
         android:onClick="showDialogTheme">
 
-        <TextView
+        <maks.dev.diplom.mytextview.MyTextView
+            android:id="@+id/tvTheme"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="left|center_vertical"
             android:text="@string/theme"
-            android:textColor="@android:color/black"
-            android:textSize="40sp" />
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black" />
 
     <LinearLayout
         android:id="@+id/dialogLanguage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/language"
+        android:layout_height="60dp"
         android:clickable="true"
         android:onClick="showDialogLanguage">
 
-        <TextView
+        <maks.dev.diplom.mytextview.MyTextView
+            android:id="@+id/tvLanguage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="left|center_vertical"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="10"
+            android:shadowDy="10"
+            android:shadowRadius="5"
             android:text="@string/language"
-            android:textColor="@android:color/holo_orange_dark"
-            android:textSize="40sp" />
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black" />
 
     <LinearLayout
         android:id="@+id/dialogDefault"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/default_ic"
+        android:layout_height="60dp"
         android:clickable="true"
         android:onClick="showDialogSetDefaultSettings">
 
-        <TextView
+        <maks.dev.diplom.mytextview.MyTextView
+            android:id="@+id/tvDefault"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/set_default"
-            android:textColor="@android:color/holo_orange_dark"
-            android:textSize="40sp" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="left|center_vertical"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="10"
+            android:shadowDy="10"
+            android:shadowRadius="5"
+            android:text="@string/title_dialog_default"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/about"
+        android:layout_height="60dp"
         android:clickable="true"
         android:onClick="showDialogAbout">
 
-        <TextView
+        <maks.dev.diplom.mytextview.MyTextView
+            android:id="@+id/tvAbout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="left|center_vertical"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="10"
+            android:shadowDy="10"
+            android:shadowRadius="5"
             android:text="@string/about"
-            android:textColor="@android:color/holo_orange_dark"
-            android:textSize="40sp" />
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

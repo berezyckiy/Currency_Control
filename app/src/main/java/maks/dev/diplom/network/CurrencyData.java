@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -42,7 +41,7 @@ public class CurrencyData
         currencyList = new ArrayList<>();
         db.open();
         checkExistDataDB();
-        mListener.showProgressBar();
+        mListener.showProgressDialog();
     }
 
     private void checkExistDataDB() {
@@ -101,7 +100,7 @@ public class CurrencyData
         } else {
             mListener.onErrorLoadingData();
         }
-        mListener.hideProgressBar();
+        mListener.hideProgressDialog();
     }
 
 }

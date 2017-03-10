@@ -1,12 +1,11 @@
 package maks.dev.diplom.Dialogs;
 
+import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import maks.dev.diplom.BuildConfig;
 import maks.dev.diplom.R;
@@ -18,24 +17,16 @@ import maks.dev.diplom.R;
 public class DialogAbout
         extends DialogFragment {
 
-    private View view;
-    private TextView tvAppVersion;
-
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.dialog_about, container, false);
-        iniItems();
-        getAppVersion();
-        return view;
-    }
-
-    private void iniItems() {
-        tvAppVersion = (TextView) view.findViewById(R.id.tvAppVersion);
-        getDialog().setTitle(getString(R.string.about));
-    }
-
-    private void getAppVersion() {
-        tvAppVersion.setText(BuildConfig.VERSION_NAME);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
+        builder.title(R.string.currency_exchange);
+        String version = getString(R.string.version);
+        String contacts = getString(R.string.contacts);
+        String developer = getString(R.string.developer);
+        builder.content(version + BuildConfig.VERSION_NAME + "\n" + contacts + "\n" + developer);
+        builder.positiveText(R.string.button_close);
+        return builder.build();
     }
 }

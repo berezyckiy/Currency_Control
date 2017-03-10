@@ -9,7 +9,7 @@ public interface CurrencyDataListener {
 
     void onErrorLoadingData();
 
-    void showProgressBar();
+    void showProgressDialog();
 
-    void hideProgressBar();
+    void hideProgressDialog();
 }

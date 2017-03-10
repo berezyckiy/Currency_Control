@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.CurrencyFullInfo.AdapterCurrencyFullInfo;
+import maks.dev.diplom.BuildConfig;
 import maks.dev.diplom.Data.DB;
 import maks.dev.diplom.Dialogs.DialogLoading;
 import maks.dev.diplom.Interface.CurrencyDataListener;
@@ -150,6 +153,20 @@ public class MainFragment
         mAdapter.notifyDataSetChanged();
     }
 
+    private void showSnackBar() {
+        Snackbar snackbar = Snackbar.make(view, R.string.error_loading, Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.button_error_loading, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(getActivity())
+                        .title(R.string.error_loading)
+                        .content(R.string.reason_error_loading)
+                        .positiveText(R.string.button_close).show();
+            }
+        });
+        snackbar.show();
+    }
+
     @Override
     public void onRefresh() {
         loadData();
@@ -173,7 +190,8 @@ public class MainFragment
         updateList();
         ((CollapseListener) getActivity()).enableCollapse(chosenCurrency, chosenSum,
                 getFullNameChosenCurrency(chosenCurrency));
-        Snackbar.make(view, "Error loading data", Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(view, getString(R.string.error_loading), Snackbar.LENGTH_SHORT).show();
+        showSnackBar();
         //TODO sdelat` proverky kogda nechego pokazivat`
 
         if (listWithoutMainCurrency != null && listWithoutMainCurrency.size() <= 5) {
@@ -182,12 +200,12 @@ public class MainFragment
     }
 
     @Override
-    public void showProgressBar() {
+    public void showProgressDialog() {
         dialogLoading.show(getActivity().getSupportFragmentManager(), "DialogLoading");
     }
 
     @Override
-    public void hideProgressBar() {
+    public void hideProgressDialog() {
         dialogLoading.dismissAllowingStateLoss();
     }
 

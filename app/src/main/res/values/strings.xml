@@ -3,8 +3,9 @@
 
     <string name="home_navigation_drawer_open">Open navigation drawer</string>
     <string name="home_navigation_drawer_close">Close navigation drawer</string>
-    <string name="submit">Submit</string>
-    <string name="cancel">Cancel</string>
+    <string name="button_agree">AGREE</string>
+    <string name="button_disagree">DISAGREE</string>
+    <string name="button_close">CLOSE</string>
     <string name="theme">Theme</string>
     <string name="language">Language</string>
     <string name="currency_exchange">Currency exchange</string>
@@ -14,18 +15,36 @@
     <string name="settings">Settings</string>
     <string name="linear">Linear</string>
     <string name="diagram">Diagram</string>
-    <string name="choose_your_language">Choose your language</string>
-    <string name="choose_your_theme">Choose your theme</string>
+    <string name="choose_your_language">Choose language</string>
+    <string name="choose_your_theme">Choose theme</string>
     <string name="add_currency_please">Add currency!</string>
     <string name="no_currency_is_selected">No currency is selected</string>
     <string name="language_english">English</string>
     <string name="language_russian">Russian</string>
     <string name="theme_default">Default</string>
     <string name="theme_light">Light</string>
-    <string name="set_default">Default</string>
-    <string name="question_set_default">Are your sure set default settings</string>
+    <string name="title_dialog_default">Default</string>
+    <string name="question_set_default">Are your sure set default settings?</string>
     <string name="about">About</string>
     <string name="check_all">Check all</string>
     <string name="uncheck_all">Uncheck all</string>
     <string name="last_updated">"Last updated: "</string>
+    <string name="progress_dialog">Download data</string>
+    <string name="please_wait">Please wait</string>
+    <string name="error_loading">Error download data</string>
+    <string name="button_error_loading">MORE</string>
+    <string name="reason_error_loading">Check your internet connection. Reboot your system. If not working contact with developer.</string>
+    <string name="version">"Version: "</string>
+    <string name="contacts">Email: hovinmaksim@gmail.com</string>
+    <string name="developer">Hovin Maksim © 2017</string>
+
+    <string-array name="themes">
+        <item>Default</item>
+        <item>Colors</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>Русский</item>
+    </string-array>
 </resources>

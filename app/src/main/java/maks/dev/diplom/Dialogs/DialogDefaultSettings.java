@@ -1,13 +1,13 @@
 package maks.dev.diplom.Dialogs;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import maks.dev.diplom.Interface.DialogListener;
 import maks.dev.diplom.R;
@@ -17,26 +17,25 @@ import maks.dev.diplom.R;
  */
 
 public class DialogDefaultSettings
-        extends DialogFragment
-        implements View.OnClickListener {
+        extends DialogFragment {
 
-    private View view;
     private DialogListener mListener;
 
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.dialog_default, container, false);
-        initItems();
-        getDialog().setTitle(getString(R.string.choose_your_language));
-        return view;
-    }
-
-    private void initItems() {
-        Button btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
-        Button btnCancel = (Button) view.findViewById(R.id.btnCancel);
-        btnSubmit.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
+        builder.title(R.string.title_dialog_default);
+        builder.content(R.string.question_set_default);
+        builder.onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                mListener.onFinishSetDefaultDialog("yes");
+            }
+        });
+        builder.negativeText(R.string.button_disagree);
+        builder.positiveText(R.string.button_agree);
+        return builder.build();
     }
 
     @Override
@@ -46,19 +45,6 @@ public class DialogDefaultSettings
             mListener = (DialogListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement DialogListener");
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnSubmit:
-                dismiss();
-                mListener.onFinishSetDefaultDialog("yes");
-                break;
-            case R.id.btnCancel:
-                dismiss();
-                break;
         }
     }
 }
