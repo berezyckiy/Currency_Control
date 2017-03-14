@@ -34,6 +34,7 @@ public class GraphicResponse extends AsyncTask<Void, Void, Boolean> {
     protected void onPreExecute() {
         super.onPreExecute();
         data = new ArrayList<>();
+        mListener.showProgressDialog();
     }
 
     @Override
@@ -61,7 +62,6 @@ public class GraphicResponse extends AsyncTask<Void, Void, Boolean> {
                     tmpMap.put(symbol, "0");
                     data.add(tmpMap);
                 }
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -78,5 +78,6 @@ public class GraphicResponse extends AsyncTask<Void, Void, Boolean> {
         } else {
             mListener.onErrorLoading();
         }
+        mListener.hideProgressDialog();
     }
 }

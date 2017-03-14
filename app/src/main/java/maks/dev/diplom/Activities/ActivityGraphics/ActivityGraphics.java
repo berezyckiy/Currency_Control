@@ -14,7 +14,6 @@ import java.util.HashMap;
 
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.ActivityGraphics.ViewPagerAdapter;
-import maks.dev.diplom.Fragments.ActivityGraphics.GraphicDiagram;
 import maks.dev.diplom.Fragments.ActivityGraphics.GraphicLinear;
 import maks.dev.diplom.R;
 
@@ -70,7 +69,9 @@ public class ActivityGraphics
                 finish();
                 break;
             case R.id.btnDone:
-                startActivity(new Intent(this, MainActivity.class));
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
                 break;
         }
@@ -80,7 +81,6 @@ public class ActivityGraphics
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new GraphicLinear(), getString(R.string.linear));
-        adapter.addFragment(new GraphicDiagram(), getString(R.string.diagram));
         viewPager.setAdapter(adapter);
     }
 }

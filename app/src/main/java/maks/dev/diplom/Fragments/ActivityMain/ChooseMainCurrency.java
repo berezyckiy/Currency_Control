@@ -1,6 +1,7 @@
 package maks.dev.diplom.Fragments.ActivityMain;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -58,8 +59,6 @@ public class ChooseMainCurrency
         AdapterCurrencyNameInfo mAdapter = new AdapterCurrencyNameInfo(this, currencyList);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerViewChooseMainCurrency.setLayoutManager(layoutManager);
-//        recyclerViewChooseMainCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         recyclerViewChooseMainCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseMainCurrency.setAdapter(mAdapter);
     }
@@ -71,6 +70,7 @@ public class ChooseMainCurrency
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(20);
             textView.setText(getString(R.string.no_currency_is_selected));
+            textView.setTextColor(Color.WHITE);
             linLayoutMainCurrency.addView(textView, lParams);
         }
     }

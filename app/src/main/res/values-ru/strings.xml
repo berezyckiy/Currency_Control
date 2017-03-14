@@ -14,11 +14,10 @@
     <string name="graphics">Графики</string>
     <string name="settings">Настройки</string>
     <string name="linear">Линейный</string>
-    <string name="diagram">Диаграмма</string>
     <string name="choose_your_language">Выберите язык</string>
     <string name="choose_your_theme">Выберите тему</string>
     <string name="add_currency_please">Добавьте валюту!</string>
-    <string name="no_currency_is_selected">Ничего не выбрано</string>
+    <string name="no_currency_is_selected">Нет выбранных валют.</string>
     <string name="language_english">English</string>
     <string name="language_russian">Русский</string>
     <string name="theme_default">Стандартная</string>
@@ -36,6 +35,7 @@
     <string name="reason_error_loading">Проверьте соединение с интернетом. Попробуйте перезагрузить телефон. Если проблема не устранена, свяжитесь с разработчиком.</string>
     <string name="version">"Версия: "</string>
     <string name="contacts">Email: hovinmaksim@gmail.com</string>
+    <string name="byn_not_available">В программе используется бесплатный сервер, который не имеет информации о BYN, в следующей версии это будет исправлено. Спасибо за понимание.</string>
 
 
     <string-array name="themes">

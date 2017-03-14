@@ -1,6 +1,7 @@
 package maks.dev.diplom.Activities.ActivityMain;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -21,7 +22,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import maks.dev.diplom.Data.DB;
 import maks.dev.diplom.Dialogs.DialogAbout;
@@ -191,6 +195,7 @@ public class MainActivity
     public void onFinishSetDefaultDialog(String result) {
         if (result.equals("yes")) {
             DB db = new DB(this);
+            // TODO change works with bd, dont need to dellAllData, after its uses request on server, its limited
             db.open();
             db.delAllData();
             db.close();

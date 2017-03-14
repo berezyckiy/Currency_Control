@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import maks.dev.diplom.Dialogs.DialogLoading;
 import maks.dev.diplom.Interface.GraphicResponseListener;
 import maks.dev.diplom.R;
 import maks.dev.diplom.network.GraphicResponse;
@@ -51,6 +52,7 @@ public class GraphicLinear
 
     private ArrayList<Entry> values = new ArrayList<>();
     private ArrayList<Map<String, String>> symbolRates;
+    private DialogLoading dialogLoading;
 
     @Nullable
     @Override
@@ -62,6 +64,7 @@ public class GraphicLinear
         HashMap currencyTwo = (HashMap) getActivity().getIntent().getSerializableExtra("secondCurrency");
         String base = currencyOne.get("name").toString();
         symbol = currencyTwo.get("name").toString();
+        dialogLoading = new DialogLoading();
 
         symbolRates = new ArrayList<>();
         new GraphicResponse(this, base, symbol).execute();
@@ -220,5 +223,17 @@ public class GraphicLinear
     @Override
     public void onErrorLoading() {
         Snackbar.make(view, "Error loading", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressDialog() {
+        if (!dialogLoading.isAdded()) {
+            dialogLoading.show(getActivity().getSupportFragmentManager(), "DialogLoading");
+        }
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        dialogLoading.dismissAllowingStateLoss();
     }
 }

@@ -1,12 +1,10 @@
 package maks.dev.diplom.Fragments.ActivityMain;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -116,12 +116,35 @@ public class GraphicsFragment
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    private void showSnackBar() {
+        if (view.isShown()) {
+            Snackbar snackbar = Snackbar.make(view, R.string.error_loading, Snackbar.LENGTH_LONG);
+            if (!snackbar.isShownOrQueued()) {
+                snackbar.setAction(R.string.button_error_loading, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new MaterialDialog.Builder(getActivity())
+                                .title(R.string.error_loading)
+                                .content(R.string.byn_not_available)
+                                .positiveText(R.string.button_close).show();
+                    }
+                });
+            }
+            snackbar.show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.btnDone:
                 if (!isDataInTextViewCorrect) {
                     Snackbar.make(view, getString(R.string.add_currency_please), Snackbar.LENGTH_SHORT).show();
+                    break;
+                }
+                if (tvGraphicCurrencyFirst.getText().toString().equals("BYN")
+                        || tvGraphicCurrencySecond.getText().toString().equals("BYN")) {
+                    showSnackBar();
                     break;
                 }
                 Intent intent = new Intent(getActivity(), ActivityGraphics.class);

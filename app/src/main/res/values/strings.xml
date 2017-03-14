@@ -14,11 +14,10 @@
     <string name="graphics">Graphics</string>
     <string name="settings">Settings</string>
     <string name="linear">Linear</string>
-    <string name="diagram">Diagram</string>
     <string name="choose_your_language">Choose language</string>
     <string name="choose_your_theme">Choose theme</string>
     <string name="add_currency_please">Add currency!</string>
-    <string name="no_currency_is_selected">No currency is selected</string>
+    <string name="no_currency_is_selected">No selected currencies</string>
     <string name="language_english">English</string>
     <string name="language_russian">Russian</string>
     <string name="theme_default">Default</string>
@@ -37,6 +36,7 @@
     <string name="version">"Version: "</string>
     <string name="contacts">Email: hovinmaksim@gmail.com</string>
     <string name="developer">Hovin Maksim © 2017</string>
+    <string name="byn_not_available">In program using free server and it does not have information about BYN, it will be fixed in next versions. Thank you for understanding.</string>
 
     <string-array name="themes">
         <item>Default</item>
