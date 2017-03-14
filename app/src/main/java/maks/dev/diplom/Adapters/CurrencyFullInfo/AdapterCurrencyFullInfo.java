@@ -5,12 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.DeflaterOutputStream;
 
 import maks.dev.diplom.R;
 import maks.dev.diplom.utils.PreferenceUtils;
@@ -43,8 +40,7 @@ public class AdapterCurrencyFullInfo
         String tmpValue = currencyList.get(position).get("value").toString();
         String coefficient = currencyList.get(position).get("coefficient").toString();
         Double result = Double.parseDouble(tmpValue) * Double.parseDouble(coefficient);
-        double roundedResult = new BigDecimal(result).setScale(2, RoundingMode.UP).doubleValue();
-        holder.currencyValue.setText(getFilteredResult(roundedResult));
+        holder.currencyValue.setText(getFilteredResult(result));
         holder.currencyFullName.setText(currencyList.get(position).get("fullName").toString());
     }
 
@@ -54,6 +50,6 @@ public class AdapterCurrencyFullInfo
     }
 
     private String getFilteredResult(Double result) {
-        return new DecimalFormat("#######.############").format(result);
+        return new DecimalFormat("#,###.##").format(result);
     }
 }

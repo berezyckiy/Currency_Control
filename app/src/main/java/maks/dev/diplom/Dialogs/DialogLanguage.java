@@ -39,7 +39,7 @@ public class DialogLanguage
                 if (text.toString().equals("English")) {
                     mListener.onFinishLanguageDialog("en");
                 } else {
-                    mListener.onFinishLanguageDialog("ru");
+                    mListener.onFinishLanguageDialog("ru_RU");
                 }
             }
         });

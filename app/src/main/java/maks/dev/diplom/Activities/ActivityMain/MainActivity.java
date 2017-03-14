@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 import maks.dev.diplom.Data.DB;
@@ -100,10 +101,8 @@ public class MainActivity
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (collapsingToolbarLayout.getHeight() + verticalOffset < collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
-//                    tvToolbar.animate().alpha(1).setDuration(600);
                     tvToolbar.setAlpha(1);
                 } else {
-//                    tvToolbar.animate().alpha(0).setDuration(600);
                     tvToolbar.setAlpha(0);
                 }
             }
@@ -135,7 +134,7 @@ public class MainActivity
 
     private void setApplicationLocale() {
         if (!PreferenceUtils.isContainsKey(this, "appLanguage")) {
-            PreferenceUtils.saveString(this, "appLanguage", "en");
+            PreferenceUtils.saveString(this, "appLanguage", String.valueOf(Locale.getDefault()));
         } else {
             String mLang = PreferenceUtils.getString(this, "appLanguage", "");
             Locale mNewLocale = new Locale(mLang);
@@ -251,6 +250,13 @@ public class MainActivity
         }
     }
 
+    private String getFilteredSum(String result) {
+        if (Double.parseDouble(result) != 0) {
+            return new DecimalFormat("#,###.##").format(Double.parseDouble(result));
+        } else {
+            return "1";
+        }
+    }
 
     @Override
     public void enableCollapse(String base, String rate, String baseFullName) {
@@ -268,11 +274,11 @@ public class MainActivity
         | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
         imgViewMain.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(base));
         tvMainScreenBase.setText(base);
-        tvMainScreenRate.setText(rate);
+        tvMainScreenRate.setText(getFilteredSum(rate));
         tvMainScreenDate.setText(getString(R.string.last_updated).concat(PreferenceUtils.getString(this, "date", "0")));
         tvMainScreenBaseFullName.setText(baseFullName);
         tvToolbar.setAlpha(0);
-        tvToolbar.setText(base + " " + rate);
+        tvToolbar.setText(base + " " + getFilteredSum(rate));
         tvToolbar.setVisibility(View.VISIBLE);
         appBarLayout.addOnOffsetChangedListener(mListener);
     }

@@ -10,8 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.R;
 
@@ -130,14 +128,6 @@ public class ActivityChooseValue
         }
     }
 
-    private String getFilteredResult(String result) {
-        if (Double.parseDouble(result) != 0) {
-            return new DecimalFormat("#######.############").format(Double.parseDouble(result));
-        } else {
-            return "1";
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_btnsubmit, menu);
@@ -152,7 +142,7 @@ public class ActivityChooseValue
                 break;
             case R.id.btnDone:
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("sum", getFilteredResult(tvTempSum.getText().toString()));
+                intent.putExtra("sum", tvTempSum.getText().toString());
                 intent.putExtra("name", getSupportActionBar() != null ? getSupportActionBar().getTitle() : "");
                 intent.putExtra("value", getIntent().getStringExtra("value"));
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

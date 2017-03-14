@@ -180,8 +180,10 @@ public class GraphicLinear
             set1.setFormSize(15.f);
 
             if (Utils.getSDKInt() >= 18) {
-                Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.graphic_linear_fade_red);
-                set1.setFillDrawable(drawable);
+                if (getActivity() != null) {
+                    Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.graphic_linear_fade_red);
+                    set1.setFillDrawable(drawable);
+                }
             } else {
                 set1.setFillColor(Color.BLACK);
             }
