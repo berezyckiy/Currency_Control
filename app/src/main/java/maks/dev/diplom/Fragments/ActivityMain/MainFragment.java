@@ -1,6 +1,7 @@
 package maks.dev.diplom.Fragments.ActivityMain;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -9,9 +10,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -50,6 +54,7 @@ public class MainFragment
     private AdapterCurrencyFullInfo mAdapter;
     private DB db;
     private DialogLoading dialogLoading;
+    private TextView tvNothingToShow;
 
     private String chosenCurrency;
     private String chosenSum;
@@ -107,6 +112,7 @@ public class MainFragment
     }
 
     private void initItems() {
+        tvNothingToShow = (TextView) view.findViewById(R.id.tvNothingToShow);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(this);
@@ -171,6 +177,12 @@ public class MainFragment
         db.close();
 
         mAdapter.notifyDataSetChanged();
+
+        if (currencyList.size() < 2) {
+            ((CollapseListener) getActivity()).disableCollapse();
+            tvNothingToShow.setVisibility(View.VISIBLE);
+            return;
+        }
 
         if (getActivity() != null) {
             ((CollapseListener) getActivity()).enableCollapse(chosenCurrency, chosenSum,

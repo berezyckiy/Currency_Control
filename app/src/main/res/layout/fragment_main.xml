@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textColor="@color/text_shadow_white"
+        android:text="@string/add_more_than_2_currencies"
+        android:id="@+id/tvNothingToShow" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"

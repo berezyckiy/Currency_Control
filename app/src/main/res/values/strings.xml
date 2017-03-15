@@ -37,6 +37,7 @@
     <string name="contacts">Email: hovinmaksim@gmail.com</string>
     <string name="developer">Hovin Maksim © 2017</string>
     <string name="byn_not_available">In program using free server and it does not have information about BYN, it will be fixed in next versions. Thank you for understanding.</string>
+    <string name="add_more_than_2_currencies">Add more than 2 currencies</string>
 
     <string-array name="themes">
         <item>Default</item>

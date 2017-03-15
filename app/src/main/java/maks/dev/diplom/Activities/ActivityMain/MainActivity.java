@@ -298,7 +298,6 @@ public class MainActivity
 
     @Override
     public void disableCollapse() {
-        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         CoordinatorLayout.LayoutParams customParams = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         appBarLayout.setLayoutParams(customParams);
         collapsingFrameLayout.setVisibility(View.GONE);
