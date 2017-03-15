@@ -1,5 +1,6 @@
 package maks.dev.diplom.Activities.ActivityMain;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -151,14 +154,12 @@ public class MainActivity
 
     private void changeTheme(Integer themeId) {
         PreferenceUtils.saveInteger(this, "appTheme", themeId);
-        finish();
-        startActivity(new Intent(this, this.getClass()));
+        this.recreate();
     }
 
     private void changeLocale(String mLang) {
         PreferenceUtils.saveString(this, "appLanguage", mLang);
-        finish();
-        startActivity(new Intent(this, this.getClass()));
+        this.recreate();
     }
 
     public void showDialogTheme(View v) {
@@ -195,13 +196,20 @@ public class MainActivity
     public void onFinishSetDefaultDialog(String result) {
         if (result.equals("yes")) {
             DB db = new DB(this);
-            // TODO change works with bd, dont need to dellAllData, after its uses request on server, its limited
             db.open();
-            db.delAllData();
+            ContentValues cv;
+            Cursor c = db.getAllData();
+            if (c.moveToFirst()) {
+                do {
+                    cv = new ContentValues();
+                    cv.put("isChecked", "true");
+                    db.updateRec(cv, Integer.parseInt(c.getString(c.getColumnIndex("id"))));
+                } while (c.moveToNext());
+            }
             db.close();
             if (PreferenceUtils.isContainsKey(this, "appTheme") || PreferenceUtils.isContainsKey(this, "appLanguage")) {
                 PreferenceUtils.saveInteger(this, "appTheme", R.style.AppTheme);
-                PreferenceUtils.saveString(this, "appLanguage", "en");
+                PreferenceUtils.saveString(this, "appLanguage", String.valueOf(Locale.getDefault().getDisplayLanguage()));
                 finish();
                 startActivity(new Intent(this, this.getClass()));
             }

@@ -39,6 +39,10 @@ public class DB {
         mSQLiteDatabase.insert("currency", null, cv);
     }
 
+    public void updateRec(ContentValues contentValues, Integer id) {
+        mSQLiteDatabase.update("currency", contentValues, "id=" + id, null);
+    }
+
     public Cursor getAllData() {
         return mSQLiteDatabase.query("currency", null, null, null, null, null, null);
     }

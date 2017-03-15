@@ -37,7 +37,7 @@ public class DialogLanguage
             @Override
             public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
                 if (text.toString().equals("English")) {
-                    mListener.onFinishLanguageDialog("en");
+                    mListener.onFinishLanguageDialog("en_US");
                 } else {
                     mListener.onFinishLanguageDialog("ru_RU");
                 }
