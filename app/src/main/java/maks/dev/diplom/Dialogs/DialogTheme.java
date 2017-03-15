@@ -32,7 +32,7 @@ public class DialogTheme
                 if (position == 0) {
                     mListener.onFinishThemeDialog(R.style.AppTheme);
                 } else {
-                    mListener.onFinishThemeDialog(R.style.AppThemeWhite);
+                    mListener.onFinishThemeDialog(R.style.AppThemeColors);
                 }
             }
         });

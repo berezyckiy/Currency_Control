@@ -4,20 +4,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import maks.dev.diplom.Interface.DialogListener;
 import maks.dev.diplom.R;
-import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
  * Created by berezyckiy on 2/14/17.

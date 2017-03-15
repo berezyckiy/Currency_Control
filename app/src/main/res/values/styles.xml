@@ -11,7 +11,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppThemeWhite" parent="AppThemeBase">
+    <style name="AppThemeColors" parent="AppThemeBase">
         <item name="colorPrimary">@color/colorPrimaryCustom</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCustom</item>
         <item name="colorAccent">@color/colorAccentCustom</item>

@@ -3,9 +3,9 @@
     <color name="colorPrimary">#FAFAFA</color>
     <color name="colorPrimaryDark">#E0E0E0</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorPrimaryCustom">#65f1ec</color>
-    <color name="colorPrimaryDarkCustom">#65f1ec</color>
-    <color name="colorAccentCustom">#d3e609</color>
+    <color name="colorPrimaryCustom">#FAFAFA</color>
+    <color name="colorPrimaryDarkCustom">#E0E0E0</color>
+    <color name="colorAccentCustom">#FF4081</color>
 
     <color name="light_font">#FBFBFB</color>
     <color name="text_shadow">#7F000000</color>
