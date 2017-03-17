@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -28,6 +29,7 @@
                 android:id="@+id/tvCurrencyName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="22dp"
                 android:layout_marginLeft="22dp"
                 android:layout_marginTop="4dp"
                 android:textColor="#b3b3b3"
@@ -37,6 +39,7 @@
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_width="450dp">
@@ -48,6 +51,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
+                android:gravity="end"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="normal|bold" />
@@ -58,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textAlignment="viewEnd"
+                android:gravity="end"
                 android:textColor="#b3b3b3"
                 android:textSize="14sp" />
         </LinearLayout>

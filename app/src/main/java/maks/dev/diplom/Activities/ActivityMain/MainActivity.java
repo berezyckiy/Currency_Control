@@ -2,9 +2,13 @@ package maks.dev.diplom.Activities.ActivityMain;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -15,6 +19,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +31,7 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.Locale;
 
+import maks.dev.diplom.Activities.ActivityChooseValue.ActivityChooseValue;
 import maks.dev.diplom.Data.DB;
 import maks.dev.diplom.Dialogs.DialogAbout;
 import maks.dev.diplom.Dialogs.DialogDefaultSettings;
@@ -140,10 +147,15 @@ public class MainActivity
         } else {
             String mLang = PreferenceUtils.getString(this, "appLanguage", "");
             Locale mNewLocale = new Locale(mLang);
-            Locale.setDefault(mNewLocale);
-            android.content.res.Configuration configuration = new android.content.res.Configuration();
-            configuration.locale = mNewLocale;
-            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            Resources resources = getResources();
+            Configuration configuration = new Configuration();
+            DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                configuration.setLocale(mNewLocale);
+            } else {
+                configuration.locale = mNewLocale;
+            }
+            resources.updateConfiguration(configuration, displayMetrics);
         }
     }
 
@@ -154,7 +166,8 @@ public class MainActivity
 
     private void changeLocale(String mLang) {
         PreferenceUtils.saveString(this, "appLanguage", mLang);
-        this.recreate();
+        finish();
+        startActivity(new Intent(this, this.getClass()));
     }
 
     public void showDialogTheme(View v) {
@@ -202,12 +215,11 @@ public class MainActivity
                 } while (c.moveToNext());
             }
             db.close();
-            if (PreferenceUtils.isContainsKey(this, "appTheme") || PreferenceUtils.isContainsKey(this, "appLanguage")) {
-                PreferenceUtils.saveInteger(this, "appTheme", R.style.AppTheme);
-                PreferenceUtils.saveString(this, "appLanguage", String.valueOf(Locale.getDefault().getDisplayLanguage()));
-                finish();
-                startActivity(new Intent(this, this.getClass()));
-            }
+            PreferenceUtils.saveInteger(this, "appTheme", R.style.AppTheme);
+            String mLang = String.valueOf(Locale.getDefault());
+            PreferenceUtils.saveString(this, "appLanguage", mLang.toLowerCase());
+            finish();
+            startActivity(new Intent(this, this.getClass()));
         }
     }
 
@@ -267,22 +279,33 @@ public class MainActivity
     }
 
     @Override
-    public void enableCollapse(String base, String rate, String baseFullName) {
+    public void enableCollapse(final String base, final String rate, String baseFullName, final String value) {
         ImageView imgViewMain = (ImageView) findViewById(R.id.imgViewMain);
         TextView tvMainScreenBase = (TextView) findViewById(R.id.tvMainScreenBase);
         TextView tvMainScreenDate = (TextView) findViewById(R.id.tvMainScreenDate);
         TextView tvMainScreenRate = (TextView) findViewById(R.id.tvMainScreenRate);
         TextView tvMainScreenBaseFullName = (TextView) findViewById(R.id.tvMainScreenBaseFullName);
         CoordinatorLayout.LayoutParams defaultParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-        defaultParams.height = 386;
+        float dpHeight = getResources().getDisplayMetrics().heightPixels / 3;
+        defaultParams.height = (int) dpHeight;
         appBarLayout.setLayoutParams(defaultParams);
         collapsingFrameLayout.setVisibility(View.VISIBLE);
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
-        | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
+                | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
         imgViewMain.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(base));
         tvMainScreenBase.setText(base);
         tvMainScreenRate.setText(getFilteredSum(rate));
+        tvMainScreenRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ActivityChooseValue.class);
+                intent.putExtra("name", base);
+                intent.putExtra("value", value);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
         tvMainScreenDate.setText(getString(R.string.last_updated).concat(PreferenceUtils.getString(this, "date", "0")));
         tvMainScreenBaseFullName.setText(baseFullName);
         tvToolbar.setAlpha(0);

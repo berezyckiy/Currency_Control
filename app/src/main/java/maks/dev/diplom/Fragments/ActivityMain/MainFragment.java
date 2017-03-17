@@ -56,10 +56,11 @@ public class MainFragment
     private String chosenCurrency;
     private String chosenSum;
     private String dateOfSuccessfulUpdate;
+    String value;
 
     public interface CollapseListener {
 
-        void enableCollapse(String base, String rate, String baseFullName);
+        void enableCollapse(String base, String rate, String baseFullName, String value);
 
         void disableCollapse();
 
@@ -142,9 +143,12 @@ public class MainFragment
     }
 
     private double calculateCoefficient() {
-        String value = getActivity().getIntent().getStringExtra("value");
+        value = getActivity().getIntent().getStringExtra("value");
         if (value == null) {
             value = "1";
+        }
+        if (chosenSum != null && Double.parseDouble(chosenSum) == 0) {
+            chosenSum = "1";
         }
         return Double.parseDouble(chosenSum) / Double.parseDouble(value);
     }
@@ -183,10 +187,8 @@ public class MainFragment
 
         if (getActivity() != null) {
             ((CollapseListener) getActivity()).enableCollapse(chosenCurrency, chosenSum,
-                    getFullNameChosenCurrency(chosenCurrency));
+                    getFullNameChosenCurrency(chosenCurrency), value);
         }
-
-        //TODO sdelat` proverky kogda nechego pokazivat`
 
         if (listWithoutMainCurrency != null && listWithoutMainCurrency.size() <= 5) {
             ((CollapseListener) getActivity()).disableScrolling();
