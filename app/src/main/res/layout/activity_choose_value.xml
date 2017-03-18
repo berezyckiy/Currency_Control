@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
+        android:layout_height="250dp">
 
-    </android.support.v7.widget.Toolbar>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvTempSum"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="0"
-            android:textColor="@android:color/black"
-            android:textSize="30sp" />
-    </LinearLayout>
+            android:layout_height="?attr/actionBarSize"
+            app:theme="?attr/themeToolbar">
+
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTempSum"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center_vertical|center_horizontal"
+                android:maxLines="1"
+                android:text="0"
+                android:textColor="?attr/text_color_black"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/mainLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:background="@drawable/ic_main_frame_background"
         android:orientation="vertical">
 
@@ -52,12 +58,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton1"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="1"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -68,12 +74,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton2"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="2"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -84,12 +90,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton3"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="3"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -107,12 +113,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton4"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="4"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -123,12 +129,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton5"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="5"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -139,12 +145,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton6"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="6"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -162,12 +168,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton7"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="7"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -178,12 +184,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton8"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="8"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -194,12 +200,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButton9"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="9"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -217,12 +223,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButtonPoint"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="."
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -233,12 +239,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
                 android:onClick="onClickButtonZero"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="0"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -248,12 +254,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
-                android:shadowColor="@color/text_shadow"
+                android:shadowColor="?attr/text_color_shadow"
                 android:shadowDx="7"
                 android:shadowDy="7"
                 android:shadowRadius="5"
                 android:text="C"
-                android:textColor="@color/light_font"
+                android:textColor="?attr/text_color_white"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>

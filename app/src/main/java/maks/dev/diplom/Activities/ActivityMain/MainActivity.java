@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -20,7 +20,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,13 +105,21 @@ public class MainActivity
 
 
     private void initAppBarOnOffsetChangedListener() {
+        final Integer currentTheme = PreferenceUtils.getInteger(this, "appTheme", R.style.AppTheme);
+        final Integer defaultTheme = R.style.AppTheme;
         mListener = new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (collapsingToolbarLayout.getHeight() + verticalOffset < collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
                     tvToolbar.setAlpha(1);
+                    if (!currentTheme.equals(defaultTheme)) {
+                        toolbar.setBackgroundColor(getResources().getColor(R.color.background_theme_inversion));
+                    } else {
+                        toolbar.setBackgroundColor(Color.WHITE);
+                    }
                 } else {
                     tvToolbar.setAlpha(0);
+                    toolbar.setBackgroundColor(0);
                 }
             }
         };
@@ -138,6 +145,7 @@ public class MainActivity
         } else {
             theme = PreferenceUtils.getInteger(this, "appTheme", R.style.AppTheme);
         }
+        currentTheme = PreferenceUtils.getInteger(this, "appTheme", R.style.AppTheme);
         setTheme(theme);
     }
 
@@ -161,7 +169,8 @@ public class MainActivity
 
     private void changeTheme(Integer themeId) {
         PreferenceUtils.saveInteger(this, "appTheme", themeId);
-        this.recreate();
+        finish();
+        startActivity(new Intent(this, this.getClass()));
     }
 
     private void changeLocale(String mLang) {
@@ -190,6 +199,20 @@ public class MainActivity
     public void onFinishThemeDialog(Integer chosenThemeId) {
         if (chosenThemeId != PreferenceUtils.getInteger(this, "appTheme", 0)) {
             changeTheme(chosenThemeId);
+        }
+    }
+
+    private void changeVisualisation(String actionOfCollapse) {
+        FrameLayout content = (FrameLayout) findViewById(R.id.contentFrame);
+        content.setBackgroundColor(Color.WHITE);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.background_theme_inversion));
+        toolbar.setTitleTextColor(Color.WHITE);
+        if (actionOfCollapse.equals("enable")) {
+            ImageView img = (ImageView) findViewById(R.id.imgViewBackground);
+            img.setVisibility(View.VISIBLE);
+        } else {
+            ImageView img = (ImageView) findViewById(R.id.imgViewBackground);
+            img.setVisibility(View.GONE);
         }
     }
 
@@ -278,8 +301,12 @@ public class MainActivity
         }
     }
 
+    Integer currentTheme;
     @Override
     public void enableCollapse(final String base, final String rate, String baseFullName, final String value) {
+        if (PreferenceUtils.getInteger(this, "appTheme", R.style.AppTheme) != R.style.AppTheme) {
+            changeVisualisation("enable");
+        }
         ImageView imgViewMain = (ImageView) findViewById(R.id.imgViewMain);
         TextView tvMainScreenBase = (TextView) findViewById(R.id.tvMainScreenBase);
         TextView tvMainScreenDate = (TextView) findViewById(R.id.tvMainScreenDate);
@@ -302,6 +329,7 @@ public class MainActivity
                 Intent intent = new Intent(getBaseContext(), ActivityChooseValue.class);
                 intent.putExtra("name", base);
                 intent.putExtra("value", value);
+                intent.putExtra("theme", currentTheme.toString());
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -316,6 +344,9 @@ public class MainActivity
 
     @Override
     public void disableCollapse() {
+        if (PreferenceUtils.getInteger(this, "appTheme", R.style.AppTheme) != R.style.AppTheme) {
+            changeVisualisation("disable");
+        }
         CoordinatorLayout.LayoutParams customParams = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         appBarLayout.setLayoutParams(customParams);
         collapsingFrameLayout.setVisibility(View.GONE);

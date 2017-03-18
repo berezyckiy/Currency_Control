@@ -17,9 +17,9 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:gravity="left|center_vertical"
+            android:gravity="start|center_vertical"
             android:text="@string/theme"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/text_color_white"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -37,13 +37,9 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:gravity="left|center_vertical"
-            android:shadowColor="@color/text_shadow"
-            android:shadowDx="10"
-            android:shadowDy="10"
-            android:shadowRadius="5"
+            android:gravity="start|center_vertical"
             android:text="@string/language"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/text_color_white"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -61,13 +57,9 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:gravity="left|center_vertical"
-            android:shadowColor="@color/text_shadow"
-            android:shadowDx="10"
-            android:shadowDy="10"
-            android:shadowRadius="5"
+            android:gravity="start|center_vertical"
             android:text="@string/title_dialog_default"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/text_color_white"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -84,13 +76,9 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:gravity="left|center_vertical"
-            android:shadowColor="@color/text_shadow"
-            android:shadowDx="10"
-            android:shadowDy="10"
-            android:shadowRadius="5"
+            android:gravity="start|center_vertical"
             android:text="@string/about"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/text_color_white"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>

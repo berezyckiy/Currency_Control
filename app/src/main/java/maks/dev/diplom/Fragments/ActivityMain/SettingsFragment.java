@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.R;
 import maks.dev.diplom.mytextview.MyTextView;
+import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
  * Created by berezyckiy on 2/6/17.
@@ -29,7 +30,7 @@ public class SettingsFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_settings, container, false);
         initItems();
-        startAnimationTextVew();
+        startAnimationTextView();
         MainActivity.nvView.setCheckedItem(R.id.nav_settings);
         return view;
     }
@@ -45,14 +46,22 @@ public class SettingsFragment
         mTvAbout.setIsVisible(false);
     }
 
-    private void startAnimationTextVew() {
-        mTvTheme.setShadowLayer(5f, 10f, 10f, Color.BLACK);
+    private void setShadowLayer(MyTextView textView) {
+        if (PreferenceUtils.getInteger(getActivity(), "appTheme", R.style.AppTheme) != R.style.AppTheme) {
+            textView.setShadowLayer(5f, 5f, 5f, Color.GRAY);
+        } else {
+            textView.setShadowLayer(5f, 10f, 10f, Color.BLACK);
+        }
+    }
+
+    private void startAnimationTextView() {
+        setShadowLayer(mTvTheme);
         mTvTheme.toggle();
-        mTvLanguage.setShadowLayer(5f, 10f, 10f, Color.BLACK);
+        setShadowLayer(mTvLanguage);
         mTvLanguage.toggle();
-        mTvDefault.setShadowLayer(5f, 10f, 10f, Color.BLACK);
+        setShadowLayer(mTvDefault);
         mTvDefault.toggle();
-        mTvAbout.setShadowLayer(5f, 10f, 10f, Color.BLACK);
+        setShadowLayer(mTvAbout);
         mTvAbout.toggle();
     }
 }

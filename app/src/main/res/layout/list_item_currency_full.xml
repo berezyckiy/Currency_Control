@@ -32,7 +32,7 @@
                 android:layout_marginStart="22dp"
                 android:layout_marginLeft="22dp"
                 android:layout_marginTop="4dp"
-                android:textColor="#b3b3b3"
+                android:textColor="?attr/text_color_gray_400"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -52,7 +52,7 @@
                 android:maxLines="1"
                 android:textAlignment="viewEnd"
                 android:gravity="end"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/text_color_white"
                 android:textSize="24sp"
                 android:textStyle="normal|bold" />
 
@@ -63,7 +63,7 @@
                 android:layout_marginTop="2dp"
                 android:textAlignment="viewEnd"
                 android:gravity="end"
-                android:textColor="#b3b3b3"
+                android:textColor="?attr/text_color_gray_400"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>

@@ -54,6 +54,7 @@ public class GraphicsFragment
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_graphics, container, false);
         initItems();
+        initImgViewsIcons();
         setDataTextView();
         return view;
     }
@@ -79,16 +80,30 @@ public class GraphicsFragment
         MainActivity.nvView.setCheckedItem(R.id.nav_graphics);
     }
 
+    private void initImgViewsIcons() {
+        if (PreferenceUtils.getInteger(getActivity(), "appTheme", R.style.AppTheme) != R.style.AppTheme) {
+            btnArrowLeftFirst.setBackgroundResource(R.mipmap.ic_keyboard_arrow_left_black);
+            btnArrowLeftSecond.setBackgroundResource(R.mipmap.ic_keyboard_arrow_left_black);
+            btnArrowRightFirst.setBackgroundResource(R.mipmap.ic_keyboard_arrow_right_black);
+            btnArrowRightSecond.setBackgroundResource(R.mipmap.ic_keyboard_arrow_right_black);
+        } else {
+            btnArrowLeftFirst.setBackgroundResource(R.mipmap.ic_keyboard_arrow_left);
+            btnArrowLeftSecond.setBackgroundResource(R.mipmap.ic_keyboard_arrow_left);
+            btnArrowRightFirst.setBackgroundResource(R.mipmap.ic_keyboard_arrow_right);
+            btnArrowRightSecond.setBackgroundResource(R.mipmap.ic_keyboard_arrow_right);
+        }
+    }
+
     private void setDataTextView() {
         if (currencyList.size() == 0) {
             btnArrowLeftFirst.setVisibility(View.INVISIBLE);
-            btnArrowRightFirst.setVisibility(View.INVISIBLE);
+            btnArrowRightFirst.setVisibility(View.GONE);
             btnArrowLeftSecond.setVisibility(View.INVISIBLE);
-            btnArrowRightSecond.setVisibility(View.INVISIBLE);
+            btnArrowRightSecond.setVisibility(View.GONE);
             imgViewCurrencyFirst.setVisibility(View.GONE);
             imgViewCurrencySecond.setVisibility(View.GONE);
-            tvGraphicCurrencyFirst.setTextSize(20);
-            tvGraphicCurrencySecond.setTextSize(20);
+            tvGraphicCurrencyFirst.setTextSize(18);
+            tvGraphicCurrencySecond.setTextSize(18);
             tvGraphicCurrencyFirst.setText(getString(R.string.add_currency_please));
             tvGraphicCurrencySecond.setText(getString(R.string.add_currency_please));
             return;
@@ -97,9 +112,9 @@ public class GraphicsFragment
             tvGraphicCurrencyFirst.setText(currencyList.get(0).get("name").toString());
             imgViewCurrencyFirst.setBackgroundResource(PreferenceUtils.getImageIdOfCurrency(currencyList.get(0).get("name").toString()));
             btnArrowLeftSecond.setVisibility(View.INVISIBLE);
-            btnArrowRightSecond.setVisibility(View.INVISIBLE);
+            btnArrowRightSecond.setVisibility(View.GONE);
             imgViewCurrencySecond.setVisibility(View.GONE);
-            tvGraphicCurrencySecond.setTextSize(20);
+            tvGraphicCurrencySecond.setTextSize(18);
             tvGraphicCurrencySecond.setText(getString(R.string.add_currency_please));
             return;
         }
@@ -111,8 +126,19 @@ public class GraphicsFragment
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem itemAgree = menu.findItem(R.id.btnDone);
+        if (PreferenceUtils.getInteger(getActivity(), "appTheme", R.style.AppTheme) != R.style.AppTheme) {
+            itemAgree.setIcon(R.mipmap.ic_menu_done_white);
+        } else {
+            itemAgree.setIcon(R.mipmap.ic_menu_done);
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.menu_btnsubmit, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_graphics_fragment, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -147,9 +173,11 @@ public class GraphicsFragment
                     showSnackBar();
                     break;
                 }
+                Integer currentTheme = PreferenceUtils.getInteger(getActivity(), "appTheme", R.style.AppTheme);
                 Intent intent = new Intent(getActivity(), ActivityGraphics.class);
                 intent.putExtra("firstCurrency", (HashMap) currencyList.get(mapPosFirstTextView));
                 intent.putExtra("secondCurrency", (HashMap) currencyList.get(mapPosSecondTextView));
+                intent.putExtra("theme", currentTheme.toString());
                 startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

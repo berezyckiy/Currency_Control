@@ -1,6 +1,7 @@
 package maks.dev.diplom.Activities.ActivityGraphics;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -27,27 +28,36 @@ public class ActivityGraphics
     private ViewPager viewPager;
     private HashMap currencyOne;
     private HashMap currencyTwo;
+    private Integer currentTheme;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setApplicationTheme();
         setContentView(R.layout.activity_graphis);
         initItems();
         buildToolbar();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+        changeVisualisation();
+    }
+
+    private void setApplicationTheme() {
+        currentTheme = Integer.parseInt(getIntent().getStringExtra("theme"));
+        setTheme(currentTheme);
     }
 
     private void initItems() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setTabTextColors(R.color.text_black, R.color.text_black);
+        tabLayout.setTabTextColors(Color.BLACK, Color.BLACK);
         currencyOne = (HashMap) getIntent().getSerializableExtra("firstCurrency");
         currencyTwo = (HashMap) getIntent().getSerializableExtra("secondCurrency");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     private void buildToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -56,9 +66,32 @@ public class ActivityGraphics
         }
     }
 
+    private void changeVisualisation() {
+        if (currentTheme != R.style.AppTheme) {
+            toolbar.setBackgroundColor(getResources().getColor(R.color.background_theme_inversion));
+            tabLayout.setBackgroundColor(getResources().getColor(R.color.background_theme_inversion));
+            viewPager.setBackgroundColor(Color.WHITE);
+            tabLayout.setTabTextColors(Color.WHITE, Color.WHITE);
+            toolbar.setTitleTextColor(Color.WHITE);
+        } else {
+            viewPager.setBackgroundColor(getResources().getColor(R.color.graphic_background));
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem itemDone = menu.findItem(R.id.btnDone);
+        if (currentTheme != R.style.AppTheme) {
+            itemDone.setIcon(R.mipmap.ic_menu_done_white);
+        } else {
+            itemDone.setIcon(R.mipmap.ic_menu_done);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_btnsubmit, menu);
+        getMenuInflater().inflate(R.menu.menu_graphics_fragment, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

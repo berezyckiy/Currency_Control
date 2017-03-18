@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import maks.dev.diplom.Activities.ActivityMain.MainActivity;
 import maks.dev.diplom.Adapters.CurrencySelected.AdapterCurrencySelected;
 import maks.dev.diplom.Data.DB;
 import maks.dev.diplom.R;
+import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
  * Created by berezyckiy on 2/6/17.
@@ -45,6 +47,7 @@ public class ChooseYourCurrency
         view = inflater.inflate(R.layout.fragment_your_currency, container, false);
         initItems();
         buildRecyclerView();
+        isCurrencyDataNull();
         return view;
     }
 
@@ -79,6 +82,24 @@ public class ChooseYourCurrency
         }
         db.close();
         return currencyList;
+    }
+
+    private void isCurrencyDataNull() {
+        if (currencyList.size() == 0) {
+            TextView tvNoCurrencySelected = (TextView) view.findViewById(R.id.tvNothingToShow);
+            tvNoCurrencySelected.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem itemDone = menu.findItem(R.id.btnDone);
+        if (PreferenceUtils.getInteger(getActivity(), "appTheme", R.style.AppTheme) != R.style.AppTheme) {
+            itemDone.setIcon(R.mipmap.ic_menu_done_white);
+        } else {
+            itemDone.setIcon(R.mipmap.ic_menu_done);
+        }
     }
 
     @Override

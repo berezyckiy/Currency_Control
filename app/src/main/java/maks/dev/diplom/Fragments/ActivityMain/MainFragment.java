@@ -56,7 +56,7 @@ public class MainFragment
     private String chosenCurrency;
     private String chosenSum;
     private String dateOfSuccessfulUpdate;
-    String value;
+    private String value;
 
     public interface CollapseListener {
 
@@ -180,9 +180,14 @@ public class MainFragment
         mAdapter.notifyDataSetChanged();
 
         if (currencyList.size() < 2) {
-            ((CollapseListener) getActivity()).disableCollapse();
-            tvNothingToShow.setVisibility(View.VISIBLE);
+            if (getActivity() != null) {
+                ((CollapseListener) getActivity()).disableCollapse();
+                tvNothingToShow.setVisibility(View.VISIBLE);
+            }
             return;
+        }
+        if (tvNothingToShow.getVisibility() == View.VISIBLE) {
+            tvNothingToShow.setVisibility(View.GONE);
         }
 
         if (getActivity() != null) {

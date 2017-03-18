@@ -1,13 +1,16 @@
 package maks.dev.diplom.Activities.ActivityChooseValue;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import maks.dev.diplom.Activities.ActivityMain.MainActivity;
@@ -22,17 +25,22 @@ public class ActivityChooseValue
         implements View.OnClickListener, View.OnLongClickListener {
 
     private TextView tvTempSum;
+    private Toolbar toolbar;
+    private AppBarLayout appBarLayout;
+    private Integer currentTheme;
+    private LinearLayout mainLinearLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setApplicationTheme();
         setContentView(R.layout.activity_choose_value);
         initItems();
         buildToolbar();
+        changeVisualisation();
     }
 
     private void buildToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
@@ -42,10 +50,33 @@ public class ActivityChooseValue
     }
 
     private void initItems() {
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mainLinearLayout = (LinearLayout) findViewById(R.id.mainLinearLayout);
         TextView btnClear = (TextView) findViewById(R.id.btnClear);
         btnClear.setOnClickListener(this);
         btnClear.setOnLongClickListener(this);
         tvTempSum = (TextView) findViewById(R.id.tvTempSum);
+        LinearLayout.LayoutParams defaultParams = (LinearLayout.LayoutParams) appBarLayout.getLayoutParams();
+        float dpHeight = getResources().getDisplayMetrics().heightPixels / 3;
+        defaultParams.height = (int) dpHeight;
+        appBarLayout.setLayoutParams(defaultParams);
+    }
+
+    private void setApplicationTheme() {
+        currentTheme = Integer.parseInt(getIntent().getStringExtra("theme"));
+        setTheme(currentTheme);
+    }
+
+    private void changeVisualisation() {
+        if (currentTheme != R.style.AppTheme) {
+            appBarLayout.setBackgroundResource(R.drawable.ic_main_frame_background);
+            mainLinearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            toolbar.setTitleTextColor(Color.WHITE);
+        } else {
+            appBarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            mainLinearLayout.setBackgroundResource(R.drawable.ic_main_frame_background);
+        }
     }
 
 
@@ -129,8 +160,19 @@ public class ActivityChooseValue
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem itemDone = menu.findItem(R.id.btnDone);
+        if (currentTheme != R.style.AppTheme) {
+            itemDone.setIcon(R.mipmap.ic_menu_done_white);
+        } else {
+            itemDone.setIcon(R.mipmap.ic_menu_done);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_btnsubmit, menu);
+        getMenuInflater().inflate(R.menu.menu_graphics_fragment, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

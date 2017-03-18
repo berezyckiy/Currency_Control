@@ -17,6 +17,6 @@ class ViewHolderCurrencySelected
 
     ViewHolderCurrencySelected(View itemView) {
         super(itemView);
-        button = (ToggleButton) itemView.findViewById(R.id.act_main_btn_telephony);
+        button = (ToggleButton) itemView.findViewById(R.id.tgl_btn_currency_selected);
     }
 }

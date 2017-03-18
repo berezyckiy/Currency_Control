@@ -4,7 +4,6 @@
 
     <item
         android:id="@+id/btnDone"
-        android:icon="@mipmap/ic_menu_done"
         android:title="@string/button_agree"
         app:showAsAction="always" />
 

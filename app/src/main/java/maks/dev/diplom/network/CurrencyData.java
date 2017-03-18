@@ -77,11 +77,11 @@ public class CurrencyData
             db.delAllData();
             int i = 0;
             db.addRec(jsonObj.getString("base"), "1", PreferenceUtils.getFullNameOfCurrency(jsonObj.getString("base")), getSavedChecked(i));
-//            i++;
-//            String jsonStrByn = sh.makeServiceCall("http://www.apilayer.net/api/live?access_key=b2c34b16e4631f59e5def5f526ed05aa&currencies=BYN");
-//            JSONObject jsonObjByn = new JSONObject(jsonStrByn);
-//            JSONObject objRateByn = jsonObjByn.getJSONObject("quotes");
-//            db.addRec("BYN", objRateByn.getString("USDBYN"), PreferenceUtils.getFullNameOfCurrency("BYN"), getSavedChecked(i));
+            i++;
+            String jsonStrByn = sh.makeServiceCall("http://www.apilayer.net/api/live?access_key=b2c34b16e4631f59e5def5f526ed05aa&currencies=BYN");
+            JSONObject jsonObjByn = new JSONObject(jsonStrByn);
+            JSONObject objRateByn = jsonObjByn.getJSONObject("quotes");
+            db.addRec("BYN", objRateByn.getString("USDBYN"), PreferenceUtils.getFullNameOfCurrency("BYN"), getSavedChecked(i));
             Iterator<String> iterator = objRates.keys();
             while (iterator.hasNext()) {
                 String nameCurrency = iterator.next();

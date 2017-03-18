@@ -9,12 +9,25 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="text_color_white">#FFFFFF</item>
+        <item name="text_color_black">#000000</item>
+        <item name="text_color_gray_400">#BDBDBD</item>
+        <item name="text_color_gray_600">#757575</item>
+        <item name="text_color_shadow">#7F000000</item>
+        <item name="themeToolbar">@style/ThemeToolbarDefault</item>
     </style>
 
     <style name="AppThemeColors" parent="AppThemeBase">
         <item name="colorPrimary">@color/colorPrimaryCustom</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCustom</item>
         <item name="colorAccent">@color/colorAccentCustom</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="themeToolbar">@style/ThemeToolbarWhite</item>
+        <item name="text_color_white">#050505</item>
+        <item name="text_color_black">#FFFFFF</item>
+        <item name="text_color_gray_400">#757575</item>
+        <item name="text_color_gray_600">#E0E0E0</item>
+        <item name="text_color_shadow">#757575</item>
     </style>
 
     <style name="digit_button">
@@ -22,4 +35,23 @@
         <item name="android:layout_height">50dp</item>
     </style>
 
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="ThemeToolbarWhite" parent="@style/Theme.AppCompat.Light">
+        <item name="android:textColorSecondary">#FFFFFF</item>
+    </style>
+
+    <style name="ThemeToolbarDefault" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorSecondary">#000000</item>
+        </style>
+
+    <attr name="themeToolbar" />
+    <attr name="text_color_white" />
+    <attr name="text_color_black" />
+    <attr name="text_color_gray_400" />
+    <attr name="text_color_gray_600" />
+    <attr name="text_color_shadow" />
 </resources>
