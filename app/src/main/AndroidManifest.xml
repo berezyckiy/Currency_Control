@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.ActivityMain.MainActivity"
+            android:name=".screen.activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,8 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ActivityChooseValue.ActivityChooseValue" />
-        <activity android:name=".Activities.ActivityGraphics.ActivityGraphics" />
+        <activity android:name=".screen.activities.ActivityChooseValue" />
+        <activity android:name=".screen.activities.ActivityGraphics" />
     </application>
 
 </manifest>

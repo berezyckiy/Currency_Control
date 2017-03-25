@@ -11,7 +11,7 @@
         android:clickable="true"
         android:onClick="showDialogTheme">
 
-        <maks.dev.diplom.mytextview.MyTextView
+        <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvTheme"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,7 +31,7 @@
         android:clickable="true"
         android:onClick="showDialogLanguage">
 
-        <maks.dev.diplom.mytextview.MyTextView
+        <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvLanguage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,7 +51,7 @@
         android:clickable="true"
         android:onClick="showDialogSetDefaultSettings">
 
-        <maks.dev.diplom.mytextview.MyTextView
+        <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvDefault"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -70,7 +70,7 @@
         android:clickable="true"
         android:onClick="showDialogAbout">
 
-        <maks.dev.diplom.mytextview.MyTextView
+        <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvAbout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

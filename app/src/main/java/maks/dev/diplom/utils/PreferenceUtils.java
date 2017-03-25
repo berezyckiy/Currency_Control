@@ -12,7 +12,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by berezyckiy on 2/14/17.
  */
 
-public abstract class PreferenceUtils {
+public final class PreferenceUtils {
 
     public static void saveString(@NonNull Activity activity, @NonNull String key, @NonNull String value) {
         SharedPreferences sp = activity.getPreferences(MODE_PRIVATE);
