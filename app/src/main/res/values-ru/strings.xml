@@ -32,13 +32,18 @@
     <string name="reason_error_loading">Проверьте соединение с интернетом. Попробуйте перезагрузить телефон. Если проблема не устранена, свяжитесь с разработчиком.</string>
     <string name="version">"Версия: "</string>
     <string name="contacts">Email: hovinmaksim@gmail.com</string>
+    <string name="developer">Hovin Maksim © 2017</string>
     <string name="byn_not_available">В программе используется бесплатный сервер, который не имеет информации о BYN, в следующей версии это будет исправлено. Спасибо за понимание.</string>
     <string name="add_more_than_2_currencies">Добавьте больше 2 валют</string>
     <string name="no_available_currencies">Нет доступных валют</string>
 
-
     <string-array name="themes">
         <item>Стандартная</item>
         <item>Инверсия</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>Русский</item>
     </string-array>
 </resources>
