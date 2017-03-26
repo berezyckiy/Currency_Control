@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Курсы Валют</string>
+    <string name="app_name">Currency Control</string>
 
     <string name="home_navigation_drawer_open">Open navigation drawer</string>
     <string name="home_navigation_drawer_close">Close navigation drawer</string>
@@ -10,18 +10,15 @@
     <string name="language">Язык</string>
     <string name="currency_exchange">Курсы валют</string>
     <string name="choose_main_currency">Главная валюта</string>
+    <string name="title_choose_main_currency">Выберите главную валюту</string>
     <string name="choose_your_currencies">Доступные валюты</string>
     <string name="graphics">Графики</string>
     <string name="settings">Настройки</string>
     <string name="linear">Линейный</string>
     <string name="choose_your_language">Выберите язык</string>
     <string name="choose_your_theme">Выберите тему</string>
-    <string name="add_currency_please">Добавьте валюту!</string>
-    <string name="no_currency_is_selected">Нет выбранных валют.</string>
-    <string name="language_english">English</string>
-    <string name="language_russian">Русский</string>
-    <string name="theme_default">Стандартная</string>
-    <string name="theme_light">Светлая</string>
+    <string name="add_currency_please">Добавьте валюту</string>
+    <string name="no_currency_is_selected">Нет выбранных валют</string>
     <string name="title_dialog_default">Сбросить настройки</string>
     <string name="question_set_default">Вы уверены, что хотите сбросить все настройки?</string>
     <string name="about">О программе</string>

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import maks.dev.diplom.screen.activities.MainActivity;
 import maks.dev.diplom.R;
 import maks.dev.diplom.screen.custom_view.MyTextView;
 import maks.dev.diplom.utils.PreferenceUtils;
@@ -31,7 +30,6 @@ public class SettingsFragment
         view = inflater.inflate(R.layout.fragment_settings, container, false);
         initItems();
         startAnimationTextView();
-        MainActivity.nvView.setCheckedItem(R.id.nav_settings);
         return view;
     }
 

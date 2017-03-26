@@ -12,14 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import maks.dev.diplom.R;
+import maks.dev.diplom.data.db.DB;
 import maks.dev.diplom.screen.activities.ActivityChooseValue;
-import maks.dev.diplom.screen.activities.MainActivity;
 import maks.dev.diplom.screen.adapters.currency_name_info.AdapterCurrencyNameInfo;
 import maks.dev.diplom.screen.adapters.currency_name_info.NameCurrencyListener;
-import maks.dev.diplom.R;
 import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
@@ -40,14 +41,25 @@ public class ChooseMainCurrency
         view = inflater.inflate(R.layout.fragment_main_currency, container, false);
         initItems();
         buildRecyclerView();
+        fillDataCurrencyList();
         isCurrencyDataNull();
         return view;
     }
 
     private void initItems() {
         recyclerViewChooseMainCurrency = (RecyclerView) view.findViewById(R.id.recyclerViewChooseMainCurrency);
-        currencyList = MainFragment.currencyList;
-        MainActivity.nvView.setCheckedItem(R.id.nav_choose_main_currency);
+        currencyList = new ArrayList<>();
+    }
+
+    private void fillDataCurrencyList() {
+        DB db = new DB(getContext());
+        db.open();
+        for (Map<String, Object> currency : db.getCurrenciesList()) {
+            if (Boolean.parseBoolean(currency.get("isChecked").toString())) {
+                currencyList.add(currency);
+            }
+        }
+        db.close();
     }
 
     private void buildRecyclerView() {

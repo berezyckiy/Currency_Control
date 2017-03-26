@@ -5,6 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by berezyckiy on 2/10/17.
  */
@@ -45,6 +50,24 @@ public class DB {
 
     public Cursor getAllData() {
         return mSQLiteDatabase.query("currency", null, null, null, null, null, null);
+    }
+
+    public List<Map<String, Object>> getCurrenciesList() {
+        List<Map<String, Object>> currenciesList = new ArrayList<>();
+        Map<String, Object> currencyMap;
+        Cursor cursor = mSQLiteDatabase.query("currency", null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                currencyMap = new HashMap<>();
+                currencyMap.put("name", cursor.getString(cursor.getColumnIndex("name")));
+                currencyMap.put("value", cursor.getString(cursor.getColumnIndex("value")));
+                currencyMap.put("fullName", cursor.getString(cursor.getColumnIndex("fullName")));
+                currencyMap.put("isChecked", cursor.getString(cursor.getColumnIndex("isChecked")));
+                currenciesList.add(currencyMap);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return currenciesList;
     }
 
     public void delRec(long id) {

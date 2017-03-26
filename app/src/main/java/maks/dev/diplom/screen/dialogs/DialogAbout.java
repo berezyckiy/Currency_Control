@@ -21,7 +21,7 @@ public class DialogAbout
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
-        builder.title(R.string.currency_exchange);
+        builder.title(R.string.app_name);
         String version = getString(R.string.version);
         String contacts = getString(R.string.contacts);
         String developer = getString(R.string.developer);

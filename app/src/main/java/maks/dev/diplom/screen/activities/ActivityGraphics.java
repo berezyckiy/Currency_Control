@@ -34,7 +34,7 @@ public class ActivityGraphics
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setApplicationTheme();
-        setContentView(R.layout.activity_graphis);
+        setContentView(R.layout.activity_graphic);
         initItems();
         buildToolbar();
         setupViewPager(viewPager);
@@ -73,6 +73,8 @@ public class ActivityGraphics
             tabLayout.setTabTextColors(Color.WHITE, Color.WHITE);
             toolbar.setTitleTextColor(Color.WHITE);
         } else {
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             viewPager.setBackgroundColor(getResources().getColor(R.color.graphic_background));
         }
     }

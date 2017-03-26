@@ -1,6 +1,5 @@
 package maks.dev.diplom.screen.fragments.activity_main;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -20,18 +19,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import maks.dev.diplom.screen.activities.MainActivity;
-import maks.dev.diplom.screen.adapters.currency_full_info.AdapterCurrencyFullInfo;
-import maks.dev.diplom.data.db.DB;
-import maks.dev.diplom.screen.dialogs.DialogLoading;
-import maks.dev.diplom.interfaces.CurrencyDataListener;
 import maks.dev.diplom.R;
+import maks.dev.diplom.data.db.DB;
 import maks.dev.diplom.data.network.CurrencyData;
+import maks.dev.diplom.interfaces.CurrencyDataListener;
+import maks.dev.diplom.screen.adapters.currency_full_info.AdapterCurrencyFullInfo;
+import maks.dev.diplom.screen.dialogs.DialogLoading;
 import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
@@ -46,8 +43,7 @@ public class MainFragment
 
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefresh;
-    static List<Map<String, Object>> currencyList;
-    private List<Map<String, Object>> listWithoutMainCurrency;
+    private List<Map<String, Object>> currencyList;
     private AdapterCurrencyFullInfo mAdapter;
     private DB db;
     private DialogLoading dialogLoading;
@@ -111,15 +107,6 @@ public class MainFragment
         return false;
     }
 
-    private String getFullNameChosenCurrency(String currencyName) {
-        for (int i = 0; i < currencyList.size(); i++) {
-            if (currencyList.get(i).get("name").equals(currencyName)) {
-                return currencyList.get(i).get("fullName").toString();
-            }
-        }
-        return "";
-    }
-
     private void initItems() {
         tvNothingToShow = (TextView) view.findViewById(R.id.tvNothingToShow);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
@@ -131,9 +118,7 @@ public class MainFragment
                 android.R.color.holo_green_dark);
         db = new DB(getContext());
         currencyList = new ArrayList<>();
-        listWithoutMainCurrency = new ArrayList<>();
-        mAdapter = new AdapterCurrencyFullInfo(listWithoutMainCurrency);
-        MainActivity.nvView.setCheckedItem(R.id.nav_currency_exchange);
+        mAdapter = new AdapterCurrencyFullInfo(currencyList);
         chosenCurrency = getActivity().getIntent().getStringExtra("name");
         chosenSum = getActivity().getIntent().getStringExtra("sum");
         dialogLoading = new DialogLoading();
@@ -167,30 +152,20 @@ public class MainFragment
     private void updateList() {
         db.open();
         currencyList.clear();
-        listWithoutMainCurrency.clear();
-        Cursor tmpCursor = db.getAllData();
-        Map<String, Object> tmpMap;
-        if (tmpCursor.moveToFirst()) {
-            do {
-                if (Boolean.parseBoolean(tmpCursor.getString(tmpCursor.getColumnIndex("isChecked")))) {
-                    tmpMap = new HashMap<>();
-                    tmpMap.put("name", tmpCursor.getString(tmpCursor.getColumnIndex("name")));
-                    tmpMap.put("value", tmpCursor.getString(tmpCursor.getColumnIndex("value")));
-                    tmpMap.put("fullName", tmpCursor.getString(tmpCursor.getColumnIndex("fullName")));
-                    tmpMap.put("isChecked", tmpCursor.getString(tmpCursor.getColumnIndex("isChecked")));
-                    tmpMap.put("coefficient", calculateCoefficient());
-                    currencyList.add(tmpMap);
-                    if (!tmpCursor.getString(tmpCursor.getColumnIndex("name")).equals(chosenCurrency)) {
-                        listWithoutMainCurrency.add(tmpMap);
-                    }
+        for (Map<String, Object> currency : db.getCurrenciesList()) {
+            if (Boolean.parseBoolean(currency.get("isChecked").toString())) {
+                if (!currency.get("name").equals(chosenCurrency)) {
+                    currency.put("coefficient", calculateCoefficient());
+                    currencyList.add(currency);
                 }
-            } while (tmpCursor.moveToNext());
+            }
         }
         db.close();
-
         mAdapter.notifyDataSetChanged();
 
-        if (currencyList.size() < 2) {
+        if (isChosenCurrenciesLessThenTwo()) {
+            currencyList.clear();
+            mAdapter.notifyDataSetChanged();
             if (getActivity() != null) {
                 ((CollapseListener) getActivity()).disableCollapse();
                 tvNothingToShow.setVisibility(View.VISIBLE);
@@ -200,15 +175,25 @@ public class MainFragment
         if (tvNothingToShow.getVisibility() == View.VISIBLE) {
             tvNothingToShow.setVisibility(View.GONE);
         }
-
         if (getActivity() != null) {
             ((CollapseListener) getActivity()).enableCollapse(chosenCurrency, chosenSum,
-                    getFullNameChosenCurrency(chosenCurrency), value);
+                    PreferenceUtils.getFullNameOfCurrency(chosenCurrency), value);
         }
-
-        if (listWithoutMainCurrency != null && listWithoutMainCurrency.size() <= 5) {
+        if (currencyList != null && currencyList.size() <= 5) {
             ((CollapseListener) getActivity()).disableScrolling();
         }
+    }
+
+    private boolean isChosenCurrenciesLessThenTwo() {
+        ArrayList<Map<String, Object>> currenciesList = new ArrayList<>();
+        db.open();
+        for (Map<String, Object> currency : db.getCurrenciesList()) {
+            if (Boolean.parseBoolean(currency.get("isChecked").toString())) {
+                currenciesList.add(currency);
+            }
+        }
+        db.close();
+        return currenciesList.size() < 2;
     }
 
     private void showSnackBar() {

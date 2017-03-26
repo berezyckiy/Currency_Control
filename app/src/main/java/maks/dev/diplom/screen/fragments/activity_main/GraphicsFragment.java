@@ -15,13 +15,14 @@ import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import maks.dev.diplom.screen.activities.ActivityGraphics;
-import maks.dev.diplom.screen.activities.MainActivity;
 import maks.dev.diplom.R;
+import maks.dev.diplom.data.db.DB;
+import maks.dev.diplom.screen.activities.ActivityGraphics;
 import maks.dev.diplom.screen.custom_view.MyTextView;
 import maks.dev.diplom.utils.PreferenceUtils;
 
@@ -54,6 +55,7 @@ public class GraphicsFragment
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.fragment_graphics, container, false);
         initItems();
+        fillDataCurrencyList();
         initImgViewsIcons();
         setDataTextView();
         return view;
@@ -76,8 +78,18 @@ public class GraphicsFragment
         btnArrowRightFirst.setOnClickListener(this);
         btnArrowLeftSecond.setOnClickListener(this);
         btnArrowRightSecond.setOnClickListener(this);
-        currencyList = MainFragment.currencyList;
-        MainActivity.nvView.setCheckedItem(R.id.nav_graphics);
+        currencyList = new ArrayList<>();
+    }
+
+    private void fillDataCurrencyList() {
+        DB db = new DB(getContext());
+        db.open();
+        for (Map<String, Object> currency : db.getCurrenciesList()) {
+            if (Boolean.parseBoolean(currency.get("isChecked").toString())) {
+                currencyList.add(currency);
+            }
+        }
+        db.close();
     }
 
     private void initImgViewsIcons() {

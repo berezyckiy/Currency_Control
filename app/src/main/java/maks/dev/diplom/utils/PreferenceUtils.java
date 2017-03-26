@@ -111,7 +111,7 @@ public final class PreferenceUtils {
                 return R.mipmap.ic_zar;
 
             default:
-                return R.mipmap.app_icon;
+                return R.mipmap.ic_launcher;
         }
     }
 

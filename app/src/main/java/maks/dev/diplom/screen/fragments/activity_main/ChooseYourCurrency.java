@@ -1,6 +1,5 @@
 package maks.dev.diplom.screen.fragments.activity_main;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,14 +16,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import maks.dev.diplom.screen.activities.MainActivity;
-import maks.dev.diplom.screen.adapters.currency_selected.AdapterCurrencySelected;
-import maks.dev.diplom.data.db.DB;
 import maks.dev.diplom.R;
+import maks.dev.diplom.data.db.DB;
+import maks.dev.diplom.screen.adapters.currency_selected.AdapterCurrencySelected;
 import maks.dev.diplom.utils.PreferenceUtils;
 
 /**
@@ -47,44 +44,33 @@ public class ChooseYourCurrency
         view = inflater.inflate(R.layout.fragment_your_currency, container, false);
         initItems();
         buildRecyclerView();
-        isCurrencyDataNull();
+        getAllCurrenciesFromDB();
+        whenNoCurrencies();
         return view;
     }
 
     private void initItems() {
         db = new DB(getActivity());
         recyclerViewChooseYourCurrency = (RecyclerView) view.findViewById(R.id.recyclerViewChooseYourCurrency);
-        currencyList = getAllCurrencyFromDB();
-        MainActivity.nvView.setCheckedItem(R.id.nav_choose_your_currency);
+        currencyList = new ArrayList<>();
     }
 
     private void buildRecyclerView() {
-        mAdapter = new AdapterCurrencySelected(getActivity() ,currencyList);
+        mAdapter = new AdapterCurrencySelected(getActivity(), currencyList);
         recyclerViewChooseYourCurrency.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewChooseYourCurrency.setItemAnimator(new DefaultItemAnimator());
         recyclerViewChooseYourCurrency.setAdapter(mAdapter);
     }
 
-    private List<Map<String, Object>> getAllCurrencyFromDB() {
+    private void getAllCurrenciesFromDB() {
         db.open();
-        Cursor tmpCursor = db.getAllData();
-        currencyList = new ArrayList<>();
-        Map<String, Object> tmpMap;
-        if (tmpCursor.moveToFirst()) {
-            do {
-                tmpMap = new HashMap<>();
-                tmpMap.put("name", tmpCursor.getString(tmpCursor.getColumnIndex("name")));
-                tmpMap.put("value", tmpCursor.getString(tmpCursor.getColumnIndex("value")));
-                tmpMap.put("fullName", tmpCursor.getString(tmpCursor.getColumnIndex("fullName")));
-                tmpMap.put("isChecked", tmpCursor.getString(tmpCursor.getColumnIndex("isChecked")));
-                currencyList.add(tmpMap);
-            } while (tmpCursor.moveToNext());
+        for (Map<String, Object> currency : db.getCurrenciesList()) {
+            currencyList.add(currency);
         }
         db.close();
-        return currencyList;
     }
 
-    private void isCurrencyDataNull() {
+    private void whenNoCurrencies() {
         if (currencyList.size() == 0) {
             TextView tvNoCurrencySelected = (TextView) view.findViewById(R.id.tvNothingToShow);
             tvNoCurrencySelected.setVisibility(View.VISIBLE);

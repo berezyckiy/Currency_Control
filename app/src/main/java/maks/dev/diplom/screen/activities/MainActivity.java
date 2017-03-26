@@ -30,7 +30,9 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.Locale;
 
+import maks.dev.diplom.R;
 import maks.dev.diplom.data.db.DB;
+import maks.dev.diplom.interfaces.DialogListener;
 import maks.dev.diplom.screen.dialogs.DialogAbout;
 import maks.dev.diplom.screen.dialogs.DialogDefaultSettings;
 import maks.dev.diplom.screen.dialogs.DialogLanguage;
@@ -40,8 +42,6 @@ import maks.dev.diplom.screen.fragments.activity_main.ChooseYourCurrency;
 import maks.dev.diplom.screen.fragments.activity_main.GraphicsFragment;
 import maks.dev.diplom.screen.fragments.activity_main.MainFragment;
 import maks.dev.diplom.screen.fragments.activity_main.SettingsFragment;
-import maks.dev.diplom.interfaces.DialogListener;
-import maks.dev.diplom.R;
 import maks.dev.diplom.utils.PreferenceUtils;
 
 public class MainActivity
@@ -50,11 +50,12 @@ public class MainActivity
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
-    public static NavigationView nvView;
+    private NavigationView nvView;
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FrameLayout collapsingFrameLayout;
     private AppBarLayout.OnOffsetChangedListener mListener;
+    private Integer currentTheme;
     private TextView tvToolbar;
 
     @Override
@@ -102,7 +103,6 @@ public class MainActivity
         toggle.syncState();
     }
 
-
     private void initAppBarOnOffsetChangedListener() {
         final Integer currentTheme = PreferenceUtils.getInteger(this, "appTheme", R.style.AppTheme);
         final Integer defaultTheme = R.style.AppTheme;
@@ -114,7 +114,7 @@ public class MainActivity
                     if (!currentTheme.equals(defaultTheme)) {
                         toolbar.setBackgroundColor(getResources().getColor(R.color.background_theme_inversion));
                     } else {
-                        toolbar.setBackgroundColor(Color.WHITE);
+                        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     }
                 } else {
                     tvToolbar.setAlpha(0);
@@ -228,13 +228,13 @@ public class MainActivity
             DB db = new DB(this);
             db.open();
             ContentValues cv;
-            Cursor c = db.getAllData();
-            if (c.moveToFirst()) {
+            Cursor cursor = db.getAllData();
+            if (cursor.moveToFirst()) {
                 do {
                     cv = new ContentValues();
                     cv.put("isChecked", "true");
-                    db.updateRec(cv, Integer.parseInt(c.getString(c.getColumnIndex("id"))));
-                } while (c.moveToNext());
+                    db.updateRec(cv, Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+                } while (cursor.moveToNext());
             }
             db.close();
             PreferenceUtils.saveInteger(this, "appTheme", R.style.AppTheme);
@@ -260,22 +260,26 @@ public class MainActivity
                 break;
             case R.id.nav_choose_main_currency:
                 enableToolbarTitle(true);
-                setToolbarTitle(getString(R.string.choose_main_currency));
+                setToolbarTitle(getString(R.string.title_choose_main_currency));
+                nvView.setCheckedItem(R.id.nav_choose_main_currency);
                 ft.replace(R.id.contentFrame, new ChooseMainCurrency()).commit();
                 break;
             case R.id.nav_choose_your_currency:
                 enableToolbarTitle(true);
                 setToolbarTitle(getString(R.string.choose_your_currencies));
+                nvView.setCheckedItem(R.id.nav_choose_your_currency);
                 ft.replace(R.id.contentFrame, new ChooseYourCurrency()).commit();
                 break;
             case R.id.nav_graphics:
                 enableToolbarTitle(true);
                 setToolbarTitle(getString(R.string.graphics));
+                nvView.setCheckedItem(R.id.nav_graphics);
                 ft.replace(R.id.contentFrame, new GraphicsFragment()).commit();
                 break;
             case R.id.nav_settings:
                 enableToolbarTitle(true);
                 setToolbarTitle(getString(R.string.settings));
+                nvView.setCheckedItem(R.id.nav_settings);
                 ft.replace(R.id.contentFrame, new SettingsFragment()).commit();
                 break;
         }
@@ -300,7 +304,6 @@ public class MainActivity
         }
     }
 
-    Integer currentTheme;
     @Override
     public void enableCollapse(final String base, final String rate, String baseFullName, final String value) {
         if (PreferenceUtils.getInteger(this, "appTheme", R.style.AppTheme) != R.style.AppTheme) {
@@ -350,12 +353,14 @@ public class MainActivity
         appBarLayout.setLayoutParams(customParams);
         collapsingFrameLayout.setVisibility(View.GONE);
         tvToolbar.setVisibility(View.GONE);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         appBarLayout.removeOnOffsetChangedListener(mListener);
     }
 
     @Override
     public void disableTitle() {
         enableToolbarTitle(false);
+        nvView.setCheckedItem(R.id.nav_currency_exchange);
     }
 
     @Override
