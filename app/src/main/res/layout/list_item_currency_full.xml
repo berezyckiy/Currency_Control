@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <ImageView
@@ -29,8 +29,8 @@
                 android:id="@+id/tvCurrencyName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="22dp"
-                android:layout_marginLeft="22dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="4dp"
                 android:textColor="?attr/text_color_gray_400"
                 android:textSize="20sp" />
@@ -42,7 +42,7 @@
             android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_width="450dp">
+            android:layout_width="match_parent">
 
             <TextView
                 android:id="@+id/tvCurrencyValue"

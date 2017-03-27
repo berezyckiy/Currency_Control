@@ -6,101 +6,148 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
 
         <ImageView
             android:id="@+id/btnArrowLeftFirst"
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp" />
+            android:layout_weight="1">
 
         <ImageView
             android:id="@+id/imgViewGraphicCurrencyFirst"
-            android:layout_width="40dp"
-            android:layout_height="32dp"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="3dp" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="40dp"
+            android:layout_height="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
 
         <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvGraphicCurrencyFirst"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
-            android:shadowDx="7"
-            android:shadowDy="7"
-            android:shadowRadius="5"
             android:textColor="?attr/text_color_white"
-            android:textSize="40sp"
+            android:textSize="32sp"
             android:textStyle="bold"
             android:layout_gravity="center" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
+
         <ImageView
             android:id="@+id/btnArrowRightFirst"
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="5dp" />
+            android:layout_gravity="center_vertical|center_horizontal" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
 
         <ImageView
             android:id="@+id/btnArrowLeftSecond"
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp" />
+            android:layout_gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
 
         <ImageView
             android:id="@+id/imgViewGraphicCurrencySecond"
             android:layout_width="40dp"
-            android:layout_height="32dp"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="3dp" />
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
 
         <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvGraphicCurrencySecond"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:textColor="?attr/text_color_white"
-            android:textSize="40sp"
+            android:textSize="32sp"
             android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1">
 
         <ImageView
             android:id="@+id/btnArrowRightSecond"
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="5dp" />
+            android:layout_gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>
