@@ -81,6 +81,8 @@ public final class PreferenceUtils {
                 return R.mipmap.ic_jpy;
             case "KRW":
                 return R.mipmap.ic_krw;
+            case "KZT":
+                return R.mipmap.ic_kzt;
             case "MXN":
                 return R.mipmap.ic_mxn;
             case "MYR":
@@ -155,6 +157,8 @@ public final class PreferenceUtils {
                 return "Japanese Yen";
             case "KRW":
                 return "South Korean Won";
+            case "KZT":
+                return "Kazakhstani Tenge";
             case "MXN":
                 return "Mexican Peso";
             case "MYR":

@@ -33,7 +33,7 @@
     <string name="version">"Версия: "</string>
     <string name="contacts">Email: hovinmaksim@gmail.com</string>
     <string name="developer">Hovin Maksim © 2017</string>
-    <string name="byn_not_available">В программе используется бесплатный сервер, который не имеет информации о BYN, в следующей версии это будет исправлено. Спасибо за понимание.</string>
+    <string name="byn_not_available">График для данной валюты будет добавлен в следующей версии. Спасибо за понимание.</string>
     <string name="add_more_than_2_currencies">Добавьте больше 2 валют</string>
     <string name="no_available_currencies">Нет доступных валют</string>
 

@@ -352,8 +352,12 @@ public class MainActivity
         CoordinatorLayout.LayoutParams customParams = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         appBarLayout.setLayoutParams(customParams);
         collapsingFrameLayout.setVisibility(View.GONE);
+        if (!currentTheme.equals(R.style.AppTheme)) {
+            toolbar.setBackgroundColor(getResources().getColor(R.color.background_theme_inversion));
+        } else {
+            toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
         tvToolbar.setVisibility(View.GONE);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         appBarLayout.removeOnOffsetChangedListener(mListener);
     }
 
@@ -361,11 +365,5 @@ public class MainActivity
     public void disableTitle() {
         enableToolbarTitle(false);
         nvView.setCheckedItem(R.id.nav_currency_exchange);
-    }
-
-    @Override
-    public void disableScrolling() {
-        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
-        params.setScrollFlags(0);
     }
 }

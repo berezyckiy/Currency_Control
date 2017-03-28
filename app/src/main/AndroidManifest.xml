@@ -19,8 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screen.activities.ActivityChooseValue" />
-        <activity android:name=".screen.activities.ActivityGraphics" />
+        <activity
+            android:name=".screen.activities.ActivityChooseValue"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screen.activities.ActivityGraphics"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -7,9 +7,10 @@
     <LinearLayout
         android:id="@+id/dialogTheme"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:onClick="showDialogTheme">
+        android:onClick="showDialogTheme"
+        android:layout_marginTop="10dp">
 
         <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvTheme"
@@ -27,9 +28,10 @@
     <LinearLayout
         android:id="@+id/dialogLanguage"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:onClick="showDialogLanguage">
+        android:onClick="showDialogLanguage"
+        android:layout_marginTop="10dp">
 
         <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvLanguage"
@@ -47,9 +49,10 @@
     <LinearLayout
         android:id="@+id/dialogDefault"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:onClick="showDialogSetDefaultSettings">
+        android:onClick="showDialogSetDefaultSettings"
+        android:layout_marginTop="10dp">
 
         <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvDefault"
@@ -66,9 +69,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:onClick="showDialogAbout">
+        android:onClick="showDialogAbout"
+        android:layout_marginTop="10dp">
 
         <maks.dev.diplom.screen.custom_view.MyTextView
             android:id="@+id/tvAbout"

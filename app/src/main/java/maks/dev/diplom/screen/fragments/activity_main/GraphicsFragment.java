@@ -181,7 +181,9 @@ public class GraphicsFragment
                     break;
                 }
                 if (tvGraphicCurrencyFirst.getText().toString().equals("BYN")
-                        || tvGraphicCurrencySecond.getText().toString().equals("BYN")) {
+                        || tvGraphicCurrencySecond.getText().toString().equals("BYN")
+                        || tvGraphicCurrencyFirst.getText().toString().equals("KZT")
+                        || tvGraphicCurrencySecond.getText().toString().equals("KZT")) {
                     showSnackBar();
                     break;
                 }

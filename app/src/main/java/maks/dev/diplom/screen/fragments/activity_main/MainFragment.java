@@ -62,7 +62,6 @@ public class MainFragment
 
         void disableTitle();
 
-        void disableScrolling();
     }
 
     @Nullable
@@ -90,8 +89,12 @@ public class MainFragment
                 (dateOfSuccessfulUpdate.length() - 2, dateOfSuccessfulUpdate.length()));
         Integer dayOfUpdate = Integer.parseInt(dateOfSuccessfulUpdate.substring
                 (dateOfSuccessfulUpdate.length() - 5, dateOfSuccessfulUpdate.length() - 3));
+        Integer monthOfUpdate = Integer.parseInt(dateOfSuccessfulUpdate.substring
+                (dateOfSuccessfulUpdate.length() - 8, dateOfSuccessfulUpdate.length() - 6));
         int daysAfterUpdate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - dayOfUpdate;
-        if (daysAfterUpdate > 1) {
+        if (monthOfUpdate < Calendar.getInstance().get(Calendar.MONTH) + 1) {
+            return true;
+        } else if (daysAfterUpdate > 1) {
             return true;
         } else if (daysAfterUpdate == 1) {
             if (hourOfUpdate < 20) {
@@ -178,9 +181,6 @@ public class MainFragment
         if (getActivity() != null) {
             ((CollapseListener) getActivity()).enableCollapse(chosenCurrency, chosenSum,
                     PreferenceUtils.getFullNameOfCurrency(chosenCurrency), value);
-        }
-        if (currencyList != null && currencyList.size() <= 5) {
-            ((CollapseListener) getActivity()).disableScrolling();
         }
     }
 

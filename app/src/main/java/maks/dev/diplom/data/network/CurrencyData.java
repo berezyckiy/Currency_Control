@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -58,7 +59,7 @@ public class CurrencyData
     }
 
     private String getSavedChecked(int id) {
-        if (currencyList.size() != 0) {
+        if (currencyList.size() != 0 && id < currencyList.size()) {
             return currencyList.get(id).get("isChecked").toString();
         } else {
             return "true";
@@ -70,18 +71,19 @@ public class CurrencyData
         try {
             HttpHandler sh = new HttpHandler();
             String jsonStr = sh.makeServiceCall("http://api.fixer.io/latest?base=USD");
+            String jsonStrFloatRates = sh.makeServiceCall("http://www.floatrates.com/daily/usd.json");
             JSONObject jsonObj = new JSONObject(jsonStr);
             JSONObject objRates = jsonObj.getJSONObject("rates");
             String date = jsonObj.getString("date");
             PreferenceUtils.saveString(mActivity, "date", date);
-//            String jsonStrByn = sh.makeServiceCall("http://www.apilayer.net/api/live?access_key=b2c34b16e4631f59e5def5f526ed05aa&currencies=BYN");
-//            JSONObject jsonObjByn = new JSONObject(jsonStrByn);
-//            JSONObject objRateByn = jsonObjByn.getJSONObject("quotes");
+            JSONObject jsonObject = new JSONObject(jsonStrFloatRates);
+            JSONObject jsonObjectBYN = jsonObject.getJSONObject("byn");
+            JSONObject jsonObjectKZT = jsonObject.getJSONObject("kzt");
             db.delAllData();
             int i = 0;
             db.addRec(jsonObj.getString("base"), "1", PreferenceUtils.getFullNameOfCurrency(jsonObj.getString("base")), getSavedChecked(i));
-//            i++;
-//            db.addRec("BYN", objRateByn.getString("USDBYN"), PreferenceUtils.getFullNameOfCurrency("BYN"), getSavedChecked(i));
+            db.addRec(jsonObjectBYN.getString("code"), jsonObjectBYN.getString("rate"), PreferenceUtils.getFullNameOfCurrency("BYN"), getSavedChecked(++i));
+            db.addRec(jsonObjectKZT.getString("code"), jsonObjectKZT.getString("rate"), PreferenceUtils.getFullNameOfCurrency("KZT"), getSavedChecked(++i));
             Iterator<String> iterator = objRates.keys();
             while (iterator.hasNext()) {
                 String nameCurrency = iterator.next();
