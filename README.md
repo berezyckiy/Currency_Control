@@ -1,1 +1,3 @@
 # Currency Control
+- Client-server application of currencies rates. It gives information about 32 currencies which based on server of Central European Bank, as JSON object. In  this  app  navigation  realizes  with  navigation  view,  each  item  of which  shows  a certain fragment. 
+- The app consists of 3 activities, 5 fragments. The main widgets are NavigationView, CollapsingToolbarLayout, RecyclerView, TabLayout, SwipeRefreshLayout.In this app realizes caching dates, which lets off-line using. It is enough to download dates  1  time.  These  dates  are  saved  in  SQLite  Database.  The  app  supports  2 languages.
