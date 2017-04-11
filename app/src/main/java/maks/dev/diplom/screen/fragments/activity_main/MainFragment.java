@@ -126,8 +126,10 @@ public class MainFragment
         chosenSum = getActivity().getIntent().getStringExtra("sum");
         dialogLoading = new DialogLoading();
         if (chosenCurrency == null) {
-            chosenCurrency = "USD";
+            chosenCurrency = PreferenceUtils.getString(getActivity(), "baseCurrency", "USD");
             chosenSum = "1";
+        } else {
+            PreferenceUtils.saveString(getActivity(), "baseCurrency", chosenCurrency);
         }
         if (getActivity().getActionBar() != null) {
             getActivity().getActionBar().setTitle("");
@@ -141,11 +143,19 @@ public class MainFragment
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private double calculateCoefficient() {
-        value = getActivity().getIntent().getStringExtra("value");
-        if (value == null) {
-            value = "1";
+    private String getCurrencyValue(String currencyName) {
+        String value = "1";
+        db.open();
+        for (Map<String, Object> currency : db.getCurrenciesList()) {
+            if (currency.get("name").equals(currencyName)) {
+                value = currency.get("value").toString();
+            }
         }
+        return value;
+    }
+
+    private double calculateCoefficient() {
+        value = getCurrencyValue(chosenCurrency);
         if (chosenSum != null && Double.parseDouble(chosenSum) == 0) {
             chosenSum = "1";
         }
