@@ -79,11 +79,13 @@ public class CurrencyData
             JSONObject jsonObject = new JSONObject(jsonStrFloatRates);
             JSONObject jsonObjectBYN = jsonObject.getJSONObject("byn");
             JSONObject jsonObjectKZT = jsonObject.getJSONObject("kzt");
+            JSONObject jsonObjectEGP = jsonObject.getJSONObject("egp");
             db.delAllData();
             int i = 0;
             db.addRec(jsonObj.getString("base"), "1", PreferenceUtils.getFullNameOfCurrency(jsonObj.getString("base")), getSavedChecked(i));
             db.addRec(jsonObjectBYN.getString("code"), jsonObjectBYN.getString("rate"), PreferenceUtils.getFullNameOfCurrency("BYN"), getSavedChecked(++i));
             db.addRec(jsonObjectKZT.getString("code"), jsonObjectKZT.getString("rate"), PreferenceUtils.getFullNameOfCurrency("KZT"), getSavedChecked(++i));
+            db.addRec(jsonObjectEGP.getString("code"), jsonObjectEGP.getString("rate"), PreferenceUtils.getFullNameOfCurrency("EGP"), getSavedChecked(++i));
             Iterator<String> iterator = objRates.keys();
             while (iterator.hasNext()) {
                 String nameCurrency = iterator.next();

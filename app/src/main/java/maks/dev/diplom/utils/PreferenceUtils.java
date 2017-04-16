@@ -61,6 +61,8 @@ public final class PreferenceUtils {
                 return R.mipmap.ic_czk;
             case "DKK":
                 return R.mipmap.ic_dkk;
+            case "EGP":
+                return R.mipmap.ic_egp;
             case "EUR":
                 return R.mipmap.ic_eur;
             case "GBP":
@@ -137,6 +139,8 @@ public final class PreferenceUtils {
                 return "Czech Koruna";
             case "DKK":
                 return "Danish Krone";
+            case "EGP":
+                return "Egyptian Pound";
             case "EUR":
                 return "European Euro";
             case "GBP":
@@ -189,7 +193,7 @@ public final class PreferenceUtils {
                 return "South African Rand";
 
             default:
-                return "Error";
+                return "Not found";
         }
     }
 }

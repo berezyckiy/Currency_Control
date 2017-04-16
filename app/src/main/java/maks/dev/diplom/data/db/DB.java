@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +69,19 @@ public class DB {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return currenciesList;
+        return sortCurrencyListByName(currenciesList);
+    }
+
+    private List<Map<String, Object>> sortCurrencyListByName(List<Map<String, Object>> currencyList) {
+        Collections.sort(currencyList, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                String firstName = o1.get("name").toString();
+                String secondName = o2.get("name").toString();
+                return firstName.compareTo(secondName);
+            }
+        });
+        return currencyList;
     }
 
     public void delRec(long id) {
