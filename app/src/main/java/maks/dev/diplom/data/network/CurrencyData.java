@@ -39,31 +39,19 @@ public class CurrencyData
     protected void onPreExecute() {
         super.onPreExecute();
         db = new DB(mActivity);
-        currencyList = new ArrayList<>();
         db.open();
-        checkExistDataDB();
+        currencyList = new ArrayList<>();
+        currencyList = db.getCurrenciesList();
         mListener.showProgressDialog();
     }
 
-    private void checkExistDataDB() {
-        Cursor cursor = db.getAllData();
-        Map<String, Object> tmpMap;
-        if (cursor.moveToFirst()) {
-            do {
-                tmpMap = new HashMap<>();
-                String isChecked = cursor.getString(cursor.getColumnIndex("isChecked"));
-                tmpMap.put("isChecked", isChecked);
-                currencyList.add(tmpMap);
-            } while (cursor.moveToNext());
+    private String getSavedChecked(String name) {
+        for (Map<String, Object> currency : currencyList) {
+            if (currency.get("name").equals(name)) {
+                return currency.get("isChecked").toString();
+            }
         }
-    }
-
-    private String getSavedChecked(int id) {
-        if (currencyList.size() != 0 && id < currencyList.size()) {
-            return currencyList.get(id).get("isChecked").toString();
-        } else {
-            return "true";
-        }
+        return "true";
     }
 
     @Override
@@ -81,16 +69,19 @@ public class CurrencyData
             JSONObject jsonObjectKZT = jsonObject.getJSONObject("kzt");
             JSONObject jsonObjectEGP = jsonObject.getJSONObject("egp");
             db.delAllData();
-            int i = 0;
-            db.addRec(jsonObj.getString("base"), "1", PreferenceUtils.getFullNameOfCurrency(jsonObj.getString("base")), getSavedChecked(i));
-            db.addRec(jsonObjectBYN.getString("code"), jsonObjectBYN.getString("rate"), PreferenceUtils.getFullNameOfCurrency("BYN"), getSavedChecked(++i));
-            db.addRec(jsonObjectKZT.getString("code"), jsonObjectKZT.getString("rate"), PreferenceUtils.getFullNameOfCurrency("KZT"), getSavedChecked(++i));
-            db.addRec(jsonObjectEGP.getString("code"), jsonObjectEGP.getString("rate"), PreferenceUtils.getFullNameOfCurrency("EGP"), getSavedChecked(++i));
+            db.addRec(jsonObj.getString("base"), "1", PreferenceUtils.getFullNameOfCurrency(jsonObj.getString("base")),
+                    getSavedChecked(jsonObj.getString("base")));
+            db.addRec(jsonObjectBYN.getString("code"), jsonObjectBYN.getString("rate"),
+                    PreferenceUtils.getFullNameOfCurrency("BYN"), getSavedChecked(jsonObjectBYN.getString("code")));
+            db.addRec(jsonObjectKZT.getString("code"), jsonObjectKZT.getString("rate"),
+                    PreferenceUtils.getFullNameOfCurrency("KZT"), getSavedChecked(jsonObjectKZT.getString("code")));
+            db.addRec(jsonObjectEGP.getString("code"), jsonObjectEGP.getString("rate"),
+                    PreferenceUtils.getFullNameOfCurrency("EGP"), getSavedChecked(jsonObjectEGP.getString("code")));
             Iterator<String> iterator = objRates.keys();
             while (iterator.hasNext()) {
-                String nameCurrency = iterator.next();
-                String currencyRate = objRates.getString(nameCurrency);
-                db.addRec(nameCurrency, currencyRate, PreferenceUtils.getFullNameOfCurrency(nameCurrency), getSavedChecked(++i));
+                String currencyName = iterator.next();
+                String currencyRate = objRates.getString(currencyName);
+                db.addRec(currencyName, currencyRate, PreferenceUtils.getFullNameOfCurrency(currencyName), getSavedChecked(currencyName));
             }
             db.close();
         } catch (Exception e) {
