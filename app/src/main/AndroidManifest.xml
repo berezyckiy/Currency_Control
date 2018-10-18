@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".screen.activities.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,10 +20,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screen.activities.ActivityChooseValue"
+            android:name=".main_currency.ActivityChooseValue"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".screen.activities.ActivityGraphics"
+            android:name=".currency_graphic.ActivityGraphics"
             android:screenOrientation="portrait" />
     </application>
 

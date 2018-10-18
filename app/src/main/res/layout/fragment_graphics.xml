@@ -50,7 +50,7 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_weight="1">
 
-        <maks.dev.diplom.screen.custom_view.MyTextView
+        <maks.dev.diplom.utils.custom_view.MyTextView
             android:id="@+id/tvGraphicCurrencyFirst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_weight="1">
 
-        <maks.dev.diplom.screen.custom_view.MyTextView
+        <maks.dev.diplom.utils.custom_view.MyTextView
             android:id="@+id/tvGraphicCurrencySecond"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
