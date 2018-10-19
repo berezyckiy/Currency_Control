@@ -24,3 +24,32 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext.versions = [
+        androidSupport  : "28.0.0",
+        constraintLayout: "2.0.0-alpha2",
+        androidChart    : "3.0.3",
+        materialDialog  : "0.9.6.0",
+        retrofit        : "2.4.0"
+]
+
+ext.support = [
+        appcompat7      : "com.android.support:appcompat-v7:$versions.androidSupport",
+        support4        : "com.android.support:support-v4:$versions.androidSupport",
+        support13       : "com.android.support:support-v13:$versions.androidSupport",
+        design          : "com.android.support:design:$versions.androidSupport",
+        constraintLayout: "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
+]
+
+ext.mpandroidChart = [
+        androidChart : "com.github.PhilJay:MPAndroidChart:v$versions.androidChart"
+]
+
+ext.materialDialog = [
+        material : "com.afollestad.material-dialogs:core:$versions.materialDialog"
+]
+
+ext.retrofit = [
+        retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+        converterGson: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+]

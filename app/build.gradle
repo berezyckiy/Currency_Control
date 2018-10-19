@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "maks.dev.diplom"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 6
         versionName "1.2.3"
     }
@@ -19,10 +19,22 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:design:25.1.1'
-    compile 'com.android.support:recyclerview-v7:25.1.1'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
-    compile 'com.afollestad.material-dialogs:commons:0.9.4.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Android support
+    implementation support.appcompat7
+    implementation support.support4
+    implementation support.support13
+    implementation support.constraintLayout
+    implementation support.design
+
+    //MPAndroidChard
+    implementation mpandroidChart.androidChart
+
+    //MaterialDialogs
+    implementation materialDialog.material
+
+    //Retrofit
+    implementation retrofit.retrofit
+    implementation retrofit.converterGson
 }
