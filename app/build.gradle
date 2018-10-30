@@ -18,7 +18,7 @@ android {
     }
 
     buildTypes.each {
-        it.buildConfigField 'String', 'FIXER_BASE_URL', "http://data.fixer.io/api/"
+        it.buildConfigField 'String', 'FIXER_BASE_URL', '"http://data.fixer.io/api/"'
         it.buildConfigField 'String', 'FIXER_ACCESS_KEY', getLocalProperty("FixerApiKey")
     }
 }
