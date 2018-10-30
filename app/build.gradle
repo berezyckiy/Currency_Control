@@ -16,6 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'FIXER_BASE_URL', "http://data.fixer.io/api/"
+        it.buildConfigField 'String', 'FIXER_ACCESS_KEY', getLocalProperty("FixerApiKey")
+    }
 }
 
 dependencies {
@@ -37,4 +42,11 @@ dependencies {
     //Retrofit
     implementation retrofit.retrofit
     implementation retrofit.converterGson
+}
+
+private String getLocalProperty(String property) {
+    final Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    return properties.getProperty(property)
 }
